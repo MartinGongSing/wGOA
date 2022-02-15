@@ -14,11 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from wGOA import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='homepage')
+    path('', views.index, name='homepage'),
+    path('instruments/', views.instruments, name='instruments'),
+
+    # Matches any html file
+    # re_path(r'^.*\.*', views.pages, name='pages'),
 
 ]
