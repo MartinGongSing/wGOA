@@ -3,8 +3,8 @@
 			<!-- Logo Header -->
 			<div class="logo-header" data-background-color="dark2">
 
-				<a href=" " > <!-- class="logo" -->
-					<img src="\static\assets\img\logo_GOA.png" alt="logo-GOA" class="navbar-brand">
+				<a href=" " class="logo">
+					<img src="logo_GOA.png" alt="logo-GOA" class="navbar-brand">
 				</a>
 
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,8 +25,51 @@
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
 
 				<div class="container-fluid">
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 
-					<div class="collapse" id="search-nav">
+						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+							<a href=" ">
+								<span class="sub-item">Home</span>
+							</a>
+						</li>
+
+						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+							<a href="/data">
+								<span class="sub-item">Data</span>
+							</a>
+						</li>
+
+						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+							<a href="/instruments">
+								<span class="sub-item">Instruments</span>
+							</a>
+						</li>
+						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+							<a href="/station">
+								<span class="sub-item">Weather station</span>
+							</a>
+						</li>
+
+						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+							<a href="/intranet">
+								<span class="sub-item">Intranet</span>
+							</a>
+						</li>
+
+						<li class="nav-item {% if 'ui-' in segment %} active {% endif %}">
+							<a href="/contact">
+								<span class="sub-item">Contact</span>
+							</a>
+						</li>
+<!--						<li class="nav-item toggle-nav-search hidden-caret">-->
+<!--							<a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">-->
+<!--								<i class="fa fa-search">Search</i>-->
+<!--							</a>-->
+<!--						</li>-->
+					</ul>
+
+				</div>
+				<div class="collapse" id="search-nav">
 						<form class="navbar-left navbar-form nav-search mr-md-3">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -38,15 +81,5 @@
 							</div>
 						</form>
 					</div>
-
-					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-						<li class="nav-item toggle-nav-search hidden-caret">
-							<a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
-								<i class="fa fa-search">Search</i>
-							</a>
-						</li>
-					</ul>
-
-				</div>
 			</nav>
 		</div>

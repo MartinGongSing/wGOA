@@ -20,7 +20,11 @@ from wGOA import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='homepage'),
+    path('data/', views.data, name='data'),
     path('instruments/', views.instruments, name='instruments'),
+    path('station/', views.station, name='station'),
+    path('intranet/', views.intranet, name='intranet'),
+    path('contact/', views.contact, name='contact'),
 
     # Matches any html file
     # re_path(r'^.*\.*', views.pages, name='pages'),
