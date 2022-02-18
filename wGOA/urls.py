@@ -26,6 +26,7 @@ urlpatterns = [
     path('station/', views.station, name='station'),
     path('intranet/', views.intranet, name='intranet'),
     path('contact/', views.contact, name='contact'),
+    path('instrument1/', views.instrument1, name='instrument1'),
 
     # Matches any html file
     # re_path(r'^.*\.*', views.pages, name='pages'),

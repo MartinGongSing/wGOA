@@ -47,7 +47,17 @@ def contact(request):
 
     html_template = loader.get_template('contact.html')
     return HttpResponse(html_template.render(context, request))
-#
+
+
+
+def instrument1(request):
+    # return HttpResponse("this is the instrument page")
+    context = {'segment': 'instrument1'}
+
+    html_template = loader.get_template('instruments/instrum1.html')
+    return HttpResponse(html_template.render(context, request))
+
+
 # def pages(request):
 #     contex = {}
 #

@@ -52,3 +52,57 @@
   margin-top: 0px;    /* if you want it vertically middle of the navbar. */
 }
 /* NAVBAR END */
+
+/* Typography START */
+
+
+h1{
+  text-align: center;
+}
+
+na{
+  color: darkred;
+}
+/*   Typography END*/
+
+
+/* BODY */
+
+.boxGray{
+  background-color: lightgray;
+  padding: 10px;
+  text-align: center;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 0px;
+  text-align: center;
+}
+.column5 {
+  float: left;
+  width: 20%;
+  padding: 0px;
+  text-align: center;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* images */
+
+.rounded {
+  border-radius: 50%;
+}
