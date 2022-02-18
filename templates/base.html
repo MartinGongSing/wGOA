@@ -1,33 +1,32 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-	<title>
-       base + {% block title %}{% endblock %}
-    </title>
+		<title>
+		   {% block title %}{% endblock %}
+		</title>
 
-	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+		<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 
-	<!-- CSS Files -->
-	<link rel="stylesheet" href="../static/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../static/assets/css/atlantis.css">
-
-
-    <!-- Specific Page CSS goes HERE  -->
-    {% block stylesheets %}{% endblock stylesheets %}
-
-</head>
-<body data-background-color="dark">
-	<div class="wrapper">
-
-		{% include 'navigation.html' %}
+		<!-- CSS Files -->
+		<link rel="stylesheet" href="../static/assets/css/GOA.css">
 
 
-		<div class="main-panel">
-			{% block content %}{% endblock content %}
+		<!-- Specific Page CSS goes HERE  -->
+		{% block stylesheets %}{% endblock stylesheets %}
+
+	</head>
+	<body>
+		<div>
+			{% include 'navigation2.html' %}
+
+			<div class="main-panel">
+				{% block content %}{% endblock content %}
+			</div>
+
 		</div>
-
-	</div>
-</body>
+	</body>
 </html>

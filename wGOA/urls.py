@@ -20,6 +20,7 @@ from wGOA import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='homepage'),
+    path('index/', views.index, name='homepage'),
     path('data/', views.data, name='data'),
     path('instruments/', views.instruments, name='instruments'),
     path('station/', views.station, name='station'),
