@@ -232,3 +232,25 @@ na{
       .forecast-container .forecast .forecast-content small {
         font-size: 16px;
         font-size: 1.1428571429em; }
+
+.num{
+  color: lightgray ;
+}
+.date{
+  color: lightgray;
+}
+.day{
+  color: lightgray;
+}
+.degree{
+  color: lightgray;
+}
+.location{
+    color: lightgray;
+}
+small{
+  color: aliceblue;
+}
+r{
+  color: lightgray;
+}
