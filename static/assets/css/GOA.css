@@ -61,7 +61,7 @@ h1{
 }
 
 na{
-  color: darkred;
+  color: blue;
 }
 /*   Typography END*/
 
@@ -87,9 +87,19 @@ na{
   padding: 0px;
   text-align: center;
 }
+
+
+
 .column5 {
   float: left;
   width: 20%;
+  padding: 0px;
+  text-align: center;
+}
+
+.column3 {
+  float: left;
+  width: 33.33%;
   padding: 0px;
   text-align: center;
 }
