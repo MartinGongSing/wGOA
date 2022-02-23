@@ -21,8 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='homepage'),
     path('index/', views.index, name='homepage'),
-    path('data/', views.data, name='data'),
+    path('data/', views.data2, name='data2'),
     path('instruments/', views.instruments, name='instruments'),
+    # INSTRUMENTS
     path('station/', views.station, name='station'),
     path('intranet/', views.intranet, name='intranet'),
     path('contact/', views.contact, name='contact'),
@@ -39,7 +40,7 @@ urlpatterns = [
     path('PSAP/', views.PSAP, name='PSAP'),
     path('Rack/', views.Rack, name='Rack'),
     path('uRADmonitor/', views.uRADmonitor, name='uRADmonitor'),
-
+    # END INSTRUMENTS
 
 
     # Matches any html file

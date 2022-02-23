@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.shortcuts import render
 import requests
 import math
-from .models import CPC
+from .models import test
 
 
 
@@ -86,13 +86,17 @@ def index(request):
 
     return HttpResponse(html_template.render(context, request))
 
-def data(request):
-    # return HttpResponse("this is the data page")
-    context = {'segment': 'data'}
-    # resultdisplay = CPC.objects.all()
-    html_template = loader.get_template('data.html')
-    return HttpResponse(html_template.render(context, request)) #, {'CPC': resultdisplay}
+# def data(request):
+#     # return HttpResponse("this is the data page")
+#     context = {'segment': 'data'}
+#     # resultdisplay = CPC.objects.all()
+#     html_template = loader.get_template('data.html')
+#     return HttpResponse(html_template.render(context, request, {'CPC': resultdisplay})) #, {'CPC': resultdisplay}
 
+def data2(request):
+    resultdisplay = test.objects.all()
+    # return HttpResponse("Hello world ! ")
+    return render(request, "data.html", {'test': resultdisplay})
 
 def instruments(request):
     # return HttpResponse("this is the instrument page")
