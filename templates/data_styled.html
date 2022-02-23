@@ -1,0 +1,36 @@
+
+STYLED TABLE
+
+{% extends "base.html" %}
+
+{% block title %} data {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<h1>DATA</h1>
+<div class="boxGray">
+    <p>CPC_UBI </p>
+    <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                        <div class="table">
+                            <div class="row header">
+                                <div class="cell">time</div>
+                                <div class="cell">N</div>
+                            </div>
+                            {% for getdata in cpc %}
+                            <div class="row">
+							    <div class="cell" > {{getdata.ID}} </div>
+                                <div class="cell" > {{getdata.N}} </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -8,20 +8,29 @@
 {% block content %}
 
 <h1>DATA</h1>
+    <p>CPC_UBI </p>
 
-<p>CPC_UBI </p>
+    <table border="1">
+        <tr>
+            <th>time</th>
+            <th>N</th>
+        </tr>
+        {% for getdata in cpc %}
+        <tr>
+            <td>{{getdata.ID}}</td>
+            <td>{{getdata.N}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
-<table border="1">
-    <tr>
-        <th>time</th>
-        <th>N</th>
-    </tr>
-    {% for getdata in test %}
-    <tr>
-        <td>{{getdata.ID}}</td>
-        <td>{{getdata.N}}</td>
-    </tr>
-    {% endfor %}
-</table>
 
 {% endblock content %}
+
+
+
+
+
+
+
+
+

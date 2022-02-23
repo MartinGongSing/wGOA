@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.shortcuts import render
 import requests
 import math
-from .models import test
+from .models import cpc
 
 
 
@@ -94,9 +94,10 @@ def index(request):
 #     return HttpResponse(html_template.render(context, request, {'CPC': resultdisplay})) #, {'CPC': resultdisplay}
 
 def data2(request):
-    resultdisplay = test.objects.all()
-    # return HttpResponse("Hello world ! ")
-    return render(request, "data.html", {'test': resultdisplay})
+    # resultdisplay = cpc.objects.all()
+    resultdisplay = cpc.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
+
+    return render(request, "data.html", {'cpc': resultdisplay})
 
 def instruments(request):
     # return HttpResponse("this is the instrument page")
