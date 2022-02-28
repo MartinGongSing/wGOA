@@ -8,6 +8,11 @@
 {% block content %}
 <a href="/instruments">Back</a>
 
-<p>PSAP</p>
+{% for instrum in instrums %}
+<h2>{{instrum.name}}</h2>
+<p>{{instrum.desc}}</p>
+<img src="{{instrum.img.url}}" alt="{{instrum.name}}" style="width:250px" class="rounded">
+<br><br><br>
+{% endfor %}
 
 {% endblock content %}

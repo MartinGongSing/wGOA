@@ -8,7 +8,13 @@ from django.db import models
 # local_dt = local_tz.normalize(utc_dt.astimezone(local_tz))
 
 class cpc(models.Model):
-    ID = models.CharField(max_length=100)
+    Time = models.CharField(max_length=100)
     N = models.CharField(max_length=15)
     class Meta:
         db_table = "cpc_ubi"
+
+class instrument(models.Model):
+
+    name = models.CharField(max_length=100)
+    desc = models.TextField()
+    img = models.ImageField(upload_to='pics')

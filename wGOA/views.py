@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.shortcuts import render
 import requests
 import math
-from .models import cpc
+from .models import cpc, instrument
 
 
 
@@ -95,7 +95,7 @@ def index(request):
 
 def data2(request):
     # resultdisplay = cpc.objects.all()
-    resultdisplay = cpc.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
+    resultdisplay = cpc.objects.order_by('Time')[:10] #Just to get the X lasts elements of the list
 
     return render(request, "data.html", {'cpc': resultdisplay})
 
@@ -192,9 +192,13 @@ def PM10_PM1(request):
 
 def PSAP(request):
     # return HttpResponse("this is the instrument page")
-    context = {'segment': 'PSAP'}
-    html_template = loader.get_template('instruments/PSAP.html')
-    return HttpResponse(html_template.render(context, request))
+    # context = {'segment': 'PSAP'}
+    # html_template = loader.get_template('instruments/PSAP.html')
+    # return HttpResponse(html_template.render(context, request))
+
+    instrums = instrument.objects.all()
+
+    return render(request, 'instruments/PSAP.html', {'instrums': instrums} )
 
 def Rack(request):
     # return HttpResponse("this is the instrument page")

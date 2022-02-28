@@ -36,6 +36,34 @@
 
     // Add zoom and rotation controls to the map.
     map.addControl(new mapboxgl.NavigationControl());
+
+
+    // dots for the position
+    const geojson = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [-7.509722, 40.2750]
+          },
+          properties: {
+            title: 'Mapbox',
+            description: 'Weather Station'
+          }
+        }
+      ]
+    };
+
+    for (const feature of geojson.features) {
+      // create a HTML element for each feature
+      const el = document.createElement('div');
+      el.className = 'marker';
+
+      // make a marker for each feature and add to the map
+      new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+    }
 </script>
 
 
