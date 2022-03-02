@@ -61,7 +61,7 @@ h1{
 }
 
 na{
-  color: red;
+  color: midnightblue;
   font-family: Arial;
 }
 /*   Typography END*/
@@ -445,19 +445,3 @@ r{
 
 
 /*DESTINATION CSS*/
-
-.destinations_container {
-  width: calc(100% + 30px);
-  left: -15px;
-}
-.destination
-{
-	width: calc(100% / 3);
-	padding-left: 15px;
-	padding-right: 15px;
-	margin-bottom: 58px;
-}
-.destinations_row
-{
-	margin-top: 45px;
-}

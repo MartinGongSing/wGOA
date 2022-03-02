@@ -115,10 +115,17 @@ def station(request):
 
 def intranet(request):
     # return HttpResponse("this is the intranet page")
-    context = {'segment': 'intranet'}
+    # context = {'segment': 'intranet'}
+    #
+    # html_template = loader.get_template('intranet.html')
+    # return HttpResponse(html_template.render(context, request))
 
-    html_template = loader.get_template('intranet.html')
-    return HttpResponse(html_template.render(context, request))
+
+
+
+    instrums = instrument.objects.all()
+
+    return render(request, 'intranet.html', {'instrums': instrums} )
 
 def contact(request):
     #return HttpResponse("this is the contact page")
