@@ -8,7 +8,7 @@ from django.shortcuts import render
 import requests
 import math
 from .models import cpc, instrument
-
+from .filters import instrumFilter
 
 
 def index(request):
@@ -95,6 +95,7 @@ def index(request):
 
 def data2(request):
     # resultdisplay = cpc.objects.all()
+
     resultdisplay = cpc.objects.order_by('Time')[:10] #Just to get the X lasts elements of the list
 
     return render(request, "data.html", {'cpc': resultdisplay})
@@ -114,14 +115,6 @@ def station(request):
     return HttpResponse(html_template.render(context, request))
 
 def intranet(request):
-    # return HttpResponse("this is the intranet page")
-    # context = {'segment': 'intranet'}
-    #
-    # html_template = loader.get_template('intranet.html')
-    # return HttpResponse(html_template.render(context, request))
-
-
-
 
     instrums = instrument.objects.all()
 
@@ -135,7 +128,15 @@ def contact(request):
     return HttpResponse(html_template.render(context, request))
 
 
-# INSTRUMENTS PAGES
+############### INSTRUMENTS PAGES ###############
+
+
+def dyna_instrum(request, id):
+    obj = instrument.objects.get(id=id)
+    context = {
+        "object" : obj
+    }
+    return render(request, 'instrum_detail.html', context)
 
 def Air_quality_monitor(request):
     # return HttpResponse("this is the instrument page")
@@ -218,6 +219,28 @@ def uRADmonitor(request):
     context = {'segment': 'uRADmonitor'}
     html_template = loader.get_template('instruments/uRADmonitor.html')
     return HttpResponse(html_template.render(context, request))
+
+
+
+
+############### TEST ###############
+
+
+# def filt(ListView):
+#     model: instrument
+#     template_name = 'instrum_detail.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['filter']=instrumFilter(self.request.GET, queryset=self.get_queryset())
+#         return context
+#
+# def search(request):
+#     instrum_list = instrument.objects.all()
+#     instrum_filter = instrumFilter(request, queryset=instrum_list)
+#     return render(request, 'instrum_detail.html', {'filter': instrum_filter})
+
+
 
 
 # def pages(request):

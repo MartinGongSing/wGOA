@@ -27,11 +27,12 @@ urlpatterns = [
     path('index/', views.index, name='homepage'),
     path('data/', views.data2, name='data2'),
     path('instruments/', views.instruments, name='instruments'),
+    path('instrum_detail/<int:id>/', views.dyna_instrum, name='instrum_detail'),
     # INSTRUMENTS
     path('station/', views.station, name='station'),
     path('intranet/', views.intranet, name='intranet'),
     path('contact/', views.contact, name='contact'),
-    path('Air_quality_monitor/', views.Air_quality_monitor, name='Air_quality_monitor'),
+    path('Air quality monitor/', views.Air_quality_monitor, name='Air_quality_monitor'),
     path('APS/', views.APS, name='APS'),
     path('Control_room/', views.Control_room, name='Control_room'),
     path('CPC/', views.CPC, name='CPC'),
