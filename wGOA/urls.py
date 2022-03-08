@@ -28,24 +28,6 @@ urlpatterns = [
     path('data/', views.data2, name='data2'),
     path('instruments/', views.instruments, name='instruments'),
     path('instrum_detail/<int:id>/', views.dyna_instrum, name='instrum_detail'),
-    # INSTRUMENTS
-    path('station/', views.station, name='station'),
-    path('intranet/', views.intranet, name='intranet'),
-    path('contact/', views.contact, name='contact'),
-    path('Air quality monitor/', views.Air_quality_monitor, name='Air_quality_monitor'),
-    path('APS/', views.APS, name='APS'),
-    path('Control_room/', views.Control_room, name='Control_room'),
-    path('CPC/', views.CPC, name='CPC'),
-    path('Gilibrator/', views.Gilibrator, name='Gilibrator'),
-    path('HT_Sensor/', views.HT_Sensor, name='HT_Sensor'),
-    path('Inlet_system/', views.Inlet_system, name='Inlet_system'),
-    path('Meteo_Station/', views.Meteo_Station, name='Meteo_Station'),
-    path('Nephelometer/', views.Nephelometer, name='Nephelometer'),
-    path('PM10_PM1/', views.PM10_PM1, name='PM10_PM1'),
-    path('PSAP/', views.PSAP, name='PSAP'),
-    path('Rack/', views.Rack, name='Rack'),
-    path('uRADmonitor/', views.uRADmonitor, name='uRADmonitor'),
-    # END INSTRUMENTS
 
 
     # Matches any html file

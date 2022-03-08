@@ -8,7 +8,6 @@ from django.shortcuts import render
 import requests
 import math
 from .models import cpc, instrument
-from .filters import instrumFilter
 
 
 def index(request):
@@ -102,10 +101,14 @@ def data2(request):
 
 def instruments(request):
     # return HttpResponse("this is the instrument page")
-    context = {'segment': 'instruments'}
+    # context = {'segment': 'instruments'}
+    #
+    # html_template = loader.get_template('instruments.html')
+    # return HttpResponse(html_template.render(context, request))
 
-    html_template = loader.get_template('instruments.html')
-    return HttpResponse(html_template.render(context, request))
+    instrums = instrument.objects.all()
+
+    return render(request, 'instruments.html', {'instrums': instrums} )
 
 def station(request):
     # return HttpResponse("this is the weather station page")
@@ -116,9 +119,10 @@ def station(request):
 
 def intranet(request):
 
-    instrums = instrument.objects.all()
+    context = {'segment': 'intranet'}
 
-    return render(request, 'intranet.html', {'instrums': instrums} )
+    html_template = loader.get_template('intranet.html')
+    return HttpResponse(html_template.render(context, request))
 
 def contact(request):
     #return HttpResponse("this is the contact page")
@@ -134,94 +138,9 @@ def contact(request):
 def dyna_instrum(request, id):
     obj = instrument.objects.get(id=id)
     context = {
-        "object" : obj
+        "instrum" : obj
     }
-    return render(request, 'instrum_detail.html', context)
-
-def Air_quality_monitor(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'Air_quality_monitor'}
-    html_template = loader.get_template('instruments/Air_quality_monitor.html')
-    return HttpResponse(html_template.render(context, request))
-
-def APS(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'APS'}
-    html_template = loader.get_template('instruments/APS.html')
-    return HttpResponse(html_template.render(context, request))
-
-def Control_room(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'Control_room'}
-    html_template = loader.get_template('instruments/Control_room.html')
-    return HttpResponse(html_template.render(context, request))
-
-def CPC(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'CPC'}
-    html_template = loader.get_template('instruments/CPC.html')
-    return HttpResponse(html_template.render(context, request))
-
-def Gilibrator(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'Gilibrator'}
-    html_template = loader.get_template('instruments/Gilibrator.html')
-    return HttpResponse(html_template.render(context, request))
-
-def HT_Sensor(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'HT_Sensor'}
-    html_template = loader.get_template('instruments/HT_Sensor.html')
-    return HttpResponse(html_template.render(context, request))
-
-def Inlet_system(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'Inlet_system'}
-    html_template = loader.get_template('instruments/Inlet_system.html')
-    return HttpResponse(html_template.render(context, request))
-
-def Meteo_Station(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'Meteo_Station'}
-    html_template = loader.get_template('instruments/Meteo_Station.html')
-    return HttpResponse(html_template.render(context, request))
-
-def Nephelometer(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'Nephelometer'}
-    html_template = loader.get_template('instruments/Nephelometer.html')
-    return HttpResponse(html_template.render(context, request))
-
-def PM10_PM1(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'PM10_PM1'}
-    html_template = loader.get_template('instruments/PM10_PM1.html')
-    return HttpResponse(html_template.render(context, request))
-
-def PSAP(request):
-    # return HttpResponse("this is the instrument page")
-    # context = {'segment': 'PSAP'}
-    # html_template = loader.get_template('instruments/PSAP.html')
-    # return HttpResponse(html_template.render(context, request))
-
-    instrums = instrument.objects.all()
-
-    return render(request, 'instruments/PSAP.html', {'instrums': instrums} )
-
-def Rack(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'Rack'}
-    html_template = loader.get_template('instruments/Rack.html')
-    return HttpResponse(html_template.render(context, request))
-
-def uRADmonitor(request):
-    # return HttpResponse("this is the instrument page")
-    context = {'segment': 'uRADmonitor'}
-    html_template = loader.get_template('instruments/uRADmonitor.html')
-    return HttpResponse(html_template.render(context, request))
-
-
-
+    return render(request, '../templates/instrum_detail.html', context)
 
 ############### TEST ###############
 

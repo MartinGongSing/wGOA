@@ -7,11 +7,23 @@
 
 {% block content %}
 
-<h1>DETAILED Instrument</h1>
+
 
 <h1>{{instrum.name}}</h1>
 
-yayyyyyyyyy
+
+
+
+    <div class="row">
+        <div class="column">
+            <img src="{{instrum.img.url}}" alt="{{instrum.name}}" style="width:50%" class="rounded">
+        </div>
+        <div class="column">
+            <p>{{instrum.desc}}</p>
+        </div>
+    </div>
+
+
 
 
 {% endblock content %}

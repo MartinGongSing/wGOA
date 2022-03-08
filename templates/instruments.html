@@ -8,198 +8,234 @@
 {% block content %}
 
 <h1>INSTRUMENTS</h1>
+   <div class="instru_page">
+       {% for instrum in instrums %}
+        <div class="column3">
+            <div class="instru_name">
+                <!--Names of the instruments -->
+                <na>{{instrum.name}}</na>
 
-<!--    Names of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <na>PSAP</na>
-        </div>
-        <div class="column3">
-            <na>CPC</na>
-        </div>
-        <div class="column3">
-            <na>APS</na>
-        </div>
-    </div>
-
-<!--Pictures of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <a href="/PSAP">
-            <img src="../static/assets/img/instrum/PSAP.jpg" alt="PSAP" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/CPC">
-            <img src="../static/assets/img/instrum/CPC.jpg" alt="CPC" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/APS">
-            <img src="../static/assets/img/instrum/APS.jpg" alt="APS" style="width:60%" class="rounded">
-            </a>
-        </div>
-    </div>
-
-    <br><!--LINE 2--><br>
-
-<!--    Names of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <na>Nephelometer</na>
-        </div>
-        <div class="column3">
-            <na>HT Sensor</na>
-        </div>
-        <div class="column3">
-            <na>Gilibrator</na>
-        </div>
-    </div>
-<!--Pictures of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <a href="/Nephelometer">
-            <img src="../static/assets/img/instrum/neph.jpg" alt="Nephelometer" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/HT_Sensor">
-            <img src="../static/assets/img/instrum/HTsensor.jpg" alt="HT_Sensor" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/Gilibrator">
-            <img src="../static/assets/img/instrum/gilibrator.jpg" alt="Gilibrator" style="width:60%" class="rounded">
-            </a>
+            </div>
+            <div class = "instru_img">
+                <a href="/instrum_detail/{{instrum.id}}">
+                    <!--Pictures of the instruments -->
+                    <img src="{{instrum.img.url}}" alt="{{instrum.name}}" style="width:60%" class="rounded">
+                </a>
+            </div>
         </div>
     </div>
 
 
-<br><!--LINE 3--><br>
-
-<!--    Names of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <na>Meteo Station</na>
-        </div>
-        <div class="column3">
-            <na>Air quality monitor</na>
-        </div>
-        <div class="column3">
-            <na>Control system to switch PM10-PM1</na>
-        </div>
-    </div>
-
-<!--Pictures of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <a href="/Meteo_Station">
-            <img src="../static/assets/img/instrum/meteo-station.jpg" alt="meteo_station" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/Air_quality_monitor">
-                <img src="../static/assets/img/instrum/AirVisual-node.jpg" alt="Air_quality_monitor" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/PM10_PM1">
-            <img src="../static/assets/img/instrum/cut-PM10-PM1.jpg" alt="Control_system_to_switch PM10_PM1" style="width:60%" class="rounded">
-            </a>
-        </div>
-    </div>
-
-    <br><!--LINE 4--><br>
-
-<!--    Names of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <na>Inlet system (in)</na>
-        </div>
-        <div class="column3">
-            <na>Inlet system (out)</na>
-        </div>
-        <div class="column3">
-            <na>Automated radiation dosimeter</na>
-        </div>
-    </div>
-<!--Pictures of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <a href="/Inlet_system">
-            <img src="../static/assets/img/instrum/inlet-inside.jpg" alt="Inlet_system_(in)" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/Inlet_system">
-            <img src="../static/assets/img/instrum/inlet-outside.jpg" alt="Inlet_system_(out)" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/uRADmonitor">
-            <img src="../static/assets/img/instrum/uRADmonitor.jpg" alt="uRADmonitor" style="width:60%" class="rounded">
-            </a>
-        </div>
-    </div>
-
- <br><!--LINE 5--><br>
-
-<!--    Names of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <na>Station view (front)</na>
-        </div>
-        <div class="column3">
-            <na>Station view (back)</na>
-        </div>
-        <div class="column3">
-            <na>Station view (in)</na>
-        </div>
-    </div>
-<!--Pictures of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <a href="/Meteo_Station">
-            <img src="../static/assets/img/instrum/station.jpg" alt="Station_view(front)" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/Meteo_Station">
-            <img src="../static/assets/img/instrum/station2.jpg" alt="InlStation_view(back)" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/Meteo_Station">
-            <img src="../static/assets/img/instrum/station-inside.jpg" alt="Station_view(in)" style="width:60%" class="rounded">
-            </a>
-        </div>
-    </div>
-
- <!--LINE 6-->
-
-<!--    Names of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <na>Rack</na>
-        </div>
-        <div class="column3">
-            <na>Control room</na>
-        </div>
-    </div>
-<!--Pictures of the instruments -->
-    <div class="row">
-        <div class="column3">
-            <a href="/Rack">
-            <img src="../static/assets/img/instrum/rack.jpg" alt="Rack" style="width:60%" class="rounded">
-            </a>
-        </div>
-        <div class="column3">
-            <a href="/Control_room">
-            <img src="../static/assets/img/instrum/control-room.jpg" alt="Control_room" style="width:60%" class="rounded">
-            </a>
-        </div>
-    </div>
-
+{% endfor %}
 
 
 {% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<h1>INSTRUMENTS</h1>-->
+
+<!--&lt;!&ndash;    Names of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <na>PSAP</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>CPC</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>APS</na>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--&lt;!&ndash;Pictures of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <a href="/PSAP">-->
+<!--            <img src="../static/assets/img/instrum/PSAP.jpg" alt="PSAP" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/CPC">-->
+<!--            <img src="../static/assets/img/instrum/CPC.jpg" alt="CPC" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/APS">-->
+<!--            <img src="../static/assets/img/instrum/APS.jpg" alt="APS" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <br>&lt;!&ndash;LINE 2&ndash;&gt;<br>-->
+
+<!--&lt;!&ndash;    Names of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <na>Nephelometer</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>HT Sensor</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>Gilibrator</na>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--&lt;!&ndash;Pictures of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <a href="/Nephelometer">-->
+<!--            <img src="../static/assets/img/instrum/neph.jpg" alt="Nephelometer" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/HT_Sensor">-->
+<!--            <img src="../static/assets/img/instrum/HTsensor.jpg" alt="HT_Sensor" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/Gilibrator">-->
+<!--            <img src="../static/assets/img/instrum/gilibrator.jpg" alt="Gilibrator" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+<!--<br>&lt;!&ndash;LINE 3&ndash;&gt;<br>-->
+
+<!--&lt;!&ndash;    Names of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <na>Meteo Station</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>Air quality monitor</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>Control system to switch PM10-PM1</na>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--&lt;!&ndash;Pictures of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <a href="/Meteo_Station">-->
+<!--            <img src="../static/assets/img/instrum/meteo-station.jpg" alt="meteo_station" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/Air_quality_monitor">-->
+<!--                <img src="../static/assets/img/instrum/AirVisual-node.jpg" alt="Air_quality_monitor" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/PM10_PM1">-->
+<!--            <img src="../static/assets/img/instrum/cut-PM10-PM1.jpg" alt="Control_system_to_switch PM10_PM1" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <br>&lt;!&ndash;LINE 4&ndash;&gt;<br>-->
+
+<!--&lt;!&ndash;    Names of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <na>Inlet system (in)</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>Inlet system (out)</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>Automated radiation dosimeter</na>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--&lt;!&ndash;Pictures of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <a href="/Inlet_system">-->
+<!--            <img src="../static/assets/img/instrum/inlet-inside.jpg" alt="Inlet_system_(in)" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/Inlet_system">-->
+<!--            <img src="../static/assets/img/instrum/inlet-outside.jpg" alt="Inlet_system_(out)" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/uRADmonitor">-->
+<!--            <img src="../static/assets/img/instrum/uRADmonitor.jpg" alt="uRADmonitor" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!-- <br>&lt;!&ndash;LINE 5&ndash;&gt;<br>-->
+
+<!--&lt;!&ndash;    Names of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <na>Station view (front)</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>Station view (back)</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>Station view (in)</na>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--&lt;!&ndash;Pictures of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <a href="/Meteo_Station">-->
+<!--            <img src="../static/assets/img/instrum/station.jpg" alt="Station_view(front)" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/Meteo_Station">-->
+<!--            <img src="../static/assets/img/instrum/station2.jpg" alt="InlStation_view(back)" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/Meteo_Station">-->
+<!--            <img src="../static/assets/img/instrum/station-inside.jpg" alt="Station_view(in)" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!-- &lt;!&ndash;LINE 6&ndash;&gt;-->
+
+<!--&lt;!&ndash;    Names of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <na>Rack</na>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <na>Control room</na>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--&lt;!&ndash;Pictures of the instruments &ndash;&gt;-->
+<!--    <div class="row">-->
+<!--        <div class="column3">-->
+<!--            <a href="/Rack">-->
+<!--            <img src="../static/assets/img/instrum/rack.jpg" alt="Rack" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="column3">-->
+<!--            <a href="/Control_room">-->
+<!--            <img src="../static/assets/img/instrum/control-room.jpg" alt="Control_room" style="width:60%" class="rounded">-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+

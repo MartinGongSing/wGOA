@@ -7,26 +7,7 @@
 
 {% block content %}
 
-<h1>INSTRUMENTS</h1>
-   <div class="instru_page">
-       {% for instrum in instrums %}
-        <div class="column3">
-            <div class="instru_name">
-                <!--Names of the instruments -->
-                <na>{{instrum.name}}</na>
-
-            </div>
-            <div class = "instru_img">
-                <a href="/instrum_detail/{{instrum.id}}">
-                    <!--Pictures of the instruments -->
-                    <img src="{{instrum.img.url}}" alt="{{instrum.name}}" style="width:60%" class="rounded">
-                </a>
-            </div>
-        </div>
-    </div>
-
-
-{% endfor %}
+<h1>Intranet</h1>
 
 
 {% endblock content %}
