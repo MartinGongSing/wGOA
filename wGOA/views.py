@@ -7,7 +7,8 @@ from django.urls import reverse
 from django.shortcuts import render
 import requests
 import math
-from .models import cpc, instrument
+from .models import cpc, instrument, cpc2
+from django.db.models import Count, Q
 
 
 def index(request):
@@ -85,31 +86,6 @@ def index(request):
 
     return HttpResponse(html_template.render(context, request))
 
-# def data(request):
-#     # return HttpResponse("this is the data page")
-#     context = {'segment': 'data'}
-#     # resultdisplay = CPC.objects.all()
-#     html_template = loader.get_template('data.html')
-#     return HttpResponse(html_template.render(context, request, {'CPC': resultdisplay})) #, {'CPC': resultdisplay}
-
-def data2(request):
-    # resultdisplay = cpc.objects.all()
-
-    resultdisplay = cpc.objects.order_by('Time')[:10] #Just to get the X lasts elements of the list
-
-    return render(request, "data.html", {'cpc': resultdisplay})
-
-def instruments(request):
-    # return HttpResponse("this is the instrument page")
-    # context = {'segment': 'instruments'}
-    #
-    # html_template = loader.get_template('instruments.html')
-    # return HttpResponse(html_template.render(context, request))
-
-    instrums = instrument.objects.all()
-
-    return render(request, 'instruments.html', {'instrums': instrums} )
-
 def station(request):
     # return HttpResponse("this is the weather station page")
     context = {'segment': 'station'}
@@ -133,7 +109,10 @@ def contact(request):
 
 
 ############### INSTRUMENTS PAGES ###############
+def instruments(request):
+    instrums = instrument.objects.all()
 
+    return render(request, 'instruments.html', {'instrums': instrums} )
 
 def dyna_instrum(request, id):
     obj = instrument.objects.get(id=id)
@@ -141,6 +120,28 @@ def dyna_instrum(request, id):
         "instrum" : obj
     }
     return render(request, '../templates/instrum_detail.html', context)
+
+
+
+############### DATA PAGES ###############
+
+def data(request):
+    # resultdisplay = cpc.objects.all()
+
+    resultdisplay = cpc.objects.order_by('Time')[:10] #Just to get the X lasts elements of the list
+
+    return render(request, "data.html", {'cpc': resultdisplay})
+
+def data2(request):
+    # resultdisplay = cpc2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
+    #
+    # return render(request, "data2.html", {'cpc2': resultdisplay})
+
+    dataset = cpc2.objects \
+        .values('N') \
+        .order_by('ID')
+    return render(request, 'data2.html', {'dataset': dataset})
+
 
 ############### TEST ###############
 
@@ -176,3 +177,12 @@ def dyna_instrum(request, id):
 #     except:
 #         html_template = loader.get_template('page-500.html')
 #         return HttpResponse(html_template.render(context, request))
+
+
+# def data(request):
+#     # return HttpResponse("this is the data page")
+#     context = {'segment': 'data'}
+#     # resultdisplay = CPC.objects.all()
+#     html_template = loader.get_template('data.html')
+#     return HttpResponse(html_template.render(context, request, {'CPC': resultdisplay})) #, {'CPC': resultdisplay}
+

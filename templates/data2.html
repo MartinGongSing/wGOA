@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %} data {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<h1>GRAPH</h1>
+    <p>CPC_UBI </p>
+
+
+
+<div class="boxGray">
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+
+
+
+    <div id="container"></div>
+    <script>
+
+        Highcharts.chart('container', {
+          title: {
+            text: 'CPC_UBIIII'
+          },
+          xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+
+            }
+          },
+          series: [{
+            data: {% for entry in dataset %}'{{ entry.N }}'{% if not forloop.last %}, {% endif %}{% endfor %}
+          }]
+        });
+    // Highcharts.chart('container', {
+    //     chart: {
+    //         type: 'column'
+    //     },
+    //     title: {
+    //         text: 'CPC by Time'
+    //     },
+    //     xAxis: {
+    //         categories: [
+    //             {% for entry in dataset %}'{{ entry.N }}'{% if not forloop.last %}, {% endif %}{% endfor %}
+    //         ]
+    //     },
+    //     series: [{
+    //         name: 'Survived',
+    //         data: [
+    //             {% for entry in dataset %}{{ entry.ID }}{% if not forloop.last %}, {% endif %}{% endfor %}
+    //             ],
+    //           color: 'green'
+    //     }]
+    // });
+  </script>
+
+
+</div>
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+

@@ -13,6 +13,13 @@ class cpc(models.Model):
     class Meta:
         db_table = "cpc_ubi"
 
+class cpc2(models.Model):
+    ID = models.CharField(max_length=100)
+    N = models.CharField(max_length=15)
+    class Meta:
+        db_table = "cpc_ubi_1"
+
+
 class instrument(models.Model):
 
     name = models.CharField(max_length=100)
