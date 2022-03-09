@@ -10,51 +10,76 @@
 <h1>GRAPH</h1>
     <p>CPC_UBI </p>
 
-
+<!-- tooltip for precise info-->
 
 <div class="boxGray">
-    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
 
 
 
     <div id="container"></div>
     <script>
-
         Highcharts.chart('container', {
-          title: {
-            text: 'CPC_UBIIII'
-          },
-          xAxis: {
-            type: 'datetime',
-            dateTimeLabelFormats: {
 
+            title: {
+                text: 'CPC_UBI number of particule overtime'
+            },
+
+            subtitle: {
+                text: 'Source: Somewhere'
+            },
+
+            yAxis: {
+                title: {
+                    text: 'N/cm3'
+                }
+            },
+
+            xAxis: {
+                accessibility: {
+                    rangeDescription: 'Range: 2010 to 2017'
+                }
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+
+            plotOptions: {
+                series: {
+                    label: {
+                        connectorAllowed: false
+                    },
+                    pointStart: 2010
+                }
+            },
+
+            series: [{
+                name: 'Installation',
+                data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+            }],
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
             }
-          },
-          series: [{
-            data: {% for entry in dataset %}'{{ entry.N }}'{% if not forloop.last %}, {% endif %}{% endfor %}
-          }]
+
         });
-    // Highcharts.chart('container', {
-    //     chart: {
-    //         type: 'column'
-    //     },
-    //     title: {
-    //         text: 'CPC by Time'
-    //     },
-    //     xAxis: {
-    //         categories: [
-    //             {% for entry in dataset %}'{{ entry.N }}'{% if not forloop.last %}, {% endif %}{% endfor %}
-    //         ]
-    //     },
-    //     series: [{
-    //         name: 'Survived',
-    //         data: [
-    //             {% for entry in dataset %}{{ entry.ID }}{% if not forloop.last %}, {% endif %}{% endfor %}
-    //             ],
-    //           color: 'green'
-    //     }]
-    // });
   </script>
+
+
 
 
 </div>

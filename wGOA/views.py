@@ -136,10 +136,10 @@ def data2(request):
     # resultdisplay = cpc2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
     #
     # return render(request, "data2.html", {'cpc2': resultdisplay})
-
-    dataset = cpc2.objects \
-        .values('N') \
-        .order_by('ID')
+    dataset = cpc.objects.order_by('Time')[:10]
+    # dataset = cpc2.objects \
+    #     .values('N') \
+    #     .order_by('ID')
     return render(request, 'data2.html', {'dataset': dataset})
 
 
