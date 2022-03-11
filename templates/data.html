@@ -8,55 +8,40 @@
 {% block content %}
 
 <h1>DATA</h1>
-    <p>CPC_UBI </p>
+
+
+
 
     <table border="1">
         <tr>
             <th>time</th>
             <th>N</th>
         </tr>
-        {% for getdata in cpc %}
+        {% for getdata in cpc2 %}
         <tr>
-            <td>{{getdata.Time}}</td>
+            <td>{{getdata.ID}}</td>
             <td>{{getdata.N}}</td>
         </tr>
         {% endfor %}
     </table>
 
-<div class="boxGray">
-    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
-
-
-    <div id="container"></div>
-    <script>
-    Highcharts.chart('container', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Historic World Population by Region'
-        },
-        xAxis: {
-            categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania']
-        },
-        series: [{
-            name: 'Year 1800',
-            data: [107, 31, 635, 203, 2]
-        }, {
-            name: 'Year 1900',
-            data: [133, 156, 947, 408, 6]
-        }, {
-            name: 'Year 2012',
-            data: [1052, 954, 4250, 740, 38]
-        }]
-    });
-  </script>
-
-
-</div>
-
-
+    <table border="1">
+        <tr>
+            <th>time</th>
+            <th>sRed</th>
+            <th>sGreen</th>
+            <th>sBlue</th>
+        </tr>
+        {% for getdata in neph2 %}
+        <tr>
+            <td>{{getdata.ID}}</td>
+            <td>{{getdata.sred}}</td>
+            <td>{{getdata.sgreen}}</td>
+            <td>{{getdata.sblue}}</td>
+        </tr>
+        {% endfor %}
 
 {% endblock content %}
 

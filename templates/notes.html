@@ -1,0 +1,54 @@
+
+{% block overwrite %}
+<!-- Overwrite the base.html jQuery load and put in head for Highcharts to work -->
+{% endblock %}
+
+{% block extrajs %}
+<!-- Maps the Python template context variables from views.py to the Highchart js variables -->
+<script>
+    var chart_id = {{ chartID|safe }}
+    var chart = {{ chart|safe }}
+    var title = {{ title|safe }}
+    var xAxis = {{ xAxis|safe }}
+    var yAxis = {{ yAxis|safe }}
+    var series = {{ series|safe }}
+</script>
+
+<!-- Highchart js. Variable map shown above -->
+<script>
+$(document).ready(function() {
+    $(chart_id).highcharts({
+        chart: chart,
+        title: title,
+        xAxis: xAxis,
+        yAxis: yAxis,
+        series: series
+    });
+});
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+<!--show data in table -->
+
+
+
+    <p>CPC_UBI </p>
+
+    <table border="1">
+        <tr>
+            <th>time</th>
+            <th>N</th>
+        </tr>
+        {% for getdata in cpc %}
+        <tr>
+            <td>{{getdata.Time}}</td>
+            <td>{{getdata.N}}</td>
+        </tr>
+        {% endfor %}
+    </table>

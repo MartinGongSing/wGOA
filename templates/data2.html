@@ -9,84 +9,103 @@
 
 <h1>GRAPH</h1>
     <p>CPC_UBI </p>
+<div class="boxGray">
+    <div class="column">
+        {{ chartID|safe }} <br>
+        {{ chart|safe }} <br>
+        {{ title|safe }} <br>
+        {{ xAxis|safe }} <br>
+        {{ yAxis|safe }} <br>
+        {{ series|safe }} <br>
+    </div>
+    <div class="column">
+        {{ chartIDNeph|safe }}<br>
+        {{ chartNeph|safe }}<br>
+        {{ titleNeph|safe }}<br>
+        {{ xAxisNeph|safe }}<br>
+        {{ yAxisNeph|safe }}<br>
+        {{ seriesNeph|safe }}<br>
+    </div>
+    end of var
+</div>
+
+graphs :
 
 <!-- tooltip for precise info-->
-
-<div class="boxGray">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.src.js"></script>
 
+<div class="boxGray">
 
+    <div id={{ chartID|safe }} class="chart" style="height:500px; width:100%"></div>
 
-    <div id="container"></div>
     <script>
-        Highcharts.chart('container', {
+        var chart_id =  {{ chartID|safe }}
+        var chart =     {{ chart|safe }}
+        var title =     {{ title|safe }}
+        var xAxis =     {{ xAxis|safe }}
+        var yAxis =     {{ yAxis|safe }}
+        var series =    {{ series|safe }}
 
-            title: {
-                text: 'CPC_UBI number of particule overtime'
-            },
+    </script>
 
-            subtitle: {
-                text: 'Source: Somewhere'
-            },
-
-            yAxis: {
-                title: {
-                    text: 'N/cm3'
-                }
-            },
-
-            xAxis: {
-                accessibility: {
-                    rangeDescription: 'Range: 2010 to 2017'
-                }
-            },
-
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
-
-            plotOptions: {
-                series: {
-                    label: {
-                        connectorAllowed: false
-                    },
-                    pointStart: 2010
-                }
-            },
-
-            series: [{
-                name: 'Installation',
-                data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-            }],
-
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
-            }
-
+<!-- Highchart js. Variable map shown above -->
+    <script>
+        $(document).ready(function() {
+            $(chart_id).highcharts({
+                chart: chart,
+                title: title,
+                xAxis: xAxis,
+                yAxis: yAxis,
+                series: series
+            });
         });
-  </script>
+    </script>
+</div>
+
+NEPH UBI
 
 
+<div class="boxGray">
 
+    <div id={{ chartIDNeph|safe }} class="chart" style="height:500px; width:100%"></div>
+
+    <script>
+        var chartIDNeph = {{ chartIDNeph|safe }}
+        var chartNeph =   {{ chartNeph|safe }}
+        var titleNeph =   {{ titleNeph|safe }}
+        var xAxisNeph =   {{ xAxisNeph|safe }}
+        var yAxisNeph =   {{ yAxisNeph|safe }}
+        var seriesNeph =  {{ seriesNeph|safe }}
+
+        console.log(seriesNeph)
+    </script>
+
+    <!-- Highchart js. Variable map shown above -->
+    <script>
+
+        $(document).ready(function() {
+            $(chartIDNeph).highcharts({
+                chart: chartNeph,
+                title: titleNeph,
+                xAxis: xAxisNeph,
+                yAxis: yAxisNeph,
+                series: seriesNeph
+            });
+        });
+
+
+    </script>
 
 </div>
 
 
-
 {% endblock content %}
+
+
+
+
+
 
 
 

@@ -14,10 +14,22 @@ class cpc(models.Model):
         db_table = "cpc_ubi"
 
 class cpc2(models.Model):
-    ID = models.CharField(max_length=100)
-    N = models.CharField(max_length=15)
+    ID = models.CharField(max_length = 100)
+    N = models.CharField(max_length = 15)
     class Meta:
         db_table = "cpc_ubi_1"
+
+class neph2(models.Model):
+    ID = models.CharField(max_length= 15 )
+    sblue = models.CharField(max_length = 15)
+    sred = models.CharField(max_length = 15)
+    sgreen = models.CharField(max_length = 15)
+    bsblue = models.CharField(max_length = 15)
+    bsred = models.CharField(max_length = 15)
+    bsgreen = models.CharField(max_length = 15)
+    class Meta:
+        db_table = "neph_ubi_1"
+
 
 
 class instrument(models.Model):

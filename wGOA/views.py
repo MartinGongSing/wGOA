@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.shortcuts import render
 import requests
 import math
-from .models import cpc, instrument, cpc2
+from .models import cpc, instrument, cpc2, neph2
 from django.db.models import Count, Q
 
 
@@ -125,12 +125,12 @@ def dyna_instrum(request, id):
 
 ############### DATA PAGES ###############
 
-def data(request):
+def data1(request):
     # resultdisplay = cpc.objects.all()
 
-    resultdisplay = cpc.objects.order_by('Time')[:10] #Just to get the X lasts elements of the list
-
-    return render(request, "data.html", {'cpc': resultdisplay})
+    resultdisplay = neph2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
+    cpcdisplay = cpc2.objects.order_by('ID')[:10]
+    return render(request, "data.html", {'neph2': resultdisplay, 'cpc2': cpcdisplay})
 
 def data2(request):
     # resultdisplay = cpc2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
@@ -141,6 +141,90 @@ def data2(request):
     #     .values('N') \
     #     .order_by('ID')
     return render(request, 'data2.html', {'dataset': dataset})
+
+########### Graphs     https://stackoverflow.com/questions/27810087/passing-django-database-queryset-to-highcharts-via-json
+class ChartData(object):
+    def check_valve_data():
+
+
+        data = {'ID': [], 'N': [],
+                'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [],
+
+                }
+
+        ###################
+        ##### CPC_UBI #####
+        ###################
+
+        # valves = cpc2.objects.all()
+        valves = cpc2.objects.order_by('ID')[:40]
+
+        for unit in valves:
+            data['ID'].append(unit.ID)
+            data['N'].append(unit.N)
+
+        ####################
+        ##### Neph_UBI #####
+        ####################
+
+        nephes = neph2.objects.order_by('ID')[:40]
+
+        for unity in nephes:
+            data['IDneph'].append(unity.ID)
+            data['sblue'].append(unity.sblue)
+            data['sred'].append(unity.sred)
+            data['sgreen'].append(unity.sgreen)
+            # data['bsblue'].append(unity.bsblue)
+            # data['bsred'].append(unity.bsred)
+            # data['bsgreen'].append(unity.bsgreen)
+
+
+        return data
+
+def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500, chartIDNeph = "chartIDNeph", chart_type_neph = 'line' ):
+
+    data = ChartData.check_valve_data()
+
+    ###################
+    ##### CPC_UBI #####
+    ###################
+
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+    title = {"text": 'CPC UBI'}
+    xAxis = {"title": {"text": 'Time'}, "categories": data['ID']}
+    yAxis = {"title": {"text": 'Data'}}
+    series = [
+        {"name": 'N/#/cm3', "data": data['N']},
+        ]
+
+    ####################
+    ##### Neph_UBI #####
+    ####################
+
+    chartNeph = {"renderTo": chartIDNeph, "type": chart_type_neph, "height": chart_height, }
+    titleNeph = {"text": 'Neph UBI'}
+    xAxisNeph = {"title": {"text": 'Time'}, "categories": data['IDneph']}
+    yAxisNeph = {"title": {"text": 'Data'}}
+    seriesNeph = [
+        {"name": 'Blue', "data": data['sblue']},
+    ]
+
+
+    return render(request, 'data2.html', {
+                                        'chartID': chartID,
+                                        'chart': chart,
+                                        'series': series,
+                                        'title': title,
+                                        'xAxis': xAxis,
+                                        'yAxis': yAxis,
+
+                                        'chartIDNeph': chartIDNeph,
+                                        'chartNeph' : chartNeph ,
+                                        'titleNeph' : titleNeph ,
+                                        'xAxisNeph' : xAxisNeph ,
+                                        'yAxisNeph' : yAxisNeph ,
+                                        'seriesNeph' : seriesNeph,
+                                          })
 
 
 ############### TEST ###############
