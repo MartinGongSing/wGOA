@@ -206,12 +206,12 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     xAxisNeph = {"title": {"text": 'Time'}, "categories": data['IDneph']}
     yAxisNeph = [{"title": {"text": 'Data'}}] #TODO : Opposite axis
     seriesNeph = [
-        {"name": 'Blue', "data": data['sblue']},
-        {"name": 'Red', "data": data['sred']},
-        {"name": 'Green', "data": data['sgreen']},
-        {"name": 'bigBlue', "data": data['bsblue']},
-        {"name": 'bigRed', "data": data['bsred']},
-        {"name": 'bigGreen', "data": data['bsgreen']},
+        {"name": 'Blue', "data": data['sblue'], "color":"#333fff"},
+        {"name": 'Red', "data": data['sred'],"color":"#ff3333"},
+        {"name": 'Green', "data": data['sgreen'],"color":"#33ff49"},
+        {"name": 'bigBlue', "data": data['bsblue'],"color":"#33fff6"},
+        {"name": 'bigRed', "data": data['bsred'],"color":"#ff33ca"},
+        {"name": 'bigGreen', "data": data['bsgreen'],"color":"#a2ff33"},
     ]
 
 
