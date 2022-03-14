@@ -27,6 +27,7 @@ urlpatterns = [
     path('index/', views.index, name='homepage'),
     path('data/', views.data1, name='data'),
     path('data2/', views.plot, name='data2'),
+    path('data3/', views.plot2, name='data3'),
     path('instruments/', views.instruments, name='instruments'),
     path('instrum_detail/<int:id>/', views.dyna_instrum, name='instrum_detail'),
     path('station/', views.station, name='station'),

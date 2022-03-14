@@ -53,21 +53,20 @@ NEPH UBI
     <div id={{ chartIDNeph|safe }} class="chart" style="height:500px; width:100%"></div>
 
     <script>
-        var chartIDNeph = {{ chartIDNeph|safe }}
+        var chart_id_neph = {{ chartIDNeph|safe }}
         var chartNeph =   {{ chartNeph|safe }}
         var titleNeph =   {{ titleNeph|safe }}
         var xAxisNeph =   {{ xAxisNeph|safe }}
         var yAxisNeph =   {{ yAxisNeph|safe }}
         var seriesNeph =  {{ seriesNeph|safe }}
 
-        console.log(seriesNeph)
     </script>
 
     <!-- Highchart js. Variable map shown above -->
     <script>
 
         $(document).ready(function() {
-            $(chartIDNeph).highcharts({
+            $(chart_id_neph).highcharts({
                 chart: chartNeph,
                 title: titleNeph,
                 xAxis: xAxisNeph,

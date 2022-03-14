@@ -174,9 +174,9 @@ class ChartData(object):
             data['sblue'].append(unity.sblue)
             data['sred'].append(unity.sred)
             data['sgreen'].append(unity.sgreen)
-            # data['bsblue'].append(unity.bsblue)
-            # data['bsred'].append(unity.bsred)
-            # data['bsgreen'].append(unity.bsgreen)
+            data['bsblue'].append(unity.bsblue)
+            data['bsred'].append(unity.bsred)
+            data['bsgreen'].append(unity.bsgreen)
 
 
         return data
@@ -204,9 +204,14 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     chartNeph = {"renderTo": chartIDNeph, "type": chart_type_neph, "height": chart_height, }
     titleNeph = {"text": 'Neph UBI'}
     xAxisNeph = {"title": {"text": 'Time'}, "categories": data['IDneph']}
-    yAxisNeph = {"title": {"text": 'Data'}}
+    yAxisNeph = [{"title": {"text": 'Data'}}] #TODO : Opposite axis
     seriesNeph = [
         {"name": 'Blue', "data": data['sblue']},
+        {"name": 'Red', "data": data['sred']},
+        {"name": 'Green', "data": data['sgreen']},
+        {"name": 'bigBlue', "data": data['bsblue']},
+        {"name": 'bigRed', "data": data['bsred']},
+        {"name": 'bigGreen', "data": data['bsgreen']},
     ]
 
 
@@ -225,6 +230,41 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'yAxisNeph' : yAxisNeph ,
                                         'seriesNeph' : seriesNeph,
                                           })
+
+
+def plot2(request, chartID = 'chartID', chart_type = 'line', chart_height = 500 ):
+
+    data = ChartData.check_valve_data()
+
+
+    ####################
+    ##### Neph_UBI #####
+    ####################
+
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height, }
+    title = {"text": 'Neph UBI'}
+    xAxis = {"title": {"text": 'Time'}, "categories": data['IDneph']}
+    yAxis = {"title": {"text": 'Data'}}
+    series = [
+        {"name": 'Blue', "data": data['sblue']},
+        {"name": 'Red', "data": data['sred']},
+        {"name": 'Green', "data": data['sgreen']},
+        {"name": 'bigBlue', "data": data['bsblue']},
+        {"name": 'bigRed', "data": data['bsred']},
+        {"name": 'bigGreen', "data": data['bsgreen']},
+    ]
+
+
+    return render(request, 'data3.html', {
+                                        'chartID': chartID,
+                                        'chart' : chart ,
+                                        'title' : title ,
+                                        'xAxis' : xAxis ,
+                                        'yAxis' : yAxis ,
+                                        'series' : series,
+                                          })
+
+
 
 
 ############### TEST ###############
