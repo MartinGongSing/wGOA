@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.shortcuts import render
 import requests
 import math
-from .models import cpc, instrument, cpc2, neph2
+from .models import cpc, instrument, cpc2, neph2, aps, psap
 from django.db.models import Count, Q
 
 
@@ -130,7 +130,9 @@ def data1(request):
 
     resultdisplay = neph2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
     cpcdisplay = cpc2.objects.order_by('ID')[:10]
-    return render(request, "data.html", {'neph2': resultdisplay, 'cpc2': cpcdisplay})
+    psapdisplay = psap.objects.order_by('ID')[:10]
+    apsdisplay = aps.objects.order_by('ID')[:10]
+    return render(request, "data.html", {'neph2': resultdisplay, 'cpc2': cpcdisplay, 'aps' : apsdisplay, 'psap' : psapdisplay})
 
 def data2(request):
     # resultdisplay = cpc2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
@@ -149,7 +151,8 @@ class ChartData(object):
 
         data = {'ID': [], 'N': [],
                 'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [],
-
+                'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [],
+                'IDpsap': [], 'pblue': [], 'pred': [], 'pgreen': [],
                 }
 
         ###################
@@ -178,10 +181,47 @@ class ChartData(object):
             data['bsred'].append(unity.bsred)
             data['bsgreen'].append(unity.bsgreen)
 
+        ####################
+        ##### PSAP_UBI #####
+        ####################
+
+        psapes = psap.objects.order_by('ID')[:40]
+
+        for unites in psapes:
+            data['IDpsap'].append(unites.ID)
+            data['pblue'].append(unites.blue)
+            data['pred'].append(unites.red)
+            data['pgreen'].append(unites.green)
+
+
+        ###################
+        ##### APS_UBI #####
+        ###################
+
+
+        apses = aps.objects.order_by('ID')[:40]
+
+        for unita in apses:
+            data['IDaps'].append(unita.ID)
+            data['d1'].append(unita.d1)
+            data['d2'].append(unita.d2)
+            data['d3'].append(unita.d3)
+            data['d4'].append(unita.d4)
+            data['d5'].append(unita.d5)
+            data['d6'].append(unita.d6)
+            data['d7'].append(unita.d7)
+            data['d8'].append(unita.d8)
+            data['d9'].append(unita.d9)
+            data['d10'].append(unita.d10)
+
 
         return data
 
-def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500, chartIDNeph = "chartIDNeph", chart_type_neph = 'line' ):
+def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
+         chartIDNeph = "chartIDNeph", chart_type_neph = 'line',
+         chartIDAps = "chartIDAps", chart_type_aps = 'heatmap',
+         chartIDPsap = "chartIDPsap", chart_type_psap = 'line',
+         ):
 
     data = ChartData.check_valve_data()
 
@@ -192,9 +232,9 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
     title = {"text": 'CPC UBI'}
     xAxis = {"title": {"text": 'Time'}, "categories": data['ID']}
-    yAxis = {"title": {"text": 'Data'}}
+    yAxis = {"title": {"text": 'N/#/cm3'}}
     series = [
-        {"name": 'N/#/cm3', "data": data['N']},
+        {"name": 'N/#/cm3', "data": data['N'], "color":"#333fff"},
         ]
 
     ####################
@@ -204,7 +244,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     chartNeph = {"renderTo": chartIDNeph, "type": chart_type_neph, "height": chart_height, }
     titleNeph = {"text": 'Neph UBI'}
     xAxisNeph = {"title": {"text": 'Time'}, "categories": data['IDneph']}
-    yAxisNeph = [{"title": {"text": 'Data'}}] #TODO : Opposite axis
+    yAxisNeph = [{"title": {"text": 'bs/Mm-1'}}] #TODO : Opposite axis
     seriesNeph = [
         {"name": 'Blue', "data": data['sblue'], "color":"#333fff"},
         {"name": 'Red', "data": data['sred'],"color":"#ff3333"},
@@ -213,6 +253,43 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         {"name": 'bigRed', "data": data['bsred'],"color":"#ff33ca"},
         {"name": 'bigGreen', "data": data['bsgreen'],"color":"#a2ff33"},
     ]
+
+    ####################
+    ##### PSAP_UBI #####
+    ####################
+
+    chartPsap = {"renderTo": chartIDPsap, "type": chart_type_psap, "height": chart_height, }
+    titlePsap = {"text": 'PSAP UBI'}
+    xAxisPsap = {"title": {"text": 'Time'}, "categories": data['IDpsap']}
+    yAxisPsap = [{"title": {"text": 'σa/Mm-1'}}]
+    seriesPsap = [
+        {"name": 'Blue', "data": data['pblue'], "color": "#333fff"},
+        {"name": 'Red', "data": data['pred'], "color": "#ff3333"},
+        {"name": 'Green', "data": data['pgreen'], "color": "#33ff49"},
+
+    ]
+
+
+
+    ###################
+    ##### APS_UBI #####
+    ###################
+    chartAps = {"renderTo": chartIDAps, "type": chart_type_aps, "height": chart_height, }
+    titleAps = {"text": 'APS UBI'}
+    xAxisAps= {"categories": data['IDaps']}
+    yAxisAps= {
+    "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10']
+    }
+
+    seriesAps = {"name": 'test', "data": [[0, 0, 10], [0, 1, 19], [0, 2, 8], [0, 3, 24], [0, 4, 67], [1, 0, 92], [1, 1, 58], [1, 2, 78], [1, 3, 117], [1, 4, 48], [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52], [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16], [4, 0, 38], [4, 1, 5], [4, 2, 8], [4, 3, 117], [4, 4, 115], [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120], [6, 0, 13], [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96], [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32], [7, 4, 30], [8, 0, 85], [8, 1, 97], [8, 2, 123], [8, 3, 64], [8, 4, 84], [9, 0, 47], [9, 1, 114], [9, 2, 31], [9, 3, 48], [9, 4, 91]],
+                 "dataLabels": {
+
+                     "color": '#000000'
+                 }
+                 }
+
+
+
 
 
     return render(request, 'data2.html', {
@@ -229,41 +306,21 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'xAxisNeph' : xAxisNeph ,
                                         'yAxisNeph' : yAxisNeph ,
                                         'seriesNeph' : seriesNeph,
+
+                                        'chartIDAps': chartIDAps,
+                                        'chartAps': chartAps,
+                                        'titleAps': titleAps,
+                                        'xAxisAps': xAxisAps,
+                                        'yAxisAps': yAxisAps,
+                                        'seriesAps': seriesAps,
+
+                                        "chartIDPsap" : chartIDPsap,
+                                        "chartPsap": chartPsap,
+                                        "titlePsap" : titlePsap,
+                                        "xAxisPsap" : xAxisPsap,
+                                        "yAxisPsap" : yAxisPsap,
+                                        "seriesPsap" : seriesPsap,
                                           })
-
-
-def plot2(request, chartID = 'chartID', chart_type = 'line', chart_height = 500 ):
-
-    data = ChartData.check_valve_data()
-
-
-    ####################
-    ##### Neph_UBI #####
-    ####################
-
-    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height, }
-    title = {"text": 'Neph UBI'}
-    xAxis = {"title": {"text": 'Time'}, "categories": data['IDneph']}
-    yAxis = {"title": {"text": 'Data'}}
-    series = [
-        {"name": 'Blue', "data": data['sblue']},
-        {"name": 'Red', "data": data['sred']},
-        {"name": 'Green', "data": data['sgreen']},
-        {"name": 'bigBlue', "data": data['bsblue']},
-        {"name": 'bigRed', "data": data['bsred']},
-        {"name": 'bigGreen', "data": data['bsgreen']},
-    ]
-
-
-    return render(request, 'data3.html', {
-                                        'chartID': chartID,
-                                        'chart' : chart ,
-                                        'title' : title ,
-                                        'xAxis' : xAxis ,
-                                        'yAxis' : yAxis ,
-                                        'series' : series,
-                                          })
-
 
 
 

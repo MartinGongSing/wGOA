@@ -43,6 +43,58 @@ Neph_UBI :
         </tr>
         {% endfor %}
 
+PSAP_UBI :
+
+
+    <table border="1">
+        <tr>
+            <th>time</th>
+            <th>Red</th>
+            <th>Green</th>
+            <th>Blue</th>
+        </tr>
+        {% for getdata in psap %}
+        <tr>
+            <td>{{getdata.ID}}</td>
+            <td>{{getdata.red}}</td>
+            <td>{{getdata.green}}</td>
+            <td>{{getdata.blue}}</td>
+        </tr>
+        {% endfor %}
+
+
+
+APS_UBI :
+
+    <table border="1">
+        <tr>
+            <th>time</th>
+            <th>d1</th>
+            <th>d2</th>
+            <th>d3</th>
+            <th>d4</th>
+            <th>d5</th>
+            <th>d6</th>
+            <th>d7</th>
+            <th>d8</th>
+            <th>d9</th>
+        </tr>
+        {% for getdata in aps %}
+        <tr>
+            <td>{{getdata.ID}}</td>
+            <td>{{getdata.d1}}</td>
+            <td>{{getdata.d2}}</td>
+            <td>{{getdata.d3}}</td>
+            <td>{{getdata.d4}}</td>
+            <td>{{getdata.d5}}</td>
+            <td>{{getdata.d6}}</td>
+            <td>{{getdata.d7}}</td>
+            <td>{{getdata.d8}}</td>
+            <td>{{getdata.d9}}</td>
+        </tr>
+        {% endfor %}
+
+
 {% endblock content %}
 
 

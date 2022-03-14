@@ -8,15 +8,12 @@
 {% block content %}
 
 <h1>GRAPH</h1>
-    <p>CPC_UBI </p>
-
-
-graphs :
 
 <!-- tooltip for precise info-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.src.js"></script>
 
+<h2>CPC_UBI </h2>
 <div class="boxGray">
 
     <div id={{ chartID|safe }} class="chart" style="height:500px; width:100%"></div>
@@ -45,7 +42,7 @@ graphs :
     </script>
 </div>
 
-NEPH UBI
+<h2>NEPH UBI</h2>
 
 
 <div class="boxGray">
@@ -79,6 +76,80 @@ NEPH UBI
     </script>
 
 </div>
+
+
+
+<h2>PSAP</h2>
+
+<div class="boxGray">
+
+    <div id={{ chartIDPsap|safe }} class="chart" style="height:500px; width:100%"></div>
+
+    <script>
+        var chart_id_psap = {{ chartIDPsap|safe }}
+        var chartPsap =   {{ chartPsap|safe }}
+        var titlePsap =   {{ titlePsap|safe }}
+        var xAxisPsap =   {{ xAxisPsap|safe }}
+        var yAxisPsap =   {{ yAxisPsap|safe }}
+        var seriesPsap =  {{ seriesPsap|safe }}
+
+    </script>
+
+    <!-- Highchart js. Variable map shown above -->
+    <script>
+
+        $(document).ready(function() {
+            $(chart_id_psap).highcharts({
+                chart: chartPsap,
+                title: titlePsap,
+                xAxis: xAxisPsap,
+                yAxis: yAxisPsap,
+                series: seriesPsap
+            });
+        });
+
+
+    </script>
+
+</div>
+
+
+<h2>APS UBI</h2>
+
+<div class="boxGray">
+
+    <div id={{ chartIDAps|safe }} class="chart" style="height:500px; width:100%"></div>
+
+    <script>
+        var chart_id_aps = {{ chartIDAps|safe }}
+        var chartAps =   {{ chartAps|safe }}
+        var titleAps =   {{ titleAps|safe }}
+        var xAxisAps =   {{ xAxisAps|safe }}
+        var yAxisAps =   {{ yAxisAps|safe }}
+        var seriesAps =  {{ seriesAps|safe }}
+
+    </script>
+
+    <!-- Highchart js. Variable map shown above -->
+    <script>
+
+        $(document).ready(function() {
+            $(chart_id_aps).highcharts({
+                chart: chartAps,
+                title: titleAps,
+                xAxis: xAxisAps,
+                yAxis: yAxisAps,
+                series: seriesAps
+            });
+        });
+
+
+    </script>
+
+</div>
+
+
+
 
 
 {% endblock content %}
