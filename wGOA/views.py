@@ -274,7 +274,11 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     ###################
     ##### APS_UBI #####
     ###################
-    chartAps = {"renderTo": chartIDAps, "type": chart_type_aps, "height": chart_height, }
+    chartAps = {"type": chart_type_aps,
+        "marginTop": 40,
+        "marginBottom": 80,
+        "plotBorderWidth": 1,
+        "renderTo": chartIDAps,  "height": chart_height, }
     titleAps = {"text": 'APS UBI'}
     xAxisAps= {"categories": data['IDaps']}
     yAxisAps= {
@@ -287,6 +291,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                      "color": '#000000'
                  }
                  }
+
 
 
 
