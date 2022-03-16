@@ -14,6 +14,8 @@
 <script src="https://code.highcharts.com/highcharts.src.js"></script>
 
 <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+
+<!--Allows to export data : -->
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -119,8 +121,8 @@
 </div>
 
 
-<h2>APS UBI</h2>
-
+<h2>APS UBI 1 </h2>
+<!--TRY 1 -->
 <div class="boxGray">
 
     <div id={{ chartIDAps|safe }} class="chart" style="height:500px; width:100%"></div>
@@ -128,10 +130,70 @@
     <script>
         var chart_id_aps = {{ chartIDAps|safe }}
         var chartAps =   {{ chartAps|safe }}
+        var chartAps2 =   {{ chartAps2|safe }}
         var titleAps =   {{ titleAps|safe }}
         var xAxisAps =   {{ xAxisAps|safe }}
         var yAxisAps =   {{ yAxisAps|safe }}
         var seriesAps =  {{ seriesAps|safe }}
+        var vd1 =  {{ vd1|safe }}
+        var vd2 =  {{ vd2|safe }}
+        var vd3 =  {{ vd3|safe }}
+        var vd4 =  {{ vd4|safe }}
+        var vd5 =  {{ vd5|safe }}
+        var vd6 =  {{ vd6|safe }}
+        var vd7 =  {{ vd7|safe }}
+        var vd8 =  {{ vd8|safe }}
+        var vd9 =  {{ vd9|safe }}
+
+        var vd11 =  {{ vd11|safe }}
+        var vd12 =  {{ vd12|safe }}
+        var vd13 =  {{ vd13|safe }}
+        var vd14 =  {{ vd14|safe }}
+        var vd15 =  {{ vd15|safe }}
+        var vd16 =  {{ vd16|safe }}
+        var vd17 =  {{ vd17|safe }}
+        var vd18 =  {{ vd18|safe }}
+        var vd19 =  {{ vd19|safe }}
+
+        var vd21 =  {{ vd21|safe }}
+        var vd22 =  {{ vd22|safe }}
+        var vd23 =  {{ vd23|safe }}
+        var vd24 =  {{ vd24|safe }}
+        var vd25 =  {{ vd25|safe }}
+        var vd26 =  {{ vd26|safe }}
+        var vd27 =  {{ vd27|safe }}
+        var vd28 =  {{ vd28|safe }}
+        var vd29 =  {{ vd29|safe }}
+
+        var vd31 =  {{ vd31|safe }}
+        var vd32 =  {{ vd32|safe }}
+        var vd33 =  {{ vd33|safe }}
+        var vd34 =  {{ vd34|safe }}
+        var vd35 =  {{ vd35|safe }}
+        var vd36 =  {{ vd36|safe }}
+        var vd37 =  {{ vd37|safe }}
+        var vd38 =  {{ vd38|safe }}
+        var vd39 =  {{ vd39|safe }}
+
+        var vd41 =  {{ vd41|safe }}
+        var vd42 =  {{ vd42|safe }}
+        var vd43 =  {{ vd43|safe }}
+        var vd44 =  {{ vd44|safe }}
+        var vd45 =  {{ vd45|safe }}
+        var vd46 =  {{ vd46|safe }}
+        var vd47 =  {{ vd47|safe }}
+        var vd48 =  {{ vd48|safe }}
+        var vd49 =  {{ vd49|safe }}
+
+        var vd51 =  {{ vd51|safe }}
+        var vd52 =  {{ vd52|safe }}
+        var vd53 =  {{ vd53|safe }}
+        var vd54 =  {{ vd54|safe }}
+        var vd55 =  {{ vd55|safe }}
+        var vd56 =  {{ vd56|safe }}
+        var vd57 =  {{ vd57|safe }}
+        var vd58 =  {{ vd58|safe }}
+        var vd59 =  {{ vd59|safe }}
 
     </script>
 
@@ -153,96 +215,127 @@
 
 </div>
 
-<figure class="highcharts-figure">
-    <div id="container"></div>
+<h2>APS UBI 2</h2>
 
+<!--TRY 2 -->
+
+<div class="boxGray">
+<figure class="highcharts-figure">
+    <div id="apsid"></div>
 </figure>
-{{ chartAps|safe }}
-<br>azertyuiop <br>
-{{ seriesAps|safe }}
 
 <script>
+
 
     function getPointCategoryName(point, dimension) {
     var series = point.series,
         isY = dimension === 'y',
         axis = series[isY ? 'yAxis' : 'xAxis'];
     return axis.categories[point[isY ? 'y' : 'x']];
-}
+    }
 
-Highcharts.chart('container', {
+    Highcharts.chart('apsid', {
 
-    chart: chartAps,
-    title: titleAps,
-    xAxis: xAxisAps,
-    yAxis: yAxisAps,
-    accessibility: {
-        point: {
-            descriptionFormatter: function (point) {
-                var ix = point.index + 1,
-                    xName = getPointCategoryName(point, 'x'),
-                    yName = getPointCategoryName(point, 'y'),
-                    val = point.value;
-                return ix + '. ' + xName + ' sales ' + yName + ', ' + val + '.';
+        chart: chartAps2,
+        title: titleAps,
+        xAxis: xAxisAps,
+        yAxis: yAxisAps,
+        series: [{
+            name: 'aps ubi',
+            borderWidth: 1,
+            data: [
+                [0, 0, vd1], [0, 1, vd2], [0, 2, vd3], [0, 3, vd4], [0, 4, vd5], [0, 5, vd6], [0, 6, vd7], [0, 7, vd8], [0, 8, vd9],
+                [1, 0, vd11], [1, 1, vd12], [1, 2, vd13], [1, 3, vd14], [1, 4, vd15], [1, 5, vd16], [1, 6, vd17], [1, 7, vd18],[1, 8, vd19],
+                [2, 0, vd21], [2, 1, vd22], [2, 2, vd23], [2, 3, vd24], [2, 4, vd25], [2, 5, vd26], [2, 6, vd27], [2, 7, vd28],[2, 8, vd29],
+                [3, 0, vd31], [3, 1, vd32], [3, 2, vd33], [3, 3, vd34], [3, 4, vd35], [3, 5, vd36], [3, 6, vd37], [3, 7, vd38],[3, 8, vd39],
+                [4, 0, vd41], [4, 1, vd42], [4, 2, vd43], [4, 3, vd44], [4, 4, vd45], [4, 5, vd46], [4, 6, vd47], [4, 7, vd48],[4, 8, vd49],
+                [5, 0, vd51], [5, 1, vd52], [5, 2, vd53], [5, 3, vd54], [5, 4, vd55], [5, 5, vd56], [5, 6, vd57], [5, 7, vd58],[5, 8, vd59],
+
+           //      {
+           //     x: 0,
+           //     y: 0,
+           //     value: vd1,
+           //     name: "Point1",
+           // }, {
+           //     x: 1,
+           //     y: 1,
+           //     value: vd2,
+           //     name: "Point2",
+           // }, {
+           //     x: 2,
+           //     y: 2,
+           //     value: vd3,
+           //     name: "Point3",
+           // }, {
+           //     x: 3,
+           //     y: 3,
+           //     value: seriesAps,
+           //     name: "Point4",
+           // }, {
+           //     x: 4,
+           //     y: 4,
+           //     value: 3,
+           //     name: "Point4",
+           // },
+        ],
+            dataLabels: {
+                enabled: true,
+                color: '#000000'
             }
-        }
-    },
-
-    colorAxis: {
-        min: 0,
-        minColor: '#FFFFFF',
-        maxColor: Highcharts.getOptions().colors[0]
-    },
-
-    legend: {
-        align: 'right',
-        layout: 'vertical',
-        margin: 0,
-        verticalAlign: 'top',
-        y: 25,
-        symbolHeight: 280
-    },
-
-    tooltip: {
-        formatter: function () {
-            return 'On <b>' + getPointCategoryName(this.point, 'x') + '</b> <br> there was <b>' +
-                this.point.value + '</b> particules of <b>' + getPointCategoryName(this.point, 'y') + '</b>';
-        }
-    },
-
-    series: [{
-        name: 'Sales per employee',
-        borderWidth: 1,
-        data: [[0, 0, 10], [0, 1, 19], [0, 2, 8], [0, 3, 24], [0, 4, 67], [1, 0, 92], [1, 1, 58], [1, 2, 78], [1, 3, 117], [1, 4, 48], [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52], [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16], [4, 0, 38], [4, 1, 5], [4, 2, 8], [4, 3, 117], [4, 4, 115], [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120], [6, 0, 13], [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96], [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32], [7, 4, 30], [8, 0, 85], [8, 1, 97], [8, 2, 123], [8, 3, 64], [8, 4, 84], [9, 0, 47], [9, 1, 114], [9, 2, 31], [9, 3, 48], [9, 4, 91]],
-        dataLabels: {
-            enabled: true,
-            color: '#000000'
-        }
-    }],
-
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                yAxis: {
-                    labels: {
-                        formatter: function () {
-                            return this.value.charAt(0);
+        }],
+        accessibility: {
+            point: {
+                descriptionFormatter: function (point) {
+                    var ix = point.index + 1,
+                        xName = getPointCategoryName(point, 'x'),
+                        yName = getPointCategoryName(point, 'y'),
+                        val = point.value;
+                    return ix + '. ' + xName + ' sales ' + yName + ', ' + val + '.';
+                }
+            }
+        },
+        colorAxis: {
+            min: 0,
+            minColor: '#FFFFFF',
+            maxColor: Highcharts.getOptions().colors[0]
+        },
+        legend: {
+            align: 'right',
+            layout: 'vertical',
+            margin: 0,
+            verticalAlign: 'top',
+            y: 25,
+            symbolHeight: 280
+        },
+        tooltip: {
+            formatter: function () {
+                return 'On <b>' + getPointCategoryName(this.point, 'x') + '</b> <br> there was <b>' +
+                    this.point.value + '</b> particules of <b>' + getPointCategoryName(this.point, 'y') + '</b>';
+            }
+        },
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    yAxis: {
+                        labels: {
+                            formatter: function () {
+                                return this.value.charAt(0);
+                            }
                         }
                     }
                 }
-            }
-        }]
-    }
+            }]
+        }
 
-});
+    });
 
 
 </script>
 
-
+</div>
 
 
 

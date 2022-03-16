@@ -9,6 +9,7 @@ import requests
 import math
 from .models import cpc, instrument, cpc2, neph2, aps, psap
 from django.db.models import Count, Q
+import json
 
 
 def index(request):
@@ -217,9 +218,11 @@ class ChartData(object):
 
         return data
 
+
+
 def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
          chartIDNeph = "chartIDNeph", chart_type_neph = 'line',
-         chartIDAps = "chartIDAps", chart_type_aps = 'heatmap',
+         chartIDAps = "chartIDAps", chart_type_aps = 'line',
          chartIDPsap = "chartIDPsap", chart_type_psap = 'line',
          ):
 
@@ -279,18 +282,96 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         "marginBottom": 80,
         "plotBorderWidth": 1,
         "renderTo": chartIDAps,  "height": chart_height, }
+    chartAps2 = {"type": "heatmap",
+                "marginTop": 40,
+                "marginBottom": 80,
+                "plotBorderWidth": 1,
+                "renderTo": chartIDAps, "height": chart_height, }
     titleAps = {"text": 'APS UBI'}
     xAxisAps= {"categories": data['IDaps']}
     yAxisAps= {
     "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10']
     }
 
-    seriesAps = {"name": 'test', "data": [[0, 0, 10], [0, 1, 19], [0, 2, 8], [0, 3, 24], [0, 4, 67], [1, 0, 92], [1, 1, 58], [1, 2, 78], [1, 3, 117], [1, 4, 48], [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52], [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16], [4, 0, 38], [4, 1, 5], [4, 2, 8], [4, 3, 117], [4, 4, 115], [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120], [6, 0, 13], [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96], [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32], [7, 4, 30], [8, 0, 85], [8, 1, 97], [8, 2, 123], [8, 3, 64], [8, 4, 84], [9, 0, 47], [9, 1, 114], [9, 2, 31], [9, 3, 48], [9, 4, 91]],
-                 "dataLabels": {
+    vd1 = data['d1'][20]
+    vd2 = data['d2'][20]
+    vd3 = data['d3'][20]
+    vd4 = data['d4'][20]
+    vd5 = data['d5'][20]
+    vd6 = data['d6'][20]
+    vd7 = data['d7'][20]
+    vd8 = data['d8'][20]
+    vd9 = data['d9'][20]
 
-                     "color": '#000000'
-                 }
-                 }
+    vd11 = data['d1'][21]
+    vd12 = data['d2'][21]
+    vd13 = data['d3'][21]
+    vd14 = data['d4'][21]
+    vd15 = data['d5'][21]
+    vd16 = data['d6'][21]
+    vd17 = data['d7'][21]
+    vd18 = data['d8'][21]
+    vd19 = data['d9'][21]
+
+    vd21 = data['d1'][22]
+    vd22 = data['d2'][22]
+    vd23 = data['d3'][22]
+    vd24 = data['d4'][22]
+    vd25 = data['d5'][22]
+    vd26 = data['d6'][22]
+    vd27 = data['d7'][22]
+    vd28 = data['d8'][22]
+    vd29 = data['d9'][22]
+
+    vd31 = data['d1'][23]
+    vd32 = data['d2'][23]
+    vd33 = data['d3'][23]
+    vd34 = data['d4'][23]
+    vd35 = data['d5'][23]
+    vd36 = data['d6'][23]
+    vd37 = data['d7'][23]
+    vd38 = data['d8'][23]
+    vd39 = data['d9'][23]
+
+    vd41 = data['d1'][24]
+    vd42 = data['d2'][24]
+    vd43 = data['d3'][24]
+    vd44 = data['d4'][24]
+    vd45 = data['d5'][24]
+    vd46 = data['d6'][24]
+    vd47 = data['d7'][24]
+    vd48 = data['d8'][24]
+    vd49 = data['d9'][24]
+
+    vd51 = data['d1'][25]
+    vd52 = data['d2'][25]
+    vd53 = data['d3'][25]
+    vd54 = data['d4'][25]
+    vd55 = data['d5'][25]
+    vd56 = data['d6'][25]
+    vd57 = data['d7'][25]
+    vd58 = data['d8'][25]
+    vd59 = data['d9'][25]
+
+    seriesAps = [
+        {"name": 'd1', "data": data['d1'], "color": "#333fff"},
+        {"name": 'd2', "data": data['d2'], "color": "#ff3333"},
+        {"name": 'd3', "data": data['d3'], "color": "#33ff49"},
+        {"name": 'd4', "data": data['d4'], "color": "#333fff"},
+        {"name": 'd5', "data": data['d5'], "color": "#ff3333"},
+        {"name": 'd6', "data": data['d6'], "color": "#33ff49"},
+
+    ]
+
+
+        #
+
+        # [0, 0, 10], [0, 1, 19], [0, 2, 8], [0, 3, 24], [0, 4, 67], [1, 0, 92], [1, 1, 58], [1, 2, 78], [1, 3, 117], [1, 4, 48], [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52], [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16], [4, 0, 38], [4, 1, 5], [4, 2, 8], [4, 3, 117], [4, 4, 115], [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120], [6, 0, 13], [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96], [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32], [7, 4, 30], [8, 0, 85], [8, 1, 97], [8, 2, 123], [8, 3, 64], [8, 4, 84], [9, 0, 47], [9, 1, 114], [9, 2, 31], [9, 3, 48], [9, 4, 91]],
+        #          "dataLabels": {
+        #
+        #              "color": '#000000'
+        #          }
+
 
 
 
@@ -312,20 +393,82 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'yAxisNeph' : yAxisNeph ,
                                         'seriesNeph' : seriesNeph,
 
-                                        'chartIDAps': chartIDAps,
-                                        'chartAps': chartAps,
-                                        'titleAps': titleAps,
-                                        'xAxisAps': xAxisAps,
-                                        'yAxisAps': yAxisAps,
-                                        'seriesAps': seriesAps,
-
                                         "chartIDPsap" : chartIDPsap,
                                         "chartPsap": chartPsap,
                                         "titlePsap" : titlePsap,
                                         "xAxisPsap" : xAxisPsap,
                                         "yAxisPsap" : yAxisPsap,
                                         "seriesPsap" : seriesPsap,
-                                          })
+
+                                        'chartIDAps': chartIDAps,
+                                        'chartAps': chartAps,
+                                        'chartAps2': chartAps2,
+                                        'titleAps': titleAps,
+                                        'xAxisAps': xAxisAps,
+                                        'yAxisAps': yAxisAps,
+                                        'seriesAps': seriesAps,
+
+                                        'vd1': vd1,
+                                        'vd2': vd2,
+                                        'vd3': vd3,
+                                        'vd4': vd4,
+                                        'vd5': vd5,
+                                        'vd6': vd6,
+                                        'vd7': vd7,
+                                        'vd8': vd8,
+                                        'vd9': vd9,
+
+                                        'vd11': vd11,
+                                        'vd12': vd12,
+                                        'vd13': vd13,
+                                        'vd14': vd14,
+                                        'vd15': vd15,
+                                        'vd16': vd16,
+                                        'vd17': vd17,
+                                        'vd18': vd18,
+                                        'vd19': vd19,
+
+                                        'vd21': vd21,
+                                        'vd22': vd22,
+                                        'vd23': vd23,
+                                        'vd24': vd24,
+                                        'vd25': vd25,
+                                        'vd26': vd26,
+                                        'vd27': vd27,
+                                        'vd28': vd28,
+                                        'vd29': vd29,
+
+                                        'vd31': vd31,
+                                        'vd32': vd32,
+                                        'vd33': vd33,
+                                        'vd34': vd34,
+                                        'vd35': vd35,
+                                        'vd36': vd36,
+                                        'vd37': vd37,
+                                        'vd38': vd38,
+                                        'vd39': vd39,
+
+                                        'vd41': vd41,
+                                        'vd42': vd42,
+                                        'vd43': vd43,
+                                        'vd44': vd44,
+                                        'vd45': vd45,
+                                        'vd46': vd46,
+                                        'vd47': vd47,
+                                        'vd48': vd48,
+                                        'vd49': vd49,
+
+                                        'vd51': vd51,
+                                        'vd52': vd52,
+                                        'vd53': vd53,
+                                        'vd54': vd54,
+                                        'vd55': vd55,
+                                        'vd56': vd56,
+                                        'vd57': vd57,
+                                        'vd58': vd58,
+                                        'vd59': vd59,
+
+    })
 
 
 
