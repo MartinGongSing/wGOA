@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} instruments {% endblock %}
+{% block title %} intranet {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -8,6 +8,21 @@
 {% block content %}
 
 <h1>Intranet</h1>
+<script>
+
+    const data = [];
+    let name = 'd'
+    // [[0,0],[0,1],[0,2],...,[39,39]]
+    for (let x = 0; x <= 40; x++) {
+        for (let y = 0; y <= 51; y++) {
+                name = name + (y+1);
+                data.push([x,y,name]);
+                name = 'd';
+        }
+    }
+    console.log(data);
+    document.write(data);
+</script>
 
 
 {% endblock content %}

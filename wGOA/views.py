@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.shortcuts import render
 import requests
 import math
+from datetime import datetime
+import time
 from .models import cpc, instrument, cpc2, neph2, aps, psap
 from django.db.models import Count, Q
 import json
@@ -160,28 +162,33 @@ class ChartData(object):
         ##### CPC_UBI #####
         ###################
 
-        # valves = cpc2.objects.all()
-        valves = cpc2.objects.order_by('ID')[:40]
+        # valves = cpc2.objects.all() # we take all the items
+        valves = cpc2.objects.order_by('ID')[:40]  # we take only 40 items
 
         for unit in valves:
-            data['ID'].append(unit.ID)
+            data['ID'].append(datetime.fromtimestamp(unit.ID/1000).strftime( "%Y/%m/%d-%H:%M:%S")) #change the timestamp
             data['N'].append(unit.N)
 
         ####################
         ##### Neph_UBI #####
         ####################
 
-        nephes = neph2.objects.order_by('ID')[:40]
+        nephes = neph2.objects.order_by('ID')[:20]
+
+
 
         for unity in nephes:
-            data['IDneph'].append(unity.ID)
+
+            data['IDneph'].append(datetime.fromtimestamp(unity.ID/1000).strftime( "%Y/%m/%d-%H:%M:%S"))
             data['sblue'].append(unity.sblue)
             data['sred'].append(unity.sred)
             data['sgreen'].append(unity.sgreen)
             data['bsblue'].append(unity.bsblue)
             data['bsred'].append(unity.bsred)
             data['bsgreen'].append(unity.bsgreen)
-
+        #     testTime = datetime.datetime.fromtimestamp(unity.ID/1000)
+        #
+        # print(testTime)
         ####################
         ##### PSAP_UBI #####
         ####################
@@ -189,7 +196,7 @@ class ChartData(object):
         psapes = psap.objects.order_by('ID')[:40]
 
         for unites in psapes:
-            data['IDpsap'].append(unites.ID)
+            data['IDpsap'].append(datetime.fromtimestamp(unites.ID/1000).strftime( "%Y/%m/%d-%H:%M:%S"))
             data['pblue'].append(unites.blue)
             data['pred'].append(unites.red)
             data['pgreen'].append(unites.green)
@@ -203,7 +210,7 @@ class ChartData(object):
         apses = aps.objects.order_by('ID')[:40]
 
         for unita in apses:
-            data['IDaps'].append(unita.ID)
+            data['IDaps'].append(datetime.fromtimestamp(unita.ID/1000).strftime( "%Y/%m/%d-%H:%M:%S"))
             data['d1'].append(unita.d1)
             data['d2'].append(unita.d2)
             data['d3'].append(unita.d3)
@@ -247,14 +254,14 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     chartNeph = {"renderTo": chartIDNeph, "type": chart_type_neph, "height": chart_height, }
     titleNeph = {"text": 'Neph UBI'}
     xAxisNeph = {"title": {"text": 'Time'}, "categories": data['IDneph']}
-    yAxisNeph = [{"title": {"text": 'bs/Mm-1'}}] #TODO : Opposite axis
+    yAxisNeph = [{"title": {"text": '/\ σ<sub>s,bs</sub>/Mm<sup>-1</sup>'}, },{"title": {"text": 'o σ<sub>s,bs</sub>/Mm<sup>-1</sup>'},"opposite": "true"}] #TODO : Opposite axis
     seriesNeph = [
-        {"name": 'Blue', "data": data['sblue'], "color":"#333fff"},
-        {"name": 'Red', "data": data['sred'],"color":"#ff3333"},
-        {"name": 'Green', "data": data['sgreen'],"color":"#33ff49"},
-        {"name": 'bigBlue', "data": data['bsblue'],"color":"#33fff6"},
-        {"name": 'bigRed', "data": data['bsred'],"color":"#ff33ca"},
-        {"name": 'bigGreen', "data": data['bsgreen'],"color":"#a2ff33"},
+        {"name": 'Blue',     "yAxis": 0,  "data": data['sblue'],   "color":"#333fff",    "marker": {"symbol": "triangle"}  },
+        {"name": 'Red',      "yAxis": 0,  "data": data['sred'],    "color":"#ff3333",    "marker": {"symbol": "triangle"}    },
+        {"name": 'Green',    "yAxis": 0,  "data": data['sgreen'],  "color":"#33ff49",    "marker": {"symbol": "triangle"}    },
+        {"name": 'bigBlue',  "yAxis": 1,  "data": data['bsblue'],  "color":"#8286ff",    "marker": {"symbol": "circle"}  },
+        {"name": 'bigRed',   "yAxis": 1,  "data": data['bsred'],   "color":"#ff6e6e",    "marker": {"symbol": "circle"}    },
+        {"name": 'bigGreen', "yAxis": 1,  "data": data['bsgreen'], "color":"#81de8b",    "marker": {"symbol": "circle"}    },
     ]
 
     ####################
@@ -264,7 +271,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     chartPsap = {"renderTo": chartIDPsap, "type": chart_type_psap, "height": chart_height, }
     titlePsap = {"text": 'PSAP UBI'}
     xAxisPsap = {"title": {"text": 'Time'}, "categories": data['IDpsap']}
-    yAxisPsap = [{"title": {"text": 'σa/Mm-1'}}]
+    yAxisPsap = [{"title": {"text": 'σ<sub>a</sub>/Mm<sup>-1</sup>'}}]
     seriesPsap = [
         {"name": 'Blue', "data": data['pblue'], "color": "#333fff"},
         {"name": 'Red', "data": data['pred'], "color": "#ff3333"},
@@ -302,6 +309,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     vd7 = data['d7'][20]
     vd8 = data['d8'][20]
     vd9 = data['d9'][20]
+    vd10 = data['d10'][20]
 
     vd11 = data['d1'][21]
     vd12 = data['d2'][21]
@@ -312,6 +320,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     vd17 = data['d7'][21]
     vd18 = data['d8'][21]
     vd19 = data['d9'][21]
+    vd20 = data['d10'][21]
 
     vd21 = data['d1'][22]
     vd22 = data['d2'][22]
@@ -322,6 +331,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     vd27 = data['d7'][22]
     vd28 = data['d8'][22]
     vd29 = data['d9'][22]
+    vd30 = data['d10'][22]
 
     vd31 = data['d1'][23]
     vd32 = data['d2'][23]
@@ -332,6 +342,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     vd37 = data['d7'][23]
     vd38 = data['d8'][23]
     vd39 = data['d9'][23]
+    vd40 = data['d10'][23]
 
     vd41 = data['d1'][24]
     vd42 = data['d2'][24]
@@ -342,6 +353,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     vd47 = data['d7'][24]
     vd48 = data['d8'][24]
     vd49 = data['d9'][24]
+    vd50 = data['d10'][24]
 
     vd51 = data['d1'][25]
     vd52 = data['d2'][25]
@@ -378,7 +390,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 
 
 
-    return render(request, 'data2.html', {
+    return render(request, 'data3.html', {
                                         'chartID': chartID,
                                         'chart': chart,
                                         'series': series,
@@ -417,6 +429,12 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'vd7': vd7,
                                         'vd8': vd8,
                                         'vd9': vd9,
+        'vd10': vd10,
+        'vd20': vd20,
+        'vd30': vd30,
+        'vd40': vd40,
+        'vd50': vd50,
+
 
                                         'vd11': vd11,
                                         'vd12': vd12,

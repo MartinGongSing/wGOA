@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<h1>GRAPH</h1>
+<h1>GRAPHICAL Representation</h1>
 
 <!-- tooltip for precise info-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -20,17 +20,47 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
+
 <div class="column">
-    <h2>CPC_UBI </h2>
     <div class="boxGray">
-
+        <h2>CPC_UBI </h2>
         <div id={{ chartID|safe }} class="chart" style="height:500px; width:100%"></div>
+    </div>
+</div>
+
+
+<div class="column">
+    <div class="boxGray">
+        <h2>NEPH UBI</h2>
+        <div id={{ chartIDNeph|safe }} class="chart" style="height:500px; width:100%"></div>
+    </div>
+</div>
+
+<br><br>
+
+
+<div class="column">
+    <div class="boxGray">
+        <h2>APS UBI First </h2>
+    <!--TRY 1 -->
+        <div id={{ chartIDAps|safe }} class="chart" style="height:500px; width:100%"></div>
+    </div>
+</div>
+
+<div class="column">
+    <div class="boxGray">
+        <h2>PSAP</h2>
+
+        <div id={{ chartIDPsap|safe }} class="chart" style="height:500px; width:100%"></div>
+
+    </div>
+</div>
 
 
 
-
-
-
+        <!--###################-->
+        <!--####### CPC #######-->
+        <!--###################-->
 
         <script>
             var chart_id =  {{ chartID|safe }}
@@ -39,9 +69,7 @@
             var xAxis =     {{ xAxis|safe }}
             var yAxis =     {{ yAxis|safe }}
             var series =    {{ series|safe }}
-
         </script>
-
     <!-- Highchart js. Variable map shown above -->
         <script>
             $(document).ready(function() {
@@ -54,15 +82,14 @@
                 });
             });
         </script>
-    </div>
-</div>
-<div class="column">
-    <h2>NEPH UBI</h2>
 
 
-    <div class="boxGray">
 
-        <div id={{ chartIDNeph|safe }} class="chart" style="height:500px; width:100%"></div>
+
+        <!--####################-->
+        <!--####### NEPH #######-->
+        <!--####################-->
+
 
         <script>
             var chart_id_neph = {{ chartIDNeph|safe }}
@@ -71,9 +98,7 @@
             var xAxisNeph =   {{ xAxisNeph|safe }}
             var yAxisNeph =   {{ yAxisNeph|safe }}
             var seriesNeph =  {{ seriesNeph|safe }}
-
         </script>
-
         <!-- Highchart js. Variable map shown above -->
         <script>
 
@@ -86,20 +111,12 @@
                     series: seriesNeph
                 });
             });
-
-
         </script>
 
-    </div>
 
-
-
-    <h2>PSAP</h2>
-
-    <div class="boxGray">
-
-        <div id={{ chartIDPsap|safe }} class="chart" style="height:500px; width:100%"></div>
-
+        <!--####################-->
+        <!--####### PSAP #######-->
+        <!--####################-->
         <script>
             var chart_id_psap = {{ chartIDPsap|safe }}
             var chartPsap =   {{ chartPsap|safe }}
@@ -122,19 +139,12 @@
                     series: seriesPsap
                 });
             });
-
-
         </script>
 
-    </div>
 
-
-    <h2>APS UBI 1 </h2>
-    <!--TRY 1 -->
-    <div class="boxGray">
-
-        <div id={{ chartIDAps|safe }} class="chart" style="height:500px; width:100%"></div>
-
+        <!--###################-->
+        <!--####### APS #######-->
+        <!--###################-->
         <script>
             var chart_id_aps = {{ chartIDAps|safe }}
             var chartAps =   {{ chartAps|safe }}
@@ -152,6 +162,7 @@
             var vd7 =  {{ vd7|safe }}
             var vd8 =  {{ vd8|safe }}
             var vd9 =  {{ vd9|safe }}
+            var vd10 =  {{ vd10|safe }}
 
             var vd11 =  {{ vd11|safe }}
             var vd12 =  {{ vd12|safe }}
@@ -162,6 +173,8 @@
             var vd17 =  {{ vd17|safe }}
             var vd18 =  {{ vd18|safe }}
             var vd19 =  {{ vd19|safe }}
+            var vd20 =  {{ vd20|safe }}
+
 
             var vd21 =  {{ vd21|safe }}
             var vd22 =  {{ vd22|safe }}
@@ -172,6 +185,8 @@
             var vd27 =  {{ vd27|safe }}
             var vd28 =  {{ vd28|safe }}
             var vd29 =  {{ vd29|safe }}
+            var vd30 =  {{ vd30|safe }}
+
 
             var vd31 =  {{ vd31|safe }}
             var vd32 =  {{ vd32|safe }}
@@ -182,6 +197,8 @@
             var vd37 =  {{ vd37|safe }}
             var vd38 =  {{ vd38|safe }}
             var vd39 =  {{ vd39|safe }}
+            var vd40 =  {{ vd40|safe }}
+
 
             var vd41 =  {{ vd41|safe }}
             var vd42 =  {{ vd42|safe }}
@@ -192,6 +209,8 @@
             var vd47 =  {{ vd47|safe }}
             var vd48 =  {{ vd48|safe }}
             var vd49 =  {{ vd49|safe }}
+            var vd50 =  {{ vd50|safe }}
+
 
             var vd51 =  {{ vd51|safe }}
             var vd52 =  {{ vd52|safe }}
@@ -221,19 +240,30 @@
 
         </script>
 
-    </div>
+
 
     <h2>APS UBI 2</h2>
 
     <!--TRY 2 -->
-
-    <div class="boxGray">
         <figure class="highcharts-figure">
             <div id="apsid"></div>
         </figure>
 
-        <script>
+    <div class="boxGray">
 
+        <script>
+            // create the datalist
+            const data_list = [];
+            let name = 'vd'
+            // [[0,0],[0,1],[0,2],...,[39,39]]
+            for (let x = 0; x <= 5; x++) {
+                for (let y = 0; y <= 9; y++) {
+                        name = name + (x*10 +(y+1));
+                        data_list.push([x,y,window[name]]);
+                        name = 'vd';
+                }
+            }
+            console.log(data_list);
 
             function getPointCategoryName(point, dimension) {
             var series = point.series,
@@ -251,14 +281,15 @@
                 series: [{
                     name: 'aps ubi',
                     borderWidth: 1,
-                    data: [
-                        [0, 0, vd1], [0, 1, vd2], [0, 2, vd3], [0, 3, vd4], [0, 4, vd5], [0, 5, vd6], [0, 6, vd7], [0, 7, vd8], [0, 8, vd9],
-                        [1, 0, vd11], [1, 1, vd12], [1, 2, vd13], [1, 3, vd14], [1, 4, vd15], [1, 5, vd16], [1, 6, vd17], [1, 7, vd18],[1, 8, vd19],
-                        [2, 0, vd21], [2, 1, vd22], [2, 2, vd23], [2, 3, vd24], [2, 4, vd25], [2, 5, vd26], [2, 6, vd27], [2, 7, vd28],[2, 8, vd29],
-                        [3, 0, vd31], [3, 1, vd32], [3, 2, vd33], [3, 3, vd34], [3, 4, vd35], [3, 5, vd36], [3, 6, vd37], [3, 7, vd38],[3, 8, vd39],
-                        [4, 0, vd41], [4, 1, vd42], [4, 2, vd43], [4, 3, vd44], [4, 4, vd45], [4, 5, vd46], [4, 6, vd47], [4, 7, vd48],[4, 8, vd49],
-                        [5, 0, vd51], [5, 1, vd52], [5, 2, vd53], [5, 3, vd54], [5, 4, vd55], [5, 5, vd56], [5, 6, vd57], [5, 7, vd58],[5, 8, vd59],
-
+                    data:data_list,
+                        // [
+                        // [0, 0, vd1], [0, 1, vd2], [0, 2, vd3], [0, 3, vd4], [0, 4, vd5], [0, 5, vd6], [0, 6, vd7], [0, 7, vd8], [0, 8, vd9],
+                        // [1, 0, vd11], [1, 1, vd12], [1, 2, vd13], [1, 3, vd14], [1, 4, vd15], [1, 5, vd16], [1, 6, vd17], [1, 7, vd18],[1, 8, vd19],
+                        // [2, 0, vd21], [2, 1, vd22], [2, 2, vd23], [2, 3, vd24], [2, 4, vd25], [2, 5, vd26], [2, 6, vd27], [2, 7, vd28],[2, 8, vd29],
+                        // [3, 0, vd31], [3, 1, vd32], [3, 2, vd33], [3, 3, vd34], [3, 4, vd35], [3, 5, vd36], [3, 6, vd37], [3, 7, vd38],[3, 8, vd39],
+                        // [4, 0, vd41], [4, 1, vd42], [4, 2, vd43], [4, 3, vd44], [4, 4, vd45], [4, 5, vd46], [4, 6, vd47], [4, 7, vd48],[4, 8, vd49],
+                        // [5, 0, vd51], [5, 1, vd52], [5, 2, vd53], [5, 3, vd54], [5, 4, vd55], [5, 5, vd56], [5, 6, vd57], [5, 7, vd58],[5, 8, vd59],
+                    // ],
                    //      {
                    //     x: 0,
                    //     y: 0,
@@ -285,7 +316,7 @@
                    //     value: 3,
                    //     name: "Point4",
                    // },
-                ],
+
                     dataLabels: {
                         enabled: true,
                         color: '#000000'
@@ -303,10 +334,19 @@
                     }
                 },
                 colorAxis: {
-                    min: 0,
-                    minColor: '#FFFFFF',
-                    maxColor: Highcharts.getOptions().colors[0]
+                    stops: [
+                        [0, '#3060cf'],
+                        [0.5, '#fffbbc'],
+                        [0.9, '#c4463a'],
+                        [1, '#c4463a']
+                    ],
                 },
+                // colorAxis: {
+                //
+                //     min: 0,
+                //     minColor: '#FFFFFF',
+                //     maxColor: Highcharts.getOptions().colors[0]
+                // },
                 legend: {
                     align: 'right',
                     layout: 'vertical',
