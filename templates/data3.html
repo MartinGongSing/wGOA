@@ -255,7 +255,7 @@
             // create the datalist
             const data_list = [];
             let name = 'vd'
-            // [[0,0],[0,1],[0,2],...,[39,39]]
+            // [0, 0, vd1], [0, 1, vd2], [0, 2, vd3]....
             for (let x = 0; x <= 5; x++) {
                 for (let y = 0; y <= 9; y++) {
                         name = name + (x*10 +(y+1));
@@ -263,7 +263,7 @@
                         name = 'vd';
                 }
             }
-            console.log(data_list);
+            // console.log(data_list);
 
             function getPointCategoryName(point, dimension) {
             var series = point.series,
@@ -290,32 +290,6 @@
                         // [4, 0, vd41], [4, 1, vd42], [4, 2, vd43], [4, 3, vd44], [4, 4, vd45], [4, 5, vd46], [4, 6, vd47], [4, 7, vd48],[4, 8, vd49],
                         // [5, 0, vd51], [5, 1, vd52], [5, 2, vd53], [5, 3, vd54], [5, 4, vd55], [5, 5, vd56], [5, 6, vd57], [5, 7, vd58],[5, 8, vd59],
                     // ],
-                   //      {
-                   //     x: 0,
-                   //     y: 0,
-                   //     value: vd1,
-                   //     name: "Point1",
-                   // }, {
-                   //     x: 1,
-                   //     y: 1,
-                   //     value: vd2,
-                   //     name: "Point2",
-                   // }, {
-                   //     x: 2,
-                   //     y: 2,
-                   //     value: vd3,
-                   //     name: "Point3",
-                   // }, {
-                   //     x: 3,
-                   //     y: 3,
-                   //     value: seriesAps,
-                   //     name: "Point4",
-                   // }, {
-                   //     x: 4,
-                   //     y: 4,
-                   //     value: 3,
-                   //     name: "Point4",
-                   // },
 
                     dataLabels: {
                         enabled: true,

@@ -13,6 +13,24 @@ from .models import cpc, instrument, cpc2, neph2, aps, psap
 from django.db.models import Count, Q
 import json
 
+################ camera START
+from django.http.response import StreamingHttpResponse
+from .camera import IPWebCam
+# Create your views here.
+
+
+
+def gen(camera):
+	while True:
+		frame = camera.get_frame()
+		yield (b'--frame\r\n'
+				b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+
+def webcam_feed(request):
+	return StreamingHttpResponse(gen(IPWebCam()),
+					content_type='multipart/x-mixed-replace; boundary=frame')
+################ camera END
 
 def index(request):
     # return HttpResponse("Hello world ! ")
@@ -166,7 +184,7 @@ class ChartData(object):
         valves = cpc2.objects.order_by('ID')[:40]  # we take only 40 items
 
         for unit in valves:
-            data['ID'].append(datetime.fromtimestamp(unit.ID/1000).strftime( "%Y/%m/%d-%H:%M:%S")) #change the timestamp
+            data['ID'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%H:%M:%S")) #change the timestamp
             data['N'].append(unit.N)
 
         ####################
@@ -179,7 +197,7 @@ class ChartData(object):
 
         for unity in nephes:
 
-            data['IDneph'].append(datetime.fromtimestamp(unity.ID/1000).strftime( "%Y/%m/%d-%H:%M:%S"))
+            data['IDneph'].append(datetime.fromtimestamp(unity.ID/1000).strftime( "%H:%M:%S"))
             data['sblue'].append(unity.sblue)
             data['sred'].append(unity.sred)
             data['sgreen'].append(unity.sgreen)
@@ -193,10 +211,10 @@ class ChartData(object):
         ##### PSAP_UBI #####
         ####################
 
-        psapes = psap.objects.order_by('ID')[:40]
+        psapes = psap.objects.order_by('ID')[:20]
 
         for unites in psapes:
-            data['IDpsap'].append(datetime.fromtimestamp(unites.ID/1000).strftime( "%Y/%m/%d-%H:%M:%S"))
+            data['IDpsap'].append(datetime.fromtimestamp(unites.ID/1000).strftime( "%H:%M:%S"))
             data['pblue'].append(unites.blue)
             data['pred'].append(unites.red)
             data['pgreen'].append(unites.green)
@@ -210,7 +228,7 @@ class ChartData(object):
         apses = aps.objects.order_by('ID')[:40]
 
         for unita in apses:
-            data['IDaps'].append(datetime.fromtimestamp(unita.ID/1000).strftime( "%Y/%m/%d-%H:%M:%S"))
+            data['IDaps'].append(datetime.fromtimestamp(unita.ID/1000).strftime( "%H:%M:%S"))
             data['d1'].append(unita.d1)
             data['d2'].append(unita.d2)
             data['d3'].append(unita.d3)
@@ -295,9 +313,9 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                 "plotBorderWidth": 1,
                 "renderTo": chartIDAps, "height": chart_height, }
     titleAps = {"text": 'APS UBI'}
-    xAxisAps= {"categories": data['IDaps']}
+    xAxisAps= {"categories": data['IDaps'],}
     yAxisAps= {
-    "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10']
+        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10'], 'type': 'logarithmic', #precise logarithmic scale define upper limit
     }
 
     vd1 = data['d1'][20]
@@ -364,6 +382,19 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     vd57 = data['d7'][25]
     vd58 = data['d8'][25]
     vd59 = data['d9'][25]
+    vd60 = data['d10'][25]
+
+    vd61 = data['d1'][26]
+    vd62 = data['d2'][26]
+    vd63 = data['d3'][26]
+    vd64 = data['d4'][26]
+    vd65 = data['d5'][26]
+    vd66 = data['d6'][26]
+    vd67 = data['d7'][26]
+    vd68 = data['d8'][26]
+    vd69 = data['d9'][26]
+    vd70 = data['d10'][26]
+
 
     seriesAps = [
         {"name": 'd1', "data": data['d1'], "color": "#333fff"},
@@ -429,12 +460,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'vd7': vd7,
                                         'vd8': vd8,
                                         'vd9': vd9,
-        'vd10': vd10,
-        'vd20': vd20,
-        'vd30': vd30,
-        'vd40': vd40,
-        'vd50': vd50,
-
+                                        'vd10': vd10,
 
                                         'vd11': vd11,
                                         'vd12': vd12,
@@ -445,6 +471,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'vd17': vd17,
                                         'vd18': vd18,
                                         'vd19': vd19,
+                                        'vd20': vd20,
 
                                         'vd21': vd21,
                                         'vd22': vd22,
@@ -455,6 +482,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'vd27': vd27,
                                         'vd28': vd28,
                                         'vd29': vd29,
+                                        'vd30': vd30,
 
                                         'vd31': vd31,
                                         'vd32': vd32,
@@ -465,6 +493,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'vd37': vd37,
                                         'vd38': vd38,
                                         'vd39': vd39,
+                                        'vd40': vd40,
 
                                         'vd41': vd41,
                                         'vd42': vd42,
@@ -475,6 +504,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'vd47': vd47,
                                         'vd48': vd48,
                                         'vd49': vd49,
+                                        'vd50': vd50,
 
                                         'vd51': vd51,
                                         'vd52': vd52,
@@ -485,6 +515,17 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'vd57': vd57,
                                         'vd58': vd58,
                                         'vd59': vd59,
+                                        'vd60': vd60,
+
+                                        'vd61': vd61,
+                                        'vd62': vd62,
+                                        'vd63': vd63,
+                                        'vd64': vd64,
+                                        'vd65': vd65,
+                                        'vd66': vd66,
+                                        'vd67': vd67,
+                                        'vd68': vd68,
+                                        'vd69': vd69,
 
     })
 
