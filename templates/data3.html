@@ -24,6 +24,7 @@
 <div class="column">
     <div class="boxGray">
         <h2>CPC_UBI </h2>
+        <p> {{ daycpc|safe }} </p>
         <div id={{ chartID|safe }} class="chart" style="height:500px; width:100%"></div>
     </div>
 </div>
@@ -32,6 +33,7 @@
 <div class="column">
     <div class="boxGray">
         <h2>NEPH UBI</h2>
+        <p> {{ dayneph|safe }} </p>
         <div id={{ chartIDNeph|safe }} class="chart" style="height:500px; width:100%"></div>
     </div>
 </div>
@@ -42,6 +44,7 @@
 <div class="column">
     <div class="boxGray">
         <h2>APS UBI First </h2>
+        <p> {{ dayaps|safe }} </p>
     <!--TRY 1 -->
         <div id={{ chartIDAps|safe }} class="chart" style="height:500px; width:100%"></div>
     </div>
@@ -50,7 +53,7 @@
 <div class="column">
     <div class="boxGray">
         <h2>PSAP</h2>
-
+        <p> {{ daypsap|safe }} </p>
         <div id={{ chartIDPsap|safe }} class="chart" style="height:500px; width:100%"></div>
 
     </div>
@@ -243,13 +246,13 @@
 
 
     <h2>APS UBI 2</h2>
-
+    <div class="boxGray">
     <!--TRY 2 -->
         <figure class="highcharts-figure">
             <div id="apsid"></div>
         </figure>
 
-    <div class="boxGray">
+
 
         <script>
             // create the datalist

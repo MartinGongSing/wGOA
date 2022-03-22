@@ -170,10 +170,10 @@ class ChartData(object):
     def check_valve_data():
 
 
-        data = {'ID': [], 'N': [],
-                'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [],
-                'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [],
-                'IDpsap': [], 'pblue': [], 'pred': [], 'pgreen': [],
+        data = {'ID': [], 'N': [], 'daycpc': [],
+                'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [], 'dayneph': [],
+                'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [],
+                'IDpsap': [], 'pblue': [], 'pred': [], 'pgreen': [], 'daypsap': [],
                 }
 
         ###################
@@ -185,6 +185,7 @@ class ChartData(object):
 
         for unit in valves:
             data['ID'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%H:%M:%S")) #change the timestamp
+            data['daycpc'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%Y/%m/%d"))
             data['N'].append(unit.N)
 
         ####################
@@ -198,13 +199,14 @@ class ChartData(object):
         for unity in nephes:
 
             data['IDneph'].append(datetime.fromtimestamp(unity.ID/1000).strftime( "%H:%M:%S"))
+            data['dayneph'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
             data['sblue'].append(unity.sblue)
             data['sred'].append(unity.sred)
             data['sgreen'].append(unity.sgreen)
             data['bsblue'].append(unity.bsblue)
             data['bsred'].append(unity.bsred)
             data['bsgreen'].append(unity.bsgreen)
-        #     testTime = datetime.datetime.fromtimestamp(unity.ID/1000)
+
         #
         # print(testTime)
         ####################
@@ -215,9 +217,11 @@ class ChartData(object):
 
         for unites in psapes:
             data['IDpsap'].append(datetime.fromtimestamp(unites.ID/1000).strftime( "%H:%M:%S"))
+            data['daypsap'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
             data['pblue'].append(unites.blue)
             data['pred'].append(unites.red)
             data['pgreen'].append(unites.green)
+
 
 
         ###################
@@ -229,6 +233,7 @@ class ChartData(object):
 
         for unita in apses:
             data['IDaps'].append(datetime.fromtimestamp(unita.ID/1000).strftime( "%H:%M:%S"))
+            data['dayaps'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
             data['d1'].append(unita.d1)
             data['d2'].append(unita.d2)
             data['d3'].append(unita.d3)
@@ -258,12 +263,13 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     ###################
 
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
-    title = {"text": 'CPC UBI'}
+    title = {"text": 'CPC UBI '}
     xAxis = {"title": {"text": 'Time'}, "categories": data['ID']}
     yAxis = {"title": {"text": 'N/#/cm3'}}
     series = [
         {"name": 'N/#/cm3', "data": data['N'], "color":"#333fff"},
         ]
+    daycpc = data["daycpc"][0] + " - " + data["daycpc"][-1]
 
     ####################
     ##### Neph_UBI #####
@@ -281,6 +287,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         {"name": 'bigRed',   "yAxis": 1,  "data": data['bsred'],   "color":"#ff6e6e",    "marker": {"symbol": "circle"}    },
         {"name": 'bigGreen', "yAxis": 1,  "data": data['bsgreen'], "color":"#81de8b",    "marker": {"symbol": "circle"}    },
     ]
+    dayneph = data["dayneph"][0] + " - " + data["dayneph"][-1]
 
     ####################
     ##### PSAP_UBI #####
@@ -296,6 +303,8 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         {"name": 'Green', "data": data['pgreen'], "color": "#33ff49"},
 
     ]
+    daypsap = data["daypsap"][0] + " - " + data["daypsap"][-1]
+
 
 
 
@@ -315,8 +324,9 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     titleAps = {"text": 'APS UBI'}
     xAxisAps= {"categories": data['IDaps'],}
     yAxisAps= {
-        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10'], 'type': 'logarithmic', #precise logarithmic scale define upper limit
+        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
     }
+    dayaps = data["dayaps"][0] + " - " + data["dayaps"][-1]
 
     vd1 = data['d1'][20]
     vd2 = data['d2'][20]
@@ -428,6 +438,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'title': title,
                                         'xAxis': xAxis,
                                         'yAxis': yAxis,
+                                        'daycpc':daycpc,
 
                                         'chartIDNeph': chartIDNeph,
                                         'chartNeph' : chartNeph ,
@@ -435,6 +446,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'xAxisNeph' : xAxisNeph ,
                                         'yAxisNeph' : yAxisNeph ,
                                         'seriesNeph' : seriesNeph,
+                                        'dayneph': dayneph,
 
                                         "chartIDPsap" : chartIDPsap,
                                         "chartPsap": chartPsap,
@@ -442,6 +454,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         "xAxisPsap" : xAxisPsap,
                                         "yAxisPsap" : yAxisPsap,
                                         "seriesPsap" : seriesPsap,
+                                        "daypsap" : daypsap,
 
                                         'chartIDAps': chartIDAps,
                                         'chartAps': chartAps,
@@ -450,6 +463,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'xAxisAps': xAxisAps,
                                         'yAxisAps': yAxisAps,
                                         'seriesAps': seriesAps,
+                                        'dayaps' : dayaps,
 
                                         'vd1': vd1,
                                         'vd2': vd2,
