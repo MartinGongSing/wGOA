@@ -13,9 +13,12 @@
     <div class="row">
         <div class="column">
             <div id='map' style='width: 400px; height: 300px;' class="center"></div>
+            <p>Current location: 	University of Beira Interior, Covilhã, Portugal </p>
+	        <p>40° 16' 30"N, 7° 30' 35"W, 704 m</p>
         </div>
         <div class="column">
-            <img src="../static/assets/img/live_feed.jpg" alt="liveFeed" style="width:70%">
+            <img src="{% url 'webcam_feed' %}" style='height: 300px;'>
+            <p>Webcamera (10 min updated)</p>
         </div>
     </div>
 </div>
@@ -32,7 +35,7 @@
         zoom: 14,
     });
 
-    // #TODO: add marker on the map : https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/
+
 
     // Add zoom and rotation controls to the map.
     map.addControl(new mapboxgl.NavigationControl());
@@ -176,7 +179,7 @@
 
 
 
-
+<!--Maybe this : https://pvlib-python.readthedocs.io/en/stable/auto_examples/plot_sunpath_diagrams.html-->
 
 <div class="center">
     <img src="../static/assets/img/sun.png" alt="weather" style="width:100%">

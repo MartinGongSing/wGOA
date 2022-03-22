@@ -29,9 +29,11 @@ urlpatterns = [
     path('graph/', views.plot, name='graph'),
     path('instruments/', views.instruments, name='instruments'),
     path('instrum_detail/<int:id>/', views.dyna_instrum, name='instrum_detail'),
-    path('station/', views.webcam_feed, name='webcam_feed'),
+    path('station/', views.station, name='station'),
     path('intranet/', views.intranet, name='intranet'),
     path('contact/', views.contact, name='contact'),
+
+    path('webcam_feed', views.webcam_feed, name='webcam_feed'),
 
 
 
