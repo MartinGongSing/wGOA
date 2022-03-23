@@ -13,6 +13,7 @@ from .models import cpc, instrument, cpc2, neph2, aps, psap
 from django.db.models import Count, Q
 import json
 
+from .forms import ContactForm
 ################ camera START
 from django.http.response import StreamingHttpResponse
 from .camera import IPWebCam
@@ -122,11 +123,19 @@ def intranet(request):
     return HttpResponse(html_template.render(context, request))
 
 def contact(request):
-    #return HttpResponse("this is the contact page")
-    context = {'segment': 'contact'}
 
-    html_template = loader.get_template('contact.html')
-    return HttpResponse(html_template.render(context, request))
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'success.html')
+
+    form = ContactForm()
+    context = {'form': form, 'segment': 'contact'}
+
+    return render(request, 'contact.html', context)
+
+    # return HttpResponse(html_template.render(context, request))
 
 
 ############### INSTRUMENTS PAGES ###############
@@ -172,7 +181,7 @@ class ChartData(object):
 
         data = {'ID': [], 'N': [], 'daycpc': [],
                 'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [], 'dayneph': [],
-                'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [],
+                'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],
                 'IDpsap': [], 'pblue': [], 'pred': [], 'pgreen': [], 'daypsap': [],
                 }
 
@@ -231,24 +240,41 @@ class ChartData(object):
 
         apses = aps.objects.order_by('ID')[:40]
 
+        upperLimit = 600
+
         for unita in apses:
             data['IDaps'].append(datetime.fromtimestamp(unita.ID/1000).strftime( "%H:%M:%S"))
             data['dayaps'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
-            data['d1'].append(unita.d1)
-            data['d2'].append(unita.d2)
-            data['d3'].append(unita.d3)
-            data['d4'].append(unita.d4)
-            data['d5'].append(unita.d5)
-            data['d6'].append(unita.d6)
-            data['d7'].append(unita.d7)
-            data['d8'].append(unita.d8)
-            data['d9'].append(unita.d9)
-            data['d10'].append(unita.d10)
+            data['d1'].append(isGreaterThan(unita.d1,upperLimit))
+            data['d2'].append(isGreaterThan(unita.d2,upperLimit))
+            data['d3'].append(isGreaterThan(unita.d3,upperLimit))
+            data['d4'].append(isGreaterThan(unita.d4,upperLimit))
+            data['d5'].append(isGreaterThan(unita.d5,upperLimit))
+            data['d6'].append(isGreaterThan(unita.d6,upperLimit))
+            data['d7'].append(isGreaterThan(unita.d7,upperLimit))
+            data['d8'].append(isGreaterThan(unita.d8,upperLimit))
+            data['d9'].append(isGreaterThan(unita.d9,upperLimit))
+            data['d10'].append(isGreaterThan(unita.d10,upperLimit))
+            data['d11'].append(isGreaterThan(unita.d11, upperLimit))
+            data['d12'].append(isGreaterThan(unita.d12, upperLimit))
+            data['d13'].append(isGreaterThan(unita.d13, upperLimit))
+            data['d14'].append(isGreaterThan(unita.d14, upperLimit))
+            data['d15'].append(isGreaterThan(unita.d15, upperLimit))
+            data['d16'].append(isGreaterThan(unita.d16, upperLimit))
+            data['d17'].append(isGreaterThan(unita.d17, upperLimit))
+            data['d18'].append(isGreaterThan(unita.d18, upperLimit))
+            data['d19'].append(isGreaterThan(unita.d19, upperLimit))
 
 
         return data
 
+def isGreaterThan(x,y):
+    if x>y:
+        x = y
+    else :
+        x = x
 
+    return x
 
 def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
          chartIDNeph = "chartIDNeph", chart_type_neph = 'line',
@@ -324,7 +350,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     titleAps = {"text": 'APS UBI'}
     xAxisAps= {"categories": data['IDaps'],}
     yAxisAps= {
-        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
+        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10'], #'type': 'logarithmic', #precise logarithmic scale define upper limit    ,'d11','d12','d13','d14','d15','d16','d17','d18','d19'
     }
     dayaps = data["dayaps"][0] + " - " + data["dayaps"][-1]
 
@@ -403,7 +429,84 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     vd67 = data['d7'][26]
     vd68 = data['d8'][26]
     vd69 = data['d9'][26]
-    vd70 = data['d10'][26]
+
+
+
+    #############################
+
+    # v1d1 = data['d11'][20]
+    # v1d2 = data['d12'][20]
+    # v1d3 = data['d13'][20]
+    # v1d4 = data['d14'][20]
+    # v1d5 = data['d15'][20]
+    # v1d6 = data['d16'][20]
+    # v1d7 = data['d17'][20]
+    # v1d8 = data['d18'][20]
+    # v1d9 = data['d19'][20]
+    # v1d10 = data['d10'][20]
+    # v1d11 = data['d11'][21]
+    # v1d12 = data['d12'][21]
+    # v1d13 = data['d13'][21]
+    # v1d14 = data['d14'][21]
+    # v1d15 = data['d15'][21]
+    # v1d16 = data['d16'][21]
+    # v1d17 = data['d17'][21]
+    # v1d18 = data['d18'][21]
+    # v1d19 = data['d19'][21]
+    # v1d20 = data['d10'][21]
+    # v1d21 = data['d11'][22]
+    # v1d22 = data['d12'][22]
+    # v1d23 = data['d13'][22]
+    # v1d24 = data['d14'][22]
+    # v1d25 = data['d15'][22]
+    # v1d26 = data['d16'][22]
+    # v1d27 = data['d17'][22]
+    # v1d28 = data['d18'][22]
+    # v1d29 = data['d19'][22]
+    # v1d30 = data['d10'][22]
+    # v1d31 = data['d11'][23]
+    # v1d32 = data['d12'][23]
+    # v1d33 = data['d13'][23]
+    # v1d34 = data['d14'][23]
+    # v1d35 = data['d15'][23]
+    # v1d36 = data['d16'][23]
+    # v1d37 = data['d17'][23]
+    # v1d38 = data['d18'][23]
+    # v1d39 = data['d19'][23]
+    # v1d40 = data['d10'][23]
+    # v1d41 = data['d11'][24]
+    # v1d42 = data['d12'][24]
+    # v1d43 = data['d13'][24]
+    # v1d44 = data['d14'][24]
+    # v1d45 = data['d15'][24]
+    # v1d46 = data['d16'][24]
+    # v1d47 = data['d17'][24]
+    # v1d48 = data['d18'][24]
+    # v1d49 = data['d19'][24]
+    # v1d50 = data['d10'][24]
+    # v1d51 = data['d11'][25]
+    # v1d52 = data['d12'][25]
+    # v1d53 = data['d13'][25]
+    # v1d54 = data['d14'][25]
+    # v1d55 = data['d15'][25]
+    # v1d56 = data['d16'][25]
+    # v1d57 = data['d17'][25]
+    # v1d58 = data['d18'][25]
+    # v1d59 = data['d19'][25]
+    # v1d60 = data['d10'][25]
+    # v1d61 = data['d11'][26]
+    # v1d62 = data['d12'][26]
+    # v1d63 = data['d13'][26]
+    # v1d64 = data['d14'][26]
+    # v1d65 = data['d15'][26]
+    # v1d66 = data['d16'][26]
+    # v1d67 = data['d17'][26]
+    # v1d68 = data['d18'][26]
+    # v1d69 = data['d19'][26]
+
+
+
+    ############################
 
 
     seriesAps = [
@@ -540,6 +643,76 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'vd67': vd67,
                                         'vd68': vd68,
                                         'vd69': vd69,
+
+        # 'v1d1': v1d1,
+        # 'v1d2': v1d2,
+        # 'v1d3': v1d3,
+        # 'v1d4': v1d4,
+        # 'v1d5': v1d5,
+        # 'v1d6': v1d6,
+        # 'v1d7': v1d7,
+        # 'v1d8': v1d8,
+        # 'v1d9': v1d9,
+        # 'v1d10': v1d10,
+        # 'v1d11': v1d11,
+        # 'v1d12': v1d12,
+        # 'v1d13': v1d13,
+        # 'v1d14': v1d14,
+        # 'v1d15': v1d15,
+        # 'v1d16': v1d16,
+        # 'v1d17': v1d17,
+        # 'v1d18': v1d18,
+        # 'v1d19': v1d19,
+        # 'v1d20': v1d20,
+        # 'v1d21': v1d21,
+        # 'v1d22': v1d22,
+        # 'v1d23': v1d23,
+        # 'v1d24': v1d24,
+        # 'v1d25': v1d25,
+        # 'v1d26': v1d26,
+        # 'v1d27': v1d27,
+        # 'v1d28': v1d28,
+        # 'v1d29': v1d29,
+        # 'v1d30': v1d30,
+        # 'v1d31': v1d31,
+        # 'v1d32': v1d32,
+        # 'v1d33': v1d33,
+        # 'v1d34': v1d34,
+        # 'v1d35': v1d35,
+        # 'v1d36': v1d36,
+        # 'v1d37': v1d37,
+        # 'v1d38': v1d38,
+        # 'v1d39': v1d39,
+        # 'v1d40': v1d40,
+        # 'v1d41': v1d41,
+        # 'v1d42': v1d42,
+        # 'v1d43': v1d43,
+        # 'v1d44': v1d44,
+        # 'v1d45': v1d45,
+        # 'v1d46': v1d46,
+        # 'v1d47': v1d47,
+        # 'v1d48': v1d48,
+        # 'v1d49': v1d49,
+        # 'v1d50': v1d50,
+        # 'v1d51': v1d51,
+        # 'v1d52': v1d52,
+        # 'v1d53': v1d53,
+        # 'v1d54': v1d54,
+        # 'v1d55': v1d55,
+        # 'v1d56': v1d56,
+        # 'v1d57': v1d57,
+        # 'v1d58': v1d58,
+        # 'v1d59': v1d59,
+        # 'v1d60': v1d60,
+        # 'v1d61': v1d61,
+        # 'v1d62': v1d62,
+        # 'v1d63': v1d63,
+        # 'v1d64': v1d64,
+        # 'v1d65': v1d65,
+        # 'v1d66': v1d66,
+        # 'v1d67': v1d67,
+        # 'v1d68': v1d68,
+        # 'v1d69': v1d69,
 
     })
 

@@ -14,6 +14,15 @@
 
 <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
+<form action="" method="post">
+   {% csrf_token %}
+   {{ form }}
+   <input type="submit" value="Submit">
+</form>
+
+https://www.twilio.com/blog/build-contact-form-python-django-twilio-sendgrid
+
+
 
 <div class="boxGray">
     <form method="post" action="" class="ccform">
@@ -45,5 +54,46 @@
 
 
 
+
+aaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+
+<form action="" method="post">
+   <input type="hidden" name="csrfmiddlewaretoken" value="fSB0809gbOaKm1v0fdz4Bb0XItQ3JUPduph8lXtRIUBHQMSK2TJxzDJYaaZ1MQID">
+   <tr>
+    <th><label for="id_email">Email:</label></th>
+    <td>
+
+      <input type="email" name="email" maxlength="254" required id="id_email">
+
+
+    </td>
+  </tr>
+
+  <tr>
+    <th><label for="id_subject">Subject:</label></th>
+    <td>
+
+      <input type="text" name="subject" maxlength="255" required id="id_subject">
+
+
+    </td>
+  </tr>
+
+  <tr>
+    <th><label for="id_message">Message:</label></th>
+    <td>
+
+      <textarea name="message" cols="40" rows="10" required id="id_message">
+</textarea>
+
+
+
+
+    </td>
+  </tr>
+   <input type="submit" value="Submit">
+</form>
 
 {% endblock content %}

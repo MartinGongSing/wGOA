@@ -43,7 +43,7 @@
 
 <div class="column">
     <div class="boxGray">
-        <h2>APS UBI First </h2>
+        <h2>APS UBI First try </h2>
         <p> {{ dayaps|safe }} </p>
     <!--TRY 1 -->
         <div id={{ chartIDAps|safe }} class="chart" style="height:500px; width:100%"></div>
@@ -61,193 +61,247 @@
 
 
 
+
         <!--###################-->
         <!--####### CPC #######-->
         <!--###################-->
 
-        <script>
-            var chart_id =  {{ chartID|safe }}
-            var chart =     {{ chart|safe }}
-            var title =     {{ title|safe }}
-            var xAxis =     {{ xAxis|safe }}
-            var yAxis =     {{ yAxis|safe }}
-            var series =    {{ series|safe }}
-        </script>
-    <!-- Highchart js. Variable map shown above -->
-        <script>
-            $(document).ready(function() {
-                $(chart_id).highcharts({
-                    chart: chart,
-                    title: title,
-                    xAxis: xAxis,
-                    yAxis: yAxis,
-                    series: series
-                });
-            });
-        </script>
+<script>
+    var chart_id =  {{ chartID|safe }}
+    var chart =     {{ chart|safe }}
+    var title =     {{ title|safe }}
+    var xAxis =     {{ xAxis|safe }}
+    var yAxis =     {{ yAxis|safe }}
+    var series =    {{ series|safe }}
+</script>
+<!-- Highchart js. Variable map shown above -->
+<script>
+    $(document).ready(function() {
+        $(chart_id).highcharts({
+            chart: chart,
+            title: title,
+            xAxis: xAxis,
+            yAxis: yAxis,
+            series: series
+        });
+    });
+</script>
 
 
 
 
-        <!--####################-->
-        <!--####### NEPH #######-->
-        <!--####################-->
+<!--####################-->
+<!--####### NEPH #######-->
+<!--####################-->
 
 
-        <script>
-            var chart_id_neph = {{ chartIDNeph|safe }}
-            var chartNeph =   {{ chartNeph|safe }}
-            var titleNeph =   {{ titleNeph|safe }}
-            var xAxisNeph =   {{ xAxisNeph|safe }}
-            var yAxisNeph =   {{ yAxisNeph|safe }}
-            var seriesNeph =  {{ seriesNeph|safe }}
-        </script>
-        <!-- Highchart js. Variable map shown above -->
-        <script>
+<script>
+    var chart_id_neph = {{ chartIDNeph|safe }}
+    var chartNeph =   {{ chartNeph|safe }}
+    var titleNeph =   {{ titleNeph|safe }}
+    var xAxisNeph =   {{ xAxisNeph|safe }}
+    var yAxisNeph =   {{ yAxisNeph|safe }}
+    var seriesNeph =  {{ seriesNeph|safe }}
+</script>
+<!-- Highchart js. Variable map shown above -->
+<script>
 
-            $(document).ready(function() {
-                $(chart_id_neph).highcharts({
-                    chart: chartNeph,
-                    title: titleNeph,
-                    xAxis: xAxisNeph,
-                    yAxis: yAxisNeph,
-                    series: seriesNeph
-                });
-            });
-        </script>
-
-
-        <!--####################-->
-        <!--####### PSAP #######-->
-        <!--####################-->
-        <script>
-            var chart_id_psap = {{ chartIDPsap|safe }}
-            var chartPsap =   {{ chartPsap|safe }}
-            var titlePsap =   {{ titlePsap|safe }}
-            var xAxisPsap =   {{ xAxisPsap|safe }}
-            var yAxisPsap =   {{ yAxisPsap|safe }}
-            var seriesPsap =  {{ seriesPsap|safe }}
-
-        </script>
-
-        <!-- Highchart js. Variable map shown above -->
-        <script>
-
-            $(document).ready(function() {
-                $(chart_id_psap).highcharts({
-                    chart: chartPsap,
-                    title: titlePsap,
-                    xAxis: xAxisPsap,
-                    yAxis: yAxisPsap,
-                    series: seriesPsap
-                });
-            });
-        </script>
+    $(document).ready(function() {
+        $(chart_id_neph).highcharts({
+            chart: chartNeph,
+            title: titleNeph,
+            xAxis: xAxisNeph,
+            yAxis: yAxisNeph,
+            series: seriesNeph
+        });
+    });
+</script>
 
 
-        <!--###################-->
-        <!--####### APS #######-->
-        <!--###################-->
-        <script>
-            var chart_id_aps = {{ chartIDAps|safe }}
-            var chartAps =   {{ chartAps|safe }}
-            var chartAps2 =   {{ chartAps2|safe }}
-            var titleAps =   {{ titleAps|safe }}
-            var xAxisAps =   {{ xAxisAps|safe }}
-            var yAxisAps =   {{ yAxisAps|safe }}
-            var seriesAps =  {{ seriesAps|safe }}
-            var vd1 =  {{ vd1|safe }}
-            var vd2 =  {{ vd2|safe }}
-            var vd3 =  {{ vd3|safe }}
-            var vd4 =  {{ vd4|safe }}
-            var vd5 =  {{ vd5|safe }}
-            var vd6 =  {{ vd6|safe }}
-            var vd7 =  {{ vd7|safe }}
-            var vd8 =  {{ vd8|safe }}
-            var vd9 =  {{ vd9|safe }}
-            var vd10 =  {{ vd10|safe }}
+<!--####################-->
+<!--####### PSAP #######-->
+<!--####################-->
+<script>
+    var chart_id_psap = {{ chartIDPsap|safe }}
+    var chartPsap =   {{ chartPsap|safe }}
+    var titlePsap =   {{ titlePsap|safe }}
+    var xAxisPsap =   {{ xAxisPsap|safe }}
+    var yAxisPsap =   {{ yAxisPsap|safe }}
+    var seriesPsap =  {{ seriesPsap|safe }}
 
-            var vd11 =  {{ vd11|safe }}
-            var vd12 =  {{ vd12|safe }}
-            var vd13 =  {{ vd13|safe }}
-            var vd14 =  {{ vd14|safe }}
-            var vd15 =  {{ vd15|safe }}
-            var vd16 =  {{ vd16|safe }}
-            var vd17 =  {{ vd17|safe }}
-            var vd18 =  {{ vd18|safe }}
-            var vd19 =  {{ vd19|safe }}
-            var vd20 =  {{ vd20|safe }}
+</script>
+
+<!-- Highchart js. Variable map shown above -->
+<script>
+
+    $(document).ready(function() {
+        $(chart_id_psap).highcharts({
+            chart: chartPsap,
+            title: titlePsap,
+            xAxis: xAxisPsap,
+            yAxis: yAxisPsap,
+            series: seriesPsap
+        });
+    });
+</script>
 
 
-            var vd21 =  {{ vd21|safe }}
-            var vd22 =  {{ vd22|safe }}
-            var vd23 =  {{ vd23|safe }}
-            var vd24 =  {{ vd24|safe }}
-            var vd25 =  {{ vd25|safe }}
-            var vd26 =  {{ vd26|safe }}
-            var vd27 =  {{ vd27|safe }}
-            var vd28 =  {{ vd28|safe }}
-            var vd29 =  {{ vd29|safe }}
-            var vd30 =  {{ vd30|safe }}
+<!--###################-->
+<!--####### APS #######-->
+<!--###################-->
+<script>
+    var chart_id_aps = {{ chartIDAps|safe }}
+    var chartAps =   {{ chartAps|safe }}
+    var chartAps2 =   {{ chartAps2|safe }}
+    var titleAps =   {{ titleAps|safe }}
+    var xAxisAps =   {{ xAxisAps|safe }}
+    var yAxisAps =   {{ yAxisAps|safe }}
+    var seriesAps =  {{ seriesAps|safe }}
+    var vd1 =  {{ vd1|safe }}
+    var vd2 =  {{ vd2|safe }}
+    var vd3 =  {{ vd3|safe }}
+    var vd4 =  {{ vd4|safe }}
+    var vd5 =  {{ vd5|safe }}
+    var vd6 =  {{ vd6|safe }}
+    var vd7 =  {{ vd7|safe }}
+    var vd8 =  {{ vd8|safe }}
+    var vd9 =  {{ vd9|safe }}
+    var vd10 =  {{ vd10|safe }}
+    var vd11 =  {{ vd11|safe }}
+    var vd12 =  {{ vd12|safe }}
+    var vd13 =  {{ vd13|safe }}
+    var vd14 =  {{ vd14|safe }}
+    var vd15 =  {{ vd15|safe }}
+    var vd16 =  {{ vd16|safe }}
+    var vd17 =  {{ vd17|safe }}
+    var vd18 =  {{ vd18|safe }}
+    var vd19 =  {{ vd19|safe }}
+    var vd20 =  {{ vd20|safe }}
+    var vd21 =  {{ vd21|safe }}
+    var vd22 =  {{ vd22|safe }}
+    var vd23 =  {{ vd23|safe }}
+    var vd24 =  {{ vd24|safe }}
+    var vd25 =  {{ vd25|safe }}
+    var vd26 =  {{ vd26|safe }}
+    var vd27 =  {{ vd27|safe }}
+    var vd28 =  {{ vd28|safe }}
+    var vd29 =  {{ vd29|safe }}
+    var vd30 =  {{ vd30|safe }}
+    var vd31 =  {{ vd31|safe }}
+    var vd32 =  {{ vd32|safe }}
+    var vd33 =  {{ vd33|safe }}
+    var vd34 =  {{ vd34|safe }}
+    var vd35 =  {{ vd35|safe }}
+    var vd36 =  {{ vd36|safe }}
+    var vd37 =  {{ vd37|safe }}
+    var vd38 =  {{ vd38|safe }}
+    var vd39 =  {{ vd39|safe }}
+    var vd40 =  {{ vd40|safe }}
+    var vd41 =  {{ vd41|safe }}
+    var vd42 =  {{ vd42|safe }}
+    var vd43 =  {{ vd43|safe }}
+    var vd44 =  {{ vd44|safe }}
+    var vd45 =  {{ vd45|safe }}
+    var vd46 =  {{ vd46|safe }}
+    var vd47 =  {{ vd47|safe }}
+    var vd48 =  {{ vd48|safe }}
+    var vd49 =  {{ vd49|safe }}
+    var vd50 =  {{ vd50|safe }}
+    var vd51 =  {{ vd51|safe }}
+    var vd52 =  {{ vd52|safe }}
+    var vd53 =  {{ vd53|safe }}
+    var vd54 =  {{ vd54|safe }}
+    var vd55 =  {{ vd55|safe }}
+    var vd56 =  {{ vd56|safe }}
+    var vd57 =  {{ vd57|safe }}
+    var vd58 =  {{ vd58|safe }}
+    var vd59 =  {{ vd59|safe }}
+
+    // var v1d1 =  {{ v1d1|safe }}
+    // var v1d2 =  {{ v1d2|safe }}
+    // var v1d3 =  {{ v1d3|safe }}
+    // var v1d4 =  {{ v1d4|safe }}
+    // var v1d5 =  {{ v1d5|safe }}
+    // var v1d6 =  {{ v1d6|safe }}
+    // var v1d7 =  {{ v1d7|safe }}
+    // var v1d8 =  {{ v1d8|safe }}
+    // var v1d9 =  {{ v1d9|safe }}
+    // var v1d10 =  {{ v1d10|safe }}
+    // var v1d11 =  {{ v1d11|safe }}
+    // var v1d12 =  {{ v1d12|safe }}
+    // var v1d13 =  {{ v1d13|safe }}
+    // var v1d14 =  {{ v1d14|safe }}
+    // var v1d15 =  {{ v1d15|safe }}
+    // var v1d16 =  {{ v1d16|safe }}
+    // var v1d17 =  {{ v1d17|safe }}
+    // var v1d18 =  {{ v1d18|safe }}
+    // var v1d19 =  {{ v1d19|safe }}
+    // var v1d20 =  {{ v1d20|safe }}
+    // var v1d21 =  {{ v1d21|safe }}
+    // var v1d22 =  {{ v1d22|safe }}
+    // var v1d23 =  {{ v1d23|safe }}
+    // var v1d24 =  {{ v1d24|safe }}
+    // var v1d25 =  {{ v1d25|safe }}
+    // var v1d26 =  {{ v1d26|safe }}
+    // var v1d27 =  {{ v1d27|safe }}
+    // var v1d28 =  {{ v1d28|safe }}
+    // var v1d29 =  {{ v1d29|safe }}
+    // var v1d30 =  {{ v1d30|safe }}
+    // var v1d31 =  {{ v1d31|safe }}
+    // var v1d32 =  {{ v1d32|safe }}
+    // var v1d33 =  {{ v1d33|safe }}
+    // var v1d34 =  {{ v1d34|safe }}
+    // var v1d35 =  {{ v1d35|safe }}
+    // var v1d36 =  {{ v1d36|safe }}
+    // var v1d37 =  {{ v1d37|safe }}
+    // var v1d38 =  {{ v1d38|safe }}
+    // var v1d39 =  {{ v1d39|safe }}
+    // var v1d40 =  {{ v1d40|safe }}
+    // var v1d41 =  {{ v1d41|safe }}
+    // var v1d42 =  {{ v1d42|safe }}
+    // var v1d43 =  {{ v1d43|safe }}
+    // var v1d44 =  {{ v1d44|safe }}
+    // var v1d45 =  {{ v1d45|safe }}
+    // var v1d46 =  {{ v1d46|safe }}
+    // var v1d47 =  {{ v1d47|safe }}
+    // var v1d48 =  {{ v1d48|safe }}
+    // var v1d49 =  {{ v1d49|safe }}
+    // var v1d50 =  {{ v1d50|safe }}
+    // var v1d51 =  {{ v1d51|safe }}
+    // var v1d52 =  {{ v1d52|safe }}
+    // var v1d53 =  {{ v1d53|safe }}
+    // var v1d54 =  {{ v1d54|safe }}
+    // var v1d55 =  {{ v1d55|safe }}
+    // var v1d56 =  {{ v1d56|safe }}
+    // var v1d57 =  {{ v1d57|safe }}
+    // var v1d58 =  {{ v1d58|safe }}
+    // var v1d59 =  {{ v1d59|safe }}
+
+</script>
+
+<!-- Highchart js. Variable map shown above -->
+<script>
+
+    $(document).ready(function() {
+        $(chart_id_aps).highcharts({
+            chart: chartAps,
+            title: titleAps,
+            xAxis: xAxisAps,
+            yAxis: yAxisAps,
+            series: seriesAps
+        });
+    });
 
 
-            var vd31 =  {{ vd31|safe }}
-            var vd32 =  {{ vd32|safe }}
-            var vd33 =  {{ vd33|safe }}
-            var vd34 =  {{ vd34|safe }}
-            var vd35 =  {{ vd35|safe }}
-            var vd36 =  {{ vd36|safe }}
-            var vd37 =  {{ vd37|safe }}
-            var vd38 =  {{ vd38|safe }}
-            var vd39 =  {{ vd39|safe }}
-            var vd40 =  {{ vd40|safe }}
+</script>
 
-
-            var vd41 =  {{ vd41|safe }}
-            var vd42 =  {{ vd42|safe }}
-            var vd43 =  {{ vd43|safe }}
-            var vd44 =  {{ vd44|safe }}
-            var vd45 =  {{ vd45|safe }}
-            var vd46 =  {{ vd46|safe }}
-            var vd47 =  {{ vd47|safe }}
-            var vd48 =  {{ vd48|safe }}
-            var vd49 =  {{ vd49|safe }}
-            var vd50 =  {{ vd50|safe }}
-
-
-            var vd51 =  {{ vd51|safe }}
-            var vd52 =  {{ vd52|safe }}
-            var vd53 =  {{ vd53|safe }}
-            var vd54 =  {{ vd54|safe }}
-            var vd55 =  {{ vd55|safe }}
-            var vd56 =  {{ vd56|safe }}
-            var vd57 =  {{ vd57|safe }}
-            var vd58 =  {{ vd58|safe }}
-            var vd59 =  {{ vd59|safe }}
-
-        </script>
-
-        <!-- Highchart js. Variable map shown above -->
-        <script>
-
-            $(document).ready(function() {
-                $(chart_id_aps).highcharts({
-                    chart: chartAps,
-                    title: titleAps,
-                    xAxis: xAxisAps,
-                    yAxis: yAxisAps,
-                    series: seriesAps
-                });
-            });
-
-
-        </script>
 
 
 
     <h2>APS UBI 2</h2>
     <div class="boxGray">
     <!--TRY 2 -->
+
         <figure class="highcharts-figure">
             <div id="apsid"></div>
         </figure>
@@ -266,7 +320,20 @@
                         name = 'vd';
                 }
             }
-            // console.log(data_list);
+
+            // const data_list_1 = [];
+            // let name_1 = 'v1d'
+            // // [0, 0, v1d1], [0, 1, v1d2], [0, 2, v1d3]....
+            // for (let x = 0; x <= 5; x++) {
+            //     for (let y = 10; y <= 19; y++) {
+            //             name_1 = name_1 + (x*10 +(y+1));
+            //             data_list_1.push([x,y,window[name_1]]);
+            //             name_1 = 'v1d';
+            //     }
+            // }
+
+
+            console.log(data_list);
 
             function getPointCategoryName(point, dimension) {
             var series = point.series,
@@ -306,7 +373,7 @@
                                 xName = getPointCategoryName(point, 'x'),
                                 yName = getPointCategoryName(point, 'y'),
                                 val = point.value;
-                            return ix + '. ' + xName + ' sales ' + yName + ', ' + val + '.';
+                            return ix + '. ' + xName + ' time ' + yName + ', ' + val + '.' + 'change this is data3.HTML';
                         }
                     }
                 },
@@ -334,7 +401,7 @@
                 },
                 tooltip: {
                     formatter: function () {
-                        return 'On <b>' + getPointCategoryName(this.point, 'x') + '</b> <br> there was <b>' +
+                        return 'At <b>' + getPointCategoryName(this.point, 'x') + '</b> <br> there was <b>' +
                             this.point.value + '</b> particules of <b>' + getPointCategoryName(this.point, 'y') + '</b>';
                     }
                 },
