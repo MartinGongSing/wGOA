@@ -43,10 +43,14 @@
 
 <div class="column">
     <div class="boxGray">
-        <h2>APS UBI First try </h2>
+        <!-- This line (down) has to be here for it to work -->
+        <div id={{ chartIDAps|safe }} class="chart" style="height:1px; width:100%"></div>
+        <!-- This line (up) has to be here for it to work -->
+        <h2>APS UBI 2</h2>
         <p> {{ dayaps|safe }} </p>
-    <!--TRY 1 -->
-        <div id={{ chartIDAps|safe }} class="chart" style="height:500px; width:100%"></div>
+        <figure class="highcharts-figure">
+            <div id="apsid"></div>
+        </figure>
     </div>
 </div>
 
@@ -62,9 +66,9 @@
 
 
 
-        <!--###################-->
-        <!--####### CPC #######-->
-        <!--###################-->
+<!--###################-->
+<!--####### CPC #######-->
+<!--###################-->
 
 <script>
     var chart_id =  {{ chartID|safe }}
@@ -86,8 +90,6 @@
         });
     });
 </script>
-
-
 
 
 <!--####################-->
@@ -121,6 +123,7 @@
 <!--####################-->
 <!--####### PSAP #######-->
 <!--####################-->
+
 <script>
     var chart_id_psap = {{ chartIDPsap|safe }}
     var chartPsap =   {{ chartPsap|safe }}
@@ -149,6 +152,7 @@
 <!--###################-->
 <!--####### APS #######-->
 <!--###################-->
+
 <script>
     var chart_id_aps = {{ chartIDAps|safe }}
     var chartAps =   {{ chartAps|safe }}
@@ -156,38 +160,14 @@
     var titleAps =   {{ titleAps|safe }}
     var xAxisAps =   {{ xAxisAps|safe }}
     var yAxisAps =   {{ yAxisAps|safe }}
-    var seriesAps =  {{ seriesAps|safe }}
-
-
-
 </script>
 
-<!-- Highchart js. Variable map shown above -->
-<script>
-
-    $(document).ready(function() {
-        $(chart_id_aps).highcharts({
-            chart: chartAps,
-            title: titleAps,
-            xAxis: xAxisAps,
-            yAxis: yAxisAps,
-            series: seriesAps
-        });
-    });
+<div class="boxGray">
 
 
-</script>
-
-
-
-
-    <h2>APS UBI 2</h2>
-    <div class="boxGray">
     <!--TRY 2 -->
 
-        <figure class="highcharts-figure">
-            <div id="apsid"></div>
-        </figure>
+
 
 <!-- SCRIPT FOR ALL DATA IN LIST -->
         <script>
