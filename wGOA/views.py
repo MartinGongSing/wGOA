@@ -350,9 +350,28 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     titleAps = {"text": 'APS UBI'}
     xAxisAps= {"categories": data['IDaps'],}
     yAxisAps= {
-        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10'], #'type': 'logarithmic', #precise logarithmic scale define upper limit    ,'d11','d12','d13','d14','d15','d16','d17','d18','d19'
+        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12','d13','d14','d15','d16','d17','d18','d19'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
     }
     dayaps = data["dayaps"][0] + " - " + data["dayaps"][-1]
+    datatest1 = data['d1']
+    datatest2 = data['d2']
+    datatest3 = data['d3']
+    datatest4 = data['d4']
+    datatest5 = data['d5']
+    datatest6 = data['d6']
+    datatest7 = data['d7']
+    datatest8 = data['d8']
+    datatest9 = data['d9']
+    datatest10 = data['d10']
+    datatest11 = data['d11']
+    datatest12 = data['d12']
+    datatest13 = data['d13']
+    datatest14 = data['d14']
+    datatest15 = data['d15']
+    datatest16 = data['d16']
+    datatest17 = data['d17']
+    datatest18 = data['d18']
+    datatest19 = data['d19']
 
     vd1 = data['d1'][20]
     vd2 = data['d2'][20]
@@ -432,81 +451,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 
 
 
-    #############################
 
-    # v1d1 = data['d11'][20]
-    # v1d2 = data['d12'][20]
-    # v1d3 = data['d13'][20]
-    # v1d4 = data['d14'][20]
-    # v1d5 = data['d15'][20]
-    # v1d6 = data['d16'][20]
-    # v1d7 = data['d17'][20]
-    # v1d8 = data['d18'][20]
-    # v1d9 = data['d19'][20]
-    # v1d10 = data['d10'][20]
-    # v1d11 = data['d11'][21]
-    # v1d12 = data['d12'][21]
-    # v1d13 = data['d13'][21]
-    # v1d14 = data['d14'][21]
-    # v1d15 = data['d15'][21]
-    # v1d16 = data['d16'][21]
-    # v1d17 = data['d17'][21]
-    # v1d18 = data['d18'][21]
-    # v1d19 = data['d19'][21]
-    # v1d20 = data['d10'][21]
-    # v1d21 = data['d11'][22]
-    # v1d22 = data['d12'][22]
-    # v1d23 = data['d13'][22]
-    # v1d24 = data['d14'][22]
-    # v1d25 = data['d15'][22]
-    # v1d26 = data['d16'][22]
-    # v1d27 = data['d17'][22]
-    # v1d28 = data['d18'][22]
-    # v1d29 = data['d19'][22]
-    # v1d30 = data['d10'][22]
-    # v1d31 = data['d11'][23]
-    # v1d32 = data['d12'][23]
-    # v1d33 = data['d13'][23]
-    # v1d34 = data['d14'][23]
-    # v1d35 = data['d15'][23]
-    # v1d36 = data['d16'][23]
-    # v1d37 = data['d17'][23]
-    # v1d38 = data['d18'][23]
-    # v1d39 = data['d19'][23]
-    # v1d40 = data['d10'][23]
-    # v1d41 = data['d11'][24]
-    # v1d42 = data['d12'][24]
-    # v1d43 = data['d13'][24]
-    # v1d44 = data['d14'][24]
-    # v1d45 = data['d15'][24]
-    # v1d46 = data['d16'][24]
-    # v1d47 = data['d17'][24]
-    # v1d48 = data['d18'][24]
-    # v1d49 = data['d19'][24]
-    # v1d50 = data['d10'][24]
-    # v1d51 = data['d11'][25]
-    # v1d52 = data['d12'][25]
-    # v1d53 = data['d13'][25]
-    # v1d54 = data['d14'][25]
-    # v1d55 = data['d15'][25]
-    # v1d56 = data['d16'][25]
-    # v1d57 = data['d17'][25]
-    # v1d58 = data['d18'][25]
-    # v1d59 = data['d19'][25]
-    # v1d60 = data['d10'][25]
-    # v1d61 = data['d11'][26]
-    # v1d62 = data['d12'][26]
-    # v1d63 = data['d13'][26]
-    # v1d64 = data['d14'][26]
-    # v1d65 = data['d15'][26]
-    # v1d66 = data['d16'][26]
-    # v1d67 = data['d17'][26]
-    # v1d68 = data['d18'][26]
-    # v1d69 = data['d19'][26]
-
-
-
-    ############################
 
 
     seriesAps = [
@@ -567,6 +512,25 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                                         'yAxisAps': yAxisAps,
                                         'seriesAps': seriesAps,
                                         'dayaps' : dayaps,
+        'datatest1': datatest1,
+        'datatest2': datatest2,
+        'datatest3': datatest3,
+        'datatest4': datatest4,
+        'datatest5': datatest5,
+        'datatest6': datatest6,
+        'datatest7': datatest7,
+        'datatest8': datatest8,
+        'datatest9': datatest9,
+        'datatest10': datatest10,
+        'datatest11': datatest11,
+        'datatest12': datatest12,
+        'datatest13': datatest13,
+        'datatest14': datatest14,
+        'datatest15': datatest15,
+        'datatest16': datatest16,
+        'datatest17': datatest17,
+        'datatest18': datatest18,
+        'datatest19': datatest19,
 
                                         'vd1': vd1,
                                         'vd2': vd2,

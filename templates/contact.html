@@ -26,74 +26,46 @@ https://www.twilio.com/blog/build-contact-form-python-django-twilio-sendgrid
 
 <div class="boxGray">
     <form method="post" action="" class="ccform">
-    <div class="ccfield-prepend">
-        <span class="ccform-addon"><i class="fa fa-user fa-2x"></i></span>
-        <input class="ccformfield" type="text" placeholder="Full Name" required>
-    </div>
-    <div class="ccfield-prepend">
-        <span class="ccform-addon"><i class="fa fa-envelope fa-2x"></i></span>
-        <input class="ccformfield" type="text" placeholder="Email" required>
-    </div>
-    <div class="ccfield-prepend">
-        <span class="ccform-addon"><i class="fa fa-mobile-phone fa-2x"></i></span>
-        <input class="ccformfield" type="text" placeholder="Phone">
-    </div>
-     <div class="ccfield-prepend">
-        <span class="ccform-addon"><i class="fa fa-info fa-2x"></i></span>
-        <input class="ccformfield" type="text" placeholder="Subject" required>
-    </div>
-    <div class="ccfield-prepend">
-        <span class="ccform-addon"><i class="fa fa-comment fa-2x"></i></span>
-        <textarea class="ccformfield" name="comments" rows="8" placeholder="Message" required></textarea>
-    </div>
-    <div class="ccfield-prepend">
-        <input class="ccbtn" type="submit" value="Submit">
-    </div>
+
+        <div class="ccfield-prepend">
+            <span class="ccform-addon"><i class="fa fa-user fa-2x"></i></span>
+            <input class="ccformfield" type="text" placeholder="Full Name" required>
+        </div>
+
+
+        <div class="ccfield-prepend">
+            <span class="ccform-addon"><i class="fa fa-envelope fa-2x"></i></span>
+            <input class="ccformfield" type="text" placeholder="Email" required>
+        </div>
+
+
+        <div class="ccfield-prepend">
+            <span class="ccform-addon"><i class="fa fa-mobile-phone fa-2x"></i></span>
+            <input class="ccformfield" type="text" placeholder="Phone">
+        </div>
+
+
+         <div class="ccfield-prepend">
+            <span class="ccform-addon"><i class="fa fa-info fa-2x"></i></span>
+            <input class="ccformfield" type="text" placeholder="Subject" required>
+        </div>
+
+
+        <div class="ccfield-prepend">
+            <span class="ccform-addon"><i class="fa fa-comment fa-2x"></i></span>
+            <textarea class="ccformfield" name="comments" rows="8" placeholder="Message" required></textarea>
+        </div>
+
+
+        <div class="ccfield-prepend">
+            <input class="ccbtn" type="submit" value="Submit">
+        </div>
     </form>
 </div>
 
 
 
 
-aaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
-
-
-<form action="" method="post">
-   <input type="hidden" name="csrfmiddlewaretoken" value="fSB0809gbOaKm1v0fdz4Bb0XItQ3JUPduph8lXtRIUBHQMSK2TJxzDJYaaZ1MQID">
-   <tr>
-    <th><label for="id_email">Email:</label></th>
-    <td>
-
-      <input type="email" name="email" maxlength="254" required id="id_email">
-
-
-    </td>
-  </tr>
-
-  <tr>
-    <th><label for="id_subject">Subject:</label></th>
-    <td>
-
-      <input type="text" name="subject" maxlength="255" required id="id_subject">
-
-
-    </td>
-  </tr>
-
-  <tr>
-    <th><label for="id_message">Message:</label></th>
-    <td>
-
-      <textarea name="message" cols="40" rows="10" required id="id_message">
-</textarea>
-
-
-
-
-    </td>
-  </tr>
-   <input type="submit" value="Submit">
-</form>
 
 {% endblock content %}
