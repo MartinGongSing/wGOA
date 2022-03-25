@@ -181,7 +181,7 @@ class ChartData(object):
 
         data = {'ID': [], 'N': [], 'daycpc': [],
                 'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [], 'dayneph': [],
-                'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],
+                'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],'d20': [],'d21': [],'d22': [], 'd23': [], 'd24': [],'d25': [],'d26': [],'d27': [],'d28': [],'d29': [],
                 'IDpsap': [], 'pblue': [], 'pred': [], 'pgreen': [], 'daypsap': [],
                 }
 
@@ -197,13 +197,12 @@ class ChartData(object):
             data['daycpc'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%Y/%m/%d"))
             data['N'].append(unit.N)
 
+
+
         ####################
         ##### Neph_UBI #####
         ####################
-
         nephes = neph2.objects.order_by('ID')[:20]
-
-
 
         for unity in nephes:
 
@@ -216,12 +215,10 @@ class ChartData(object):
             data['bsred'].append(unity.bsred)
             data['bsgreen'].append(unity.bsgreen)
 
-        #
-        # print(testTime)
+
         ####################
         ##### PSAP_UBI #####
         ####################
-
         psapes = psap.objects.order_by('ID')[:20]
 
         for unites in psapes:
@@ -236,8 +233,6 @@ class ChartData(object):
         ###################
         ##### APS_UBI #####
         ###################
-
-
         apses = aps.objects.order_by('ID')[:40]
 
         upperLimit = 600
@@ -264,7 +259,16 @@ class ChartData(object):
             data['d17'].append(isGreaterThan(unita.d17, upperLimit))
             data['d18'].append(isGreaterThan(unita.d18, upperLimit))
             data['d19'].append(isGreaterThan(unita.d19, upperLimit))
-
+            data['d20'].append(isGreaterThan(unita.d20, upperLimit))
+            data['d21'].append(isGreaterThan(unita.d21, upperLimit))
+            data['d22'].append(isGreaterThan(unita.d22, upperLimit))
+            data['d23'].append(isGreaterThan(unita.d23, upperLimit))
+            data['d24'].append(isGreaterThan(unita.d24, upperLimit))
+            data['d25'].append(isGreaterThan(unita.d25, upperLimit))
+            data['d26'].append(isGreaterThan(unita.d26, upperLimit))
+            data['d27'].append(isGreaterThan(unita.d27, upperLimit))
+            data['d28'].append(isGreaterThan(unita.d28, upperLimit))
+            data['d29'].append(isGreaterThan(unita.d29, upperLimit))
 
         return data
 
@@ -295,7 +299,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     series = [
         {"name": 'N/#/cm3', "data": data['N'], "color":"#333fff"},
         ]
-    daycpc = data["daycpc"][0] + " - " + data["daycpc"][-1]
+    daycpc = {"text": data["daycpc"][0] + " - " + data["daycpc"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
     ####################
     ##### Neph_UBI #####
@@ -313,7 +317,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         {"name": 'bigRed',   "yAxis": 1,  "data": data['bsred'],   "color":"#ff6e6e",    "marker": {"symbol": "circle"}    },
         {"name": 'bigGreen', "yAxis": 1,  "data": data['bsgreen'], "color":"#81de8b",    "marker": {"symbol": "circle"}    },
     ]
-    dayneph = data["dayneph"][0] + " - " + data["dayneph"][-1]
+    dayneph = {"text" : data["dayneph"][0] + " - " + data["dayneph"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
     ####################
     ##### PSAP_UBI #####
@@ -329,7 +333,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         {"name": 'Green', "data": data['pgreen'], "color": "#33ff49"},
 
     ]
-    daypsap = data["daypsap"][0] + " - " + data["daypsap"][-1]
+    daypsap = {"text": data["daypsap"][0] + " - " + data["daypsap"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
 
 
@@ -348,11 +352,12 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                 "plotBorderWidth": 1,
                 "renderTo": chartIDAps, "height": chart_height, }
     titleAps = {"text": 'APS UBI'}
-    xAxisAps= {"categories": data['IDaps'],}
+    xAxisAps= {"title": {"text": 'Time'}, "categories": data['IDaps'],}
     yAxisAps= {
-        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12','d13','d14','d15','d16','d17','d18','d19'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
+        "title": {"text": 'Particule size'},
+        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12','d13','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24','d25','d26','d27','d28','d29'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
     }
-    dayaps = data["dayaps"][0] + " - " + data["dayaps"][-1]
+    dayaps = {"text" : data["dayaps"][0] + " - " + data["dayaps"][-1], "verticalAlign": 'bottom', "align": 'right'}
     datatest1 = data['d1']
     datatest2 = data['d2']
     datatest3 = data['d3']
@@ -372,6 +377,16 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     datatest17 = data['d17']
     datatest18 = data['d18']
     datatest19 = data['d19']
+    datatest20 = data['d20']
+    datatest21 = data['d21']
+    datatest22 = data['d22']
+    datatest23 = data['d23']
+    datatest24 = data['d24']
+    datatest25 = data['d25']
+    datatest26 = data['d26']
+    datatest27 = data['d27']
+    datatest28 = data['d28']
+    datatest29 = data['d29']
 
 
 
@@ -432,7 +447,16 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         'datatest17': datatest17,
         'datatest18': datatest18,
         'datatest19': datatest19,
-
+        'datatest20': datatest20,
+        'datatest21': datatest21,
+        'datatest22': datatest22,
+        'datatest23': datatest23,
+        'datatest24': datatest24,
+        'datatest25': datatest25,
+        'datatest26': datatest26,
+        'datatest27': datatest27,
+        'datatest28': datatest28,
+        'datatest29': datatest29,
 
     })
 
