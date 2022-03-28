@@ -193,7 +193,7 @@ class ChartData(object):
         valves = cpc2.objects.order_by('ID')[:40]  # we take only 40 items
 
         for unit in valves:
-            data['ID'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%H:%M:%S")) #change the timestamp
+            data['ID'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%H:%M")) #change the timestamp
             data['daycpc'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%Y/%m/%d"))
             data['N'].append(unit.N)
 
@@ -206,14 +206,14 @@ class ChartData(object):
 
         for unity in nephes:
 
-            data['IDneph'].append(datetime.fromtimestamp(unity.ID/1000).strftime( "%H:%M:%S"))
+            data['IDneph'].append(datetime.fromtimestamp(unity.ID/1000).strftime( "%H:%M"))
             data['dayneph'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
-            data['sblue'].append(unity.sblue)
-            data['sred'].append(unity.sred)
-            data['sgreen'].append(unity.sgreen)
-            data['bsblue'].append(unity.bsblue)
-            data['bsred'].append(unity.bsred)
-            data['bsgreen'].append(unity.bsgreen)
+            data['sblue'].append(unity.sblue * 1000000) # x 10^6
+            data['sred'].append(unity.sred * 1000000)
+            data['sgreen'].append(unity.sgreen * 1000000)
+            data['bsblue'].append(unity.bsblue * 1000000)
+            data['bsred'].append(unity.bsred * 1000000)
+            data['bsgreen'].append(unity.bsgreen * 1000000)
 
 
         ####################
@@ -222,7 +222,7 @@ class ChartData(object):
         psapes = psap.objects.order_by('ID')[:20]
 
         for unites in psapes:
-            data['IDpsap'].append(datetime.fromtimestamp(unites.ID/1000).strftime( "%H:%M:%S"))
+            data['IDpsap'].append(datetime.fromtimestamp(unites.ID/1000).strftime( "%H:%M"))
             data['daypsap'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
             data['pblue'].append(unites.blue)
             data['pred'].append(unites.red)
@@ -238,7 +238,7 @@ class ChartData(object):
         upperLimit = 600
 
         for unita in apses:
-            data['IDaps'].append(datetime.fromtimestamp(unita.ID/1000).strftime( "%H:%M:%S"))
+            data['IDaps'].append(datetime.fromtimestamp(unita.ID/1000).strftime( "%H:%M"))
             data['dayaps'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
             data['d1'].append(isGreaterThan(unita.d1,upperLimit))
             data['d2'].append(isGreaterThan(unita.d2,upperLimit))
@@ -308,14 +308,14 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     chartNeph = {"renderTo": chartIDNeph, "type": chart_type_neph, "height": chart_height, }
     titleNeph = {"text": 'Neph UBI'}
     xAxisNeph = {"title": {"text": 'Time'}, "categories": data['IDneph']}
-    yAxisNeph = [{"title": {"text": '/\ σ<sub>s,bs</sub>/Mm<sup>-1</sup>'}, },{"title": {"text": 'o σ<sub>s,bs</sub>/Mm<sup>-1</sup>'},"opposite": "true"}] #TODO : Opposite axis
+    yAxisNeph = [{"title": {"text": '/\ σ<sub>s,bs</sub>/Mm<sup>-1</sup> *10^6'}, },{"title": {"text": 'o σ<sub>s,bs</sub>/Mm<sup>-1</sup> *10^6'},"opposite": "true"}] #TODO : Opposite axis
     seriesNeph = [
-        {"name": 'Blue',     "yAxis": 0,  "data": data['sblue'],   "color":"#333fff",    "marker": {"symbol": "triangle"}  },
-        {"name": 'Red',      "yAxis": 0,  "data": data['sred'],    "color":"#ff3333",    "marker": {"symbol": "triangle"}    },
-        {"name": 'Green',    "yAxis": 0,  "data": data['sgreen'],  "color":"#33ff49",    "marker": {"symbol": "triangle"}    },
-        {"name": 'bigBlue',  "yAxis": 1,  "data": data['bsblue'],  "color":"#8286ff",    "marker": {"symbol": "circle"}  },
-        {"name": 'bigRed',   "yAxis": 1,  "data": data['bsred'],   "color":"#ff6e6e",    "marker": {"symbol": "circle"}    },
-        {"name": 'bigGreen', "yAxis": 1,  "data": data['bsgreen'], "color":"#81de8b",    "marker": {"symbol": "circle"}    },
+        {"name": 'sBlue',     "yAxis": 0,  "data": data['sblue'],   "color":"#333fff",    "marker": {"symbol": "triangle"}  },
+        {"name": 'sRed',      "yAxis": 0,  "data": data['sred'],    "color":"#ff3333",    "marker": {"symbol": "triangle"}    },
+        {"name": 'sGreen',    "yAxis": 0,  "data": data['sgreen'],  "color":"#33ff49",    "marker": {"symbol": "triangle"}    },
+        {"name": 'bBlue',  "yAxis": 1,  "data": data['bsblue'],  "color":"#8286ff",    "marker": {"symbol": "circle"}  },
+        {"name": 'bRed',   "yAxis": 1,  "data": data['bsred'],   "color":"#ff6e6e",    "marker": {"symbol": "circle"}    },
+        {"name": 'bGreen', "yAxis": 1,  "data": data['bsgreen'], "color":"#81de8b",    "marker": {"symbol": "circle"}    },
     ]
     dayneph = {"text" : data["dayneph"][0] + " - " + data["dayneph"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
