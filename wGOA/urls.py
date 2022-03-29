@@ -31,6 +31,7 @@ urlpatterns = [
     path('instrum_detail/<int:id>/', views.dyna_instrum, name='instrum_detail'),
     path('station/', views.station, name='station'),
     path('intranet/', views.intranet, name='intranet'),
+    path('previous/', views.previous, name='previous'),
     path('contact/', views.contact, name='contact'),
 
     path('webcam_feed', views.webcam_feed, name='webcam_feed'),

@@ -122,6 +122,13 @@ def intranet(request):
     html_template = loader.get_template('intranet.html')
     return HttpResponse(html_template.render(context, request))
 
+def previous(request):
+
+    context = {'segment': 'previous'}
+
+    html_template = loader.get_template('previous.html')
+    return HttpResponse(html_template.render(context, request))
+
 def contact(request):
 
     if request.method == 'POST':
@@ -190,7 +197,7 @@ class ChartData(object):
         ###################
 
         # valves = cpc2.objects.all() # we take all the items
-        valves = cpc2.objects.order_by('ID')[:40]  # we take only 40 items
+        valves = cpc2.objects.order_by('ID')[:288]  # we take only 40 items
 
         for unit in valves:
             data['ID'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%H:%M")) #change the timestamp
@@ -202,7 +209,7 @@ class ChartData(object):
         ####################
         ##### Neph_UBI #####
         ####################
-        nephes = neph2.objects.order_by('ID')[:20]
+        nephes = neph2.objects.order_by('ID')[:1440]
 
         for unity in nephes:
 
@@ -219,7 +226,7 @@ class ChartData(object):
         ####################
         ##### PSAP_UBI #####
         ####################
-        psapes = psap.objects.order_by('ID')[:20]
+        psapes = psap.objects.order_by('ID')[:1440]
 
         for unites in psapes:
             data['IDpsap'].append(datetime.fromtimestamp(unites.ID/1000).strftime( "%H:%M"))
@@ -233,7 +240,7 @@ class ChartData(object):
         ###################
         ##### APS_UBI #####
         ###################
-        apses = aps.objects.order_by('ID')[:40]
+        apses = aps.objects.order_by('ID')[:144]
 
         upperLimit = 600
 
@@ -308,14 +315,14 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     chartNeph = {"renderTo": chartIDNeph, "type": chart_type_neph, "height": chart_height, }
     titleNeph = {"text": 'Neph UBI'}
     xAxisNeph = {"title": {"text": 'Time'}, "categories": data['IDneph']}
-    yAxisNeph = [{"title": {"text": '/\ σ<sub>s,bs</sub>/Mm<sup>-1</sup> *10^6'}, },{"title": {"text": 'o σ<sub>s,bs</sub>/Mm<sup>-1</sup> *10^6'},"opposite": "true"}] #TODO : Opposite axis
+    yAxisNeph = [{"title": {"text": 'σs/Mm<sup>-1 *10^6'}, },{"title": {"text": 'bs/Mm-1 *10^6'},"opposite": "true"}] #TODO : Opposite axis
     seriesNeph = [
         {"name": 'sBlue',     "yAxis": 0,  "data": data['sblue'],   "color":"#333fff",    "marker": {"symbol": "triangle"}  },
         {"name": 'sRed',      "yAxis": 0,  "data": data['sred'],    "color":"#ff3333",    "marker": {"symbol": "triangle"}    },
         {"name": 'sGreen',    "yAxis": 0,  "data": data['sgreen'],  "color":"#33ff49",    "marker": {"symbol": "triangle"}    },
-        {"name": 'bBlue',  "yAxis": 1,  "data": data['bsblue'],  "color":"#8286ff",    "marker": {"symbol": "circle"}  },
-        {"name": 'bRed',   "yAxis": 1,  "data": data['bsred'],   "color":"#ff6e6e",    "marker": {"symbol": "circle"}    },
-        {"name": 'bGreen', "yAxis": 1,  "data": data['bsgreen'], "color":"#81de8b",    "marker": {"symbol": "circle"}    },
+        {"name": 'bBlue',  "yAxis": 1,  "data": data['bsblue'],  "color":"#b8bcfc",    "marker": {"symbol": "circle"}  },
+        {"name": 'bRed',   "yAxis": 1,  "data": data['bsred'],   "color":"#fab9b9",    "marker": {"symbol": "circle"}    },
+        {"name": 'bGreen', "yAxis": 1,  "data": data['bsgreen'], "color":"#b5f7bc",    "marker": {"symbol": "circle"}    },
     ]
     dayneph = {"text" : data["dayneph"][0] + " - " + data["dayneph"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
@@ -355,7 +362,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     xAxisAps= {"title": {"text": 'Time'}, "categories": data['IDaps'],}
     yAxisAps= {
         "title": {"text": 'Particule size'},
-        "categories": ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12','d13','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24','d25','d26','d27','d28','d29'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
+        "categories": ['0.0003','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12','d13','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24','d25','d26','d27','d28','d29'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
     }
     dayaps = {"text" : data["dayaps"][0] + " - " + data["dayaps"][-1], "verticalAlign": 'bottom', "align": 'right'}
     datatest1 = data['d1']
