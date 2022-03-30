@@ -188,7 +188,7 @@ class ChartData(object):
 
         data = {'ID': [], 'N': [], 'daycpc': [],
                 'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [], 'dayneph': [],
-                'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],'d20': [],'d21': [],'d22': [], 'd23': [], 'd24': [],'d25': [],'d26': [],'d27': [],'d28': [],'d29': [],
+                'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],'d20': [],'d21': [],'d22': [], 'd23': [], 'd24': [],'d25': [],'d26': [],'d27': [],'d28': [],'d29': [],'d30': [],'d31': [],'d32': [], 'd33': [], 'd34': [],'d35': [],'d36': [],'d37': [],'d38': [],'d39': [],'d40': [],'d41': [],'d42': [],'d43':[],
                 'IDpsap': [], 'pblue': [], 'pred': [], 'pgreen': [], 'daypsap': [],
                 }
 
@@ -276,6 +276,20 @@ class ChartData(object):
             data['d27'].append(isGreaterThan(unita.d27, upperLimit))
             data['d28'].append(isGreaterThan(unita.d28, upperLimit))
             data['d29'].append(isGreaterThan(unita.d29, upperLimit))
+            data['d30'].append(isGreaterThan(unita.d30, upperLimit))
+            data['d31'].append(isGreaterThan(unita.d31, upperLimit))
+            data['d32'].append(isGreaterThan(unita.d32, upperLimit))
+            data['d33'].append(isGreaterThan(unita.d33, upperLimit))
+            data['d34'].append(isGreaterThan(unita.d34, upperLimit))
+            data['d35'].append(isGreaterThan(unita.d35, upperLimit))
+            data['d36'].append(isGreaterThan(unita.d36, upperLimit))
+            data['d37'].append(isGreaterThan(unita.d37, upperLimit))
+            data['d38'].append(isGreaterThan(unita.d38, upperLimit))
+            data['d39'].append(isGreaterThan(unita.d39, upperLimit))
+            data['d40'].append(isGreaterThan(unita.d40, upperLimit))
+            data['d41'].append(isGreaterThan(unita.d41, upperLimit))
+            data['d42'].append(isGreaterThan(unita.d42, upperLimit))
+            data['d43'].append(isGreaterThan(unita.d43, upperLimit))
 
         return data
 
@@ -362,7 +376,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     xAxisAps= {"title": {"text": 'Time'}, "categories": data['IDaps'],}
     yAxisAps= {
         "title": {"text": 'Particule size'},
-        "categories": ['0.0003','d2','d3','d4','d5','d6','d7','d8','d9','d10','d11','d12','d13','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24','d25','d26','d27','d28','d29'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
+        "categories": ['<0.523','0.542','0.583','0.626','0.723','0.777','0.835','0.898','0.965','1.037','1.114','1.197','1.286','1.382','1;486','1.596','1.715','1.843','1.981','2.129','2.288','2.458','2.642','2.839','3.051','3.278','3.523','3.786','4.068','4.371','4.698','5.048','5.425','5.829','6.264','6.732','7.234','7.774','8.354','8.977','9.647','10.37','11.14'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
     }
     dayaps = {"text" : data["dayaps"][0] + " - " + data["dayaps"][-1], "verticalAlign": 'bottom', "align": 'right'}
     datatest1 = data['d1']
@@ -394,6 +408,20 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     datatest27 = data['d27']
     datatest28 = data['d28']
     datatest29 = data['d29']
+    datatest30 = data['d30']
+    datatest31 = data['d31']
+    datatest32 = data['d32']
+    datatest33 = data['d33']
+    datatest34 = data['d34']
+    datatest35 = data['d35']
+    datatest36 = data['d36']
+    datatest37 = data['d37']
+    datatest38 = data['d38']
+    datatest39 = data['d39']
+    datatest40 = data['d40']
+    datatest41 = data['d41']
+    datatest42 = data['d42']
+    datatest43 = data['d43']
 
 
 
@@ -464,6 +492,20 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         'datatest27': datatest27,
         'datatest28': datatest28,
         'datatest29': datatest29,
+        'datatest30': datatest30,
+        'datatest31': datatest31,
+        'datatest32': datatest32,
+        'datatest33': datatest33,
+        'datatest34': datatest34,
+        'datatest35': datatest35,
+        'datatest36': datatest36,
+        'datatest37': datatest37,
+        'datatest38': datatest38,
+        'datatest39': datatest39,
+        'datatest40': datatest40,
+        'datatest41': datatest41,
+        'datatest42': datatest42,
+        'datatest43': datatest43,
 
     })
 
