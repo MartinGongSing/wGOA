@@ -9,7 +9,7 @@ import requests
 import math
 from datetime import datetime
 import time
-from .models import cpc, instrument, cpc2, neph2, aps, psap
+from .models import cpc, instrument, cpc2, neph2, aps, psap, cpc3
 from django.db.models import Count, Q
 import json
 
@@ -168,22 +168,19 @@ def data1(request):
     resultdisplay = neph2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
     cpcdisplay = cpc2.objects.order_by('ID')[:10]
     psapdisplay = psap.objects.order_by('ID')[:10]
-    apsdisplay = aps.objects.order_by('ID')[:10]
+    apsdisplay = aps.objects.order_by('time')[:10]
     return render(request, "data.html", {'neph2': resultdisplay, 'cpc2': cpcdisplay, 'aps' : apsdisplay, 'psap' : psapdisplay})
 
 def data2(request):
     # resultdisplay = cpc2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
-    #
-    # return render(request, "data2.html", {'cpc2': resultdisplay})
+
     dataset = cpc.objects.order_by('Time')[:10]
-    # dataset = cpc2.objects \
-    #     .values('N') \
-    #     .order_by('ID')
+
     return render(request, 'data2.html', {'dataset': dataset})
 
 ########### Graphs     https://stackoverflow.com/questions/27810087/passing-django-database-queryset-to-highcharts-via-json
 class ChartData(object):
-    def check_valve_data():
+    def check_the_data():
 
 
         data = {'ID': [], 'N': [], 'daycpc': [],
@@ -196,10 +193,10 @@ class ChartData(object):
         ##### CPC_UBI #####
         ###################
 
-        # valves = cpc2.objects.all() # we take all the items
-        valves = cpc2.objects.order_by('ID')[:288]  # we take only 40 items
+        # cpces = cpc2.objects.all() # we take all the items
+        cpces = cpc2.objects.order_by('ID')[:288]  # we take only 40 items
 
-        for unit in valves:
+        for unit in cpces:
             data['ID'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%H:%M")) #change the timestamp
             data['daycpc'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%Y/%m/%d"))
             data['N'].append(unit.N)
@@ -214,7 +211,7 @@ class ChartData(object):
         for unity in nephes:
 
             data['IDneph'].append(datetime.fromtimestamp(unity.ID/1000).strftime( "%H:%M"))
-            data['dayneph'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
+            data['dayneph'].append(datetime.fromtimestamp(unity.ID / 1000).strftime("%Y/%m/%d"))
             data['sblue'].append(unity.sblue * 1000000) # x 10^6
             data['sred'].append(unity.sred * 1000000)
             data['sgreen'].append(unity.sgreen * 1000000)
@@ -230,7 +227,7 @@ class ChartData(object):
 
         for unites in psapes:
             data['IDpsap'].append(datetime.fromtimestamp(unites.ID/1000).strftime( "%H:%M"))
-            data['daypsap'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
+            data['daypsap'].append(datetime.fromtimestamp(unites.ID / 1000).strftime("%Y/%m/%d"))
             data['pblue'].append(unites.blue)
             data['pred'].append(unites.red)
             data['pgreen'].append(unites.green)
@@ -240,13 +237,13 @@ class ChartData(object):
         ###################
         ##### APS_UBI #####
         ###################
-        apses = aps.objects.order_by('ID')[:144]
+        apses = aps.objects.using('dataGOA').order_by('time')[:144]
 
         upperLimit = 600
 
         for unita in apses:
-            data['IDaps'].append(datetime.fromtimestamp(unita.ID/1000).strftime( "%H:%M"))
-            data['dayaps'].append(datetime.fromtimestamp(unit.ID / 1000).strftime("%Y/%m/%d"))
+            data['IDaps'].append(datetime.fromtimestamp(unita.time/1000).strftime( "%H:%M"))
+            data['dayaps'].append(datetime.fromtimestamp(unita.time/ 1000).strftime("%Y/%m/%d"))
             data['d1'].append(isGreaterThan(unita.d1,upperLimit))
             data['d2'].append(isGreaterThan(unita.d2,upperLimit))
             data['d3'].append(isGreaterThan(unita.d3,upperLimit))
@@ -307,7 +304,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
          chartIDPsap = "chartIDPsap", chart_type_psap = 'line',
          ):
 
-    data = ChartData.check_valve_data()
+    data = ChartData.check_the_data()
 
     ###################
     ##### CPC_UBI #####
@@ -553,4 +550,12 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 #     # resultdisplay = CPC.objects.all()
 #     html_template = loader.get_template('data.html')
 #     return HttpResponse(html_template.render(context, request, {'CPC': resultdisplay})) #, {'CPC': resultdisplay}
+
+
+
+def data4(request):
+    # resultdisplay = cpc.objects.all()
+
+    cpc3display = cpc3.objects.using('dataGOA').all() #order_by('time')[:10]
+    return render(request, "data4.html", {'cpc3': cpc3display})
 

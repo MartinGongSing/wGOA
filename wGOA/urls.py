@@ -36,6 +36,7 @@ urlpatterns = [
 
     path('webcam_feed', views.webcam_feed, name='webcam_feed'),
 
+    path('data4/', views.data4, name='data4'),
 
 
     # Matches any html file

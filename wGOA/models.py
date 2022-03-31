@@ -14,7 +14,7 @@ class cpc(models.Model):
         db_table = "cpc_ubi"
 
 class cpc2(models.Model):
-    ID = models.CharField(max_length = 100)
+    ID = models.CharField(max_length = 100)     #https://www.dark-hamster.com/web/how-to-solve-error-message-cannot-resolve-keyword-into-field-choices-are-when-running-django-application/
     N = models.CharField(max_length = 15)
     class Meta:
         db_table = "cpc_ubi_1"
@@ -40,7 +40,7 @@ class psap(models.Model):
         db_table = "psap_ubi"
 
 class aps(models.Model):
-    ID = models.CharField(max_length= 100)
+    time = models.CharField(max_length= 100,primary_key=True)
     d1 = models.CharField(max_length=15)
     d2 = models.CharField(max_length=15)
     d3 = models.CharField(max_length=15)
@@ -95,7 +95,7 @@ class aps(models.Model):
     d52 = models.CharField(max_length=15)
 
     class Meta:
-        db_table = "aps_ubi"
+        db_table = "APS_UBI"
 
 
 
@@ -115,3 +115,11 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class cpc3(models.Model):
+    # id = models.AutoField(primary_key=True)
+    time = models.CharField(max_length=100,primary_key=True)
+    N = models.CharField(max_length=15)
+    class Meta:
+        db_table = "CPC_UBI"

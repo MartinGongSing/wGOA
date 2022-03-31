@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %} data {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<h1>DATA</h1>
+
+
+<h2>CPC_UBI :</h2>
+
+    <table border="1">
+        <tr>
+            <th>time</th>
+            <th>N</th>
+        </tr>
+        {% for getdata in cpc3 %}
+        <tr>
+            <td>{{getdata.time}}</td>
+            <td>{{getdata.N}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
