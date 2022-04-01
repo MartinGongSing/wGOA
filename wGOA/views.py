@@ -160,6 +160,10 @@ def dyna_instrum(request, id):
 
 
 
+
+
+
+
 ############### DATA PAGES ###############
 
 def data1(request):
@@ -178,6 +182,9 @@ def data2(request):
 
     return render(request, 'data2.html', {'dataset': dataset})
 
+
+
+
 ########### Graphs     https://stackoverflow.com/questions/27810087/passing-django-database-queryset-to-highcharts-via-json
 class ChartData(object):
     def check_the_data():
@@ -194,99 +201,105 @@ class ChartData(object):
         ###################
 
         # cpces = cpc2.objects.all() # we take all the items
-        cpces = cpc2.objects.order_by('ID')[:288]  # we take only 40 items
+        # cpces = cpc2.objects.order_by('ID')[:288]  # we take only 40 items
 
-        for unit in cpces:
-            data['ID'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%H:%M")) #change the timestamp
-            data['daycpc'].append(datetime.fromtimestamp(unit.ID/1000).strftime("%Y/%m/%d"))
-            data['N'].append(unit.N)
+        cpc3display = cpc3.objects.using('dataGOA').order_by('-time')[:288]
+        print(type(cpc3display))
+
+        for unit in cpc3display:
+            data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
+            data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            data['N'].insert(0,unit.N)
+
+
+
 
 
 
         ####################
         ##### Neph_UBI #####
         ####################
-        nephes = neph2.objects.order_by('ID')[:1440]
+        nephes = neph2.objects.using('dataGOA').order_by('-time')[:1440]
 
         for unity in nephes:
 
-            data['IDneph'].append(datetime.fromtimestamp(unity.ID/1000).strftime( "%H:%M"))
-            data['dayneph'].append(datetime.fromtimestamp(unity.ID / 1000).strftime("%Y/%m/%d"))
-            data['sblue'].append(unity.sblue * 1000000) # x 10^6
-            data['sred'].append(unity.sred * 1000000)
-            data['sgreen'].append(unity.sgreen * 1000000)
-            data['bsblue'].append(unity.bsblue * 1000000)
-            data['bsred'].append(unity.bsred * 1000000)
-            data['bsgreen'].append(unity.bsgreen * 1000000)
+            data['IDneph'].insert(0,datetime.fromtimestamp(unity.time/1000).strftime( "%H:%M"))
+            data['dayneph'].insert(0,datetime.fromtimestamp(unity.time/ 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0,unity.sblue * 1000000) # x 10^6
+            data['sred'].insert(0,unity.sred * 1000000)
+            data['sgreen'].insert(0,unity.sgreen * 1000000)
+            data['bsblue'].insert(0,unity.bsblue * 1000000)
+            data['bsred'].insert(0,unity.bsred * 1000000)
+            data['bsgreen'].insert(0,unity.bsgreen * 1000000)
 
 
         ####################
         ##### PSAP_UBI #####
         ####################
-        psapes = psap.objects.order_by('ID')[:1440]
+        psapes = psap.objects.using('dataGOA').order_by('-time')[1:1440]
 
         for unites in psapes:
-            data['IDpsap'].append(datetime.fromtimestamp(unites.ID/1000).strftime( "%H:%M"))
-            data['daypsap'].append(datetime.fromtimestamp(unites.ID / 1000).strftime("%Y/%m/%d"))
-            data['pblue'].append(unites.blue)
-            data['pred'].append(unites.red)
-            data['pgreen'].append(unites.green)
+            data['IDpsap'].insert(0,datetime.fromtimestamp(unites.time/1000).strftime( "%H:%M"))
+            data['daypsap'].insert(0,datetime.fromtimestamp(unites.time/ 1000).strftime("%Y/%m/%d"))
+            data['pblue'].insert(0,unites.blue)
+            data['pred'].insert(0,unites.red)
+            data['pgreen'].insert(0,unites.green)
 
 
 
         ###################
         ##### APS_UBI #####
         ###################
-        apses = aps.objects.using('dataGOA').order_by('time')[:144]
+        apses = aps.objects.using('dataGOA').order_by('-time')[:144]
 
         upperLimit = 600
 
         for unita in apses:
-            data['IDaps'].append(datetime.fromtimestamp(unita.time/1000).strftime( "%H:%M"))
-            data['dayaps'].append(datetime.fromtimestamp(unita.time/ 1000).strftime("%Y/%m/%d"))
-            data['d1'].append(isGreaterThan(unita.d1,upperLimit))
-            data['d2'].append(isGreaterThan(unita.d2,upperLimit))
-            data['d3'].append(isGreaterThan(unita.d3,upperLimit))
-            data['d4'].append(isGreaterThan(unita.d4,upperLimit))
-            data['d5'].append(isGreaterThan(unita.d5,upperLimit))
-            data['d6'].append(isGreaterThan(unita.d6,upperLimit))
-            data['d7'].append(isGreaterThan(unita.d7,upperLimit))
-            data['d8'].append(isGreaterThan(unita.d8,upperLimit))
-            data['d9'].append(isGreaterThan(unita.d9,upperLimit))
-            data['d10'].append(isGreaterThan(unita.d10,upperLimit))
-            data['d11'].append(isGreaterThan(unita.d11, upperLimit))
-            data['d12'].append(isGreaterThan(unita.d12, upperLimit))
-            data['d13'].append(isGreaterThan(unita.d13, upperLimit))
-            data['d14'].append(isGreaterThan(unita.d14, upperLimit))
-            data['d15'].append(isGreaterThan(unita.d15, upperLimit))
-            data['d16'].append(isGreaterThan(unita.d16, upperLimit))
-            data['d17'].append(isGreaterThan(unita.d17, upperLimit))
-            data['d18'].append(isGreaterThan(unita.d18, upperLimit))
-            data['d19'].append(isGreaterThan(unita.d19, upperLimit))
-            data['d20'].append(isGreaterThan(unita.d20, upperLimit))
-            data['d21'].append(isGreaterThan(unita.d21, upperLimit))
-            data['d22'].append(isGreaterThan(unita.d22, upperLimit))
-            data['d23'].append(isGreaterThan(unita.d23, upperLimit))
-            data['d24'].append(isGreaterThan(unita.d24, upperLimit))
-            data['d25'].append(isGreaterThan(unita.d25, upperLimit))
-            data['d26'].append(isGreaterThan(unita.d26, upperLimit))
-            data['d27'].append(isGreaterThan(unita.d27, upperLimit))
-            data['d28'].append(isGreaterThan(unita.d28, upperLimit))
-            data['d29'].append(isGreaterThan(unita.d29, upperLimit))
-            data['d30'].append(isGreaterThan(unita.d30, upperLimit))
-            data['d31'].append(isGreaterThan(unita.d31, upperLimit))
-            data['d32'].append(isGreaterThan(unita.d32, upperLimit))
-            data['d33'].append(isGreaterThan(unita.d33, upperLimit))
-            data['d34'].append(isGreaterThan(unita.d34, upperLimit))
-            data['d35'].append(isGreaterThan(unita.d35, upperLimit))
-            data['d36'].append(isGreaterThan(unita.d36, upperLimit))
-            data['d37'].append(isGreaterThan(unita.d37, upperLimit))
-            data['d38'].append(isGreaterThan(unita.d38, upperLimit))
-            data['d39'].append(isGreaterThan(unita.d39, upperLimit))
-            data['d40'].append(isGreaterThan(unita.d40, upperLimit))
-            data['d41'].append(isGreaterThan(unita.d41, upperLimit))
-            data['d42'].append(isGreaterThan(unita.d42, upperLimit))
-            data['d43'].append(isGreaterThan(unita.d43, upperLimit))
+            data['IDaps'].insert(0,datetime.fromtimestamp(unita.time/1000).strftime( "%H:%M"))
+            data['dayaps'].insert(0,datetime.fromtimestamp(unita.time/ 1000).strftime("%Y/%m/%d"))
+            data['d1'].insert(0,isGreaterThan(unita.d1,upperLimit))
+            data['d2'].insert(0,isGreaterThan(unita.d2,upperLimit))
+            data['d3'].insert(0,isGreaterThan(unita.d3,upperLimit))
+            data['d4'].insert(0,isGreaterThan(unita.d4,upperLimit))
+            data['d5'].insert(0,isGreaterThan(unita.d5,upperLimit))
+            data['d6'].insert(0,isGreaterThan(unita.d6,upperLimit))
+            data['d7'].insert(0,isGreaterThan(unita.d7,upperLimit))
+            data['d8'].insert(0,isGreaterThan(unita.d8,upperLimit))
+            data['d9'].insert(0,isGreaterThan(unita.d9,upperLimit))
+            data['d10'].insert(0,isGreaterThan(unita.d10,upperLimit))
+            data['d11'].insert(0,isGreaterThan(unita.d11, upperLimit))
+            data['d12'].insert(0,isGreaterThan(unita.d12, upperLimit))
+            data['d13'].insert(0,isGreaterThan(unita.d13, upperLimit))
+            data['d14'].insert(0,isGreaterThan(unita.d14, upperLimit))
+            data['d15'].insert(0,isGreaterThan(unita.d15, upperLimit))
+            data['d16'].insert(0,isGreaterThan(unita.d16, upperLimit))
+            data['d17'].insert(0,isGreaterThan(unita.d17, upperLimit))
+            data['d18'].insert(0,isGreaterThan(unita.d18, upperLimit))
+            data['d19'].insert(0,isGreaterThan(unita.d19, upperLimit))
+            data['d20'].insert(0,isGreaterThan(unita.d20, upperLimit))
+            data['d21'].insert(0,isGreaterThan(unita.d21, upperLimit))
+            data['d22'].insert(0,isGreaterThan(unita.d22, upperLimit))
+            data['d23'].insert(0,isGreaterThan(unita.d23, upperLimit))
+            data['d24'].insert(0,isGreaterThan(unita.d24, upperLimit))
+            data['d25'].insert(0,isGreaterThan(unita.d25, upperLimit))
+            data['d26'].insert(0,isGreaterThan(unita.d26, upperLimit))
+            data['d27'].insert(0,isGreaterThan(unita.d27, upperLimit))
+            data['d28'].insert(0,isGreaterThan(unita.d28, upperLimit))
+            data['d29'].insert(0,isGreaterThan(unita.d29, upperLimit))
+            data['d30'].insert(0,isGreaterThan(unita.d30, upperLimit))
+            data['d31'].insert(0,isGreaterThan(unita.d31, upperLimit))
+            data['d32'].insert(0,isGreaterThan(unita.d32, upperLimit))
+            data['d33'].insert(0,isGreaterThan(unita.d33, upperLimit))
+            data['d34'].insert(0,isGreaterThan(unita.d34, upperLimit))
+            data['d35'].insert(0,isGreaterThan(unita.d35, upperLimit))
+            data['d36'].insert(0,isGreaterThan(unita.d36, upperLimit))
+            data['d37'].insert(0,isGreaterThan(unita.d37, upperLimit))
+            data['d38'].insert(0,isGreaterThan(unita.d38, upperLimit))
+            data['d39'].insert(0,isGreaterThan(unita.d39, upperLimit))
+            data['d40'].insert(0,isGreaterThan(unita.d40, upperLimit))
+            data['d41'].insert(0,isGreaterThan(unita.d41, upperLimit))
+            data['d42'].insert(0,isGreaterThan(unita.d42, upperLimit))
+            data['d43'].insert(0,isGreaterThan(unita.d43, upperLimit))
 
         return data
 
@@ -556,6 +569,6 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 def data4(request):
     # resultdisplay = cpc.objects.all()
 
-    cpc3display = cpc3.objects.using('dataGOA').all() #order_by('time')[:10]
-    return render(request, "data4.html", {'cpc3': cpc3display})
+    cpc3display = psap.objects.using('dataGOA').order_by('-time')[1:10] #all()
+    return render(request, "data4.html", {'psap': cpc3display})
 

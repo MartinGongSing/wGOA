@@ -7,6 +7,7 @@ from django.db import models
 # utc_dt = datetime.utcfromtimestamp(timestamp).replace(tzinfo=pytz.utc)
 # local_dt = local_tz.normalize(utc_dt.astimezone(local_tz))
 
+#old#########
 class cpc(models.Model):
     Time = models.CharField(max_length=100)
     N = models.CharField(max_length=15)
@@ -18,9 +19,16 @@ class cpc2(models.Model):
     N = models.CharField(max_length = 15)
     class Meta:
         db_table = "cpc_ubi_1"
+############
+class cpc3(models.Model):
+    # id = models.AutoField(primary_key=True)
+    time = models.CharField(max_length=100,primary_key=True)
+    N = models.CharField(max_length=15)
+    class Meta:
+        db_table = "CPC_UBI"
 
 class neph2(models.Model):
-    ID = models.CharField(max_length= 100)
+    time = models.CharField(max_length= 100,primary_key=True)
     sblue = models.CharField(max_length = 15)
     sred = models.CharField(max_length = 15)
     sgreen = models.CharField(max_length = 15)
@@ -28,16 +36,16 @@ class neph2(models.Model):
     bsred = models.CharField(max_length = 15)
     bsgreen = models.CharField(max_length = 15)
     class Meta:
-        db_table = "neph_ubi_1"
+        db_table = "Neph_UBI"
 
 class psap(models.Model):
-    ID = models.CharField(max_length= 100)
+    time = models.CharField(max_length= 100,primary_key=True)
     blue = models.CharField(max_length = 15)
     red = models.CharField(max_length = 15)
     green = models.CharField(max_length = 15)
 
     class Meta:
-        db_table = "psap_ubi"
+        db_table = "PSAP_UBI"
 
 class aps(models.Model):
     time = models.CharField(max_length= 100,primary_key=True)
@@ -117,9 +125,3 @@ class Contact(models.Model):
         return self.email
 
 
-class cpc3(models.Model):
-    # id = models.AutoField(primary_key=True)
-    time = models.CharField(max_length=100,primary_key=True)
-    N = models.CharField(max_length=15)
-    class Meta:
-        db_table = "CPC_UBI"
