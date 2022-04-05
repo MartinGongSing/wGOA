@@ -614,6 +614,7 @@ def cpc_det(request):
     context = {}
     form = DateForm()
     context['form'] = form
+    data = {'ID': [], 'N': [], 'daycpc': []}
 
     if request.GET:
         start   = int(request.GET['start'])
@@ -622,9 +623,18 @@ def cpc_det(request):
         print(start)
         print(end)
 
-        cpcDetData = cpc3.objects.using('dataGOA').order_by('-time')[start:end]
+        #transform start and end to unix to choose the correct data
 
-        print(cpcDetData)
+        cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[start:end]
+        for unit in cpc3display_det:
+            data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
+            data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            data['N'].insert(0,unit.N)
+
+        print(cpc3display_det)
+        print(data['ID'])
+        print(data['daycpc'])
+        print(data['N'])
 
     return render(request, 'data_det/cpc.html', context)
 
