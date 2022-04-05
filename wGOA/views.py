@@ -13,7 +13,7 @@ from .models import cpc, instrument, cpc2, neph2, aps, psap, cpc3
 from django.db.models import Count, Q
 import json
 
-from .forms import ContactForm
+from .forms import ContactForm, DateForm
 ################ camera START
 from django.http.response import StreamingHttpResponse
 from .camera import IPWebCam
@@ -204,7 +204,7 @@ class ChartData(object):
         # cpces = cpc2.objects.order_by('ID')[:288]  # we take only 40 items
 
         cpc3display = cpc3.objects.using('dataGOA').order_by('-time')[:288]
-        print(type(cpc3display))
+
 
         for unit in cpc3display:
             data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
@@ -239,7 +239,7 @@ class ChartData(object):
         psapes = psap.objects.using('dataGOA').order_by('-time')[1:1440]
 
         for unites in psapes:
-            data['IDpsap'].insert(0,datetime.fromtimestamp(unites.time/1000).strftime( "%H:%M"))
+            data['IDpsap'].insert(0,datetime.fromtimestamp(unites.time/1000).strftime( "%H:%M"))            # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
             data['daypsap'].insert(0,datetime.fromtimestamp(unites.time/ 1000).strftime("%Y/%m/%d"))
             data['pblue'].insert(0,unites.blue)
             data['pred'].insert(0,unites.red)
@@ -572,3 +572,82 @@ def data4(request):
     cpc3display = psap.objects.using('dataGOA').order_by('-time')[1:10] #all()
     return render(request, "data4.html", {'psap': cpc3display})
 
+
+
+        ##################
+        ## Graph detail ##
+        ##################
+
+
+
+
+# class cpcDetData(object):
+#     def cpc_det_data():
+#
+#         data = {'ID': [], 'N': [], 'daycpc': [] }
+#
+#         ###################
+#         ##### CPC_UBI #####
+#         ###################
+#
+#         # cpces = cpc2.objects.all() # we take all the items
+#         # cpces = cpc2.objects.order_by('ID')[:288]  # we take only 40 items
+#
+#         start = 3
+#         end = 5
+#
+#         cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[start:end]
+#
+#         # print("this is : ", cpc3display_det)
+#         for unit in cpc3display_det:
+#             data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
+#             data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+#             data['N'].insert(0,unit.N)
+#
+#         return data
+
+
+
+def cpc_det(request):
+    # data = cpcDetData.cpc_det_data()
+    # print("data is ", data)
+    context = {}
+    form = DateForm()
+    context['form'] = form
+
+    if request.GET:
+        start   = int(request.GET['start'])
+        end     = int(request.GET['end'])
+        print(type(start))
+        print(start)
+        print(end)
+
+        cpcDetData = cpc3.objects.using('dataGOA').order_by('-time')[start:end]
+
+        print(cpcDetData)
+
+    return render(request, 'data_det/cpc.html', context)
+
+
+
+
+
+
+def aps_det(request):
+
+    context = {'segment': 'aps'}
+
+    html_template = loader.get_template('data_det/aps.html')
+    return HttpResponse(html_template.render(context, request))
+
+def psap_det(request):
+    context = {'segment': 'psap'}
+
+    html_template = loader.get_template('data_det/psap.html')
+    return HttpResponse(html_template.render(context, request))
+
+def neph_det(request):
+    context = {'segment': 'neph'}
+
+    html_template = loader.get_template('data_det/neph.html')
+    return HttpResponse(html_template.render(context, request))
