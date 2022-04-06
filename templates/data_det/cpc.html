@@ -51,21 +51,104 @@
 
 
 
+<!--    <table border="1">-->
+<!--        <tr>-->
+<!--&lt;!&ndash;            <th>Day</th>&ndash;&gt;-->
+<!--            <th>Time</th>-->
+<!--            <th>N</th>-->
+<!--        </tr>-->
+<!--        {% for getdata in cpc3display_det %}-->
+<!--        <tr>-->
+<!--            <td>{{getdata.time}}</td>-->
+<!--            <td>{{getdata.N}}</td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--    </table>-->
+
+    <script>
+        // console.log(typeof cpc3display_det);
+        // console.log( {{daycpc|safe}})
+
+        var daycpc = {{daycpc|safe}};
+        var ncpc = {{N|safe}};
+        var timecpc = {{ID|safe}};
+
+        var myListOfArrays = [];
+
+        myListOfArrays.push(daycpc);
+        myListOfArrays.push(timecpc);
+        myListOfArrays.push(ncpc);
+        // console.log(myListOfArrays)
+        // document.write(myListOfArrays)
+
+        var newList = [];
+
+
+        for (let i = 0; i < ncpc.length; i++) {
+            newList.push('<tr>')
+            newList.push('<td>')
+            newList.push(daycpc[i]);
+            newList.push('</td>')
+            newList.push('<td>')
+            newList.push(timecpc[i]);
+            newList.push('</td>')
+            newList.push('<td>')
+            newList.push(ncpc[i]);
+            newList.push('</td>')
+            newList.push('</tr>')
+
+        }
+
+        // console.log(newList);
+
+        function makeTableHTML(myArray) {
+            var result = "<table border=1>";
+            for(var i=0; i<myArray.length; i++) {
+                result += "<tr>";
+                for(var j=0; j<myArray[i].length; j++){
+                    result += "<td>"+myArray[i][j]+"</td>";
+                }
+                result += "</tr>";
+            }
+            result += "</table>";
+
+            return result;
+        };
+
+        // document.write(makeTableHTML(newList))
+
+    </script>
+
     <table border="1">
-        <tr>
-            <th>time</th>
-            <th>N</th>
-        </tr>
-        {% for getdata in cpc3display_det %}
-        <tr>
-            <td>{{getdata.time}}</td>
-            <td>{{getdata.N}}</td>
-        </tr>
-        {% endfor %}
+        <th>Day</th>
+        <th>Time</th>
+        <th>N</th>
+            <tr>
+                <script>
+                    document.write(newList)
+                </script>
+            </tr>
     </table>
 
-{{N|safe}}
 
+
+
+
+    <script>
+
+
+        let table = document.createElement('table');
+
+        for (let row of myListOfArrays) {
+          table.insertRow();
+          for (let cell of row) {
+            let newCell = table.rows[table.rows.length - 1].insertCell();
+            newCell.textContent = cell;
+          }
+        }
+        document.body.appendChild(table);
+
+    </script>
 
 
 

@@ -622,7 +622,7 @@ def cpc_det(request):
         # TODO: transform start and end to unix to choose the correct data
 
         cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[start:end]
-        print(cpc3display_det)
+        # print(cpc3display_det)
         for unit in cpc3display_det:
             data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
             data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
@@ -641,7 +641,7 @@ def cpc_det(request):
         daycpc = {"text": data["daycpc"][0] + " - " + data["daycpc"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
         # add the data to the context to send it to the html
-        context['cpc3display_det'] = cpc3display_det
+
         context['cpcdet']= cpcdet
         context['chart']= chart
         context['series']= series
@@ -650,7 +650,13 @@ def cpc_det(request):
         context['yAxis']= yAxis
         context['daycpc']= daycpc
 
+        context['cpc3display_det'] = cpc3display_det
         context['N'] = data['N']
+        context['ID'] = data['ID']
+        context['daycpc'] = data['daycpc']
+
+
+        print(type(context['cpc3display_det']))
 
 
     return render(request, 'data_det/cpc.html',  context)
