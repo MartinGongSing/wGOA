@@ -169,16 +169,17 @@ def dyna_instrum(request, id):
 def data1(request):
     # resultdisplay = cpc.objects.all()
 
-    resultdisplay = neph2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
-    cpcdisplay = cpc2.objects.order_by('ID')[:10]
-    psapdisplay = psap.objects.order_by('ID')[:10]
-    apsdisplay = aps.objects.order_by('time')[:10]
+    resultdisplay = neph2.objects.using('dataGOA').order_by('time')[:10] #Just to get the X lasts elements of the list
+    cpcdisplay = cpc3.objects.using('dataGOA').order_by('time')[:10]
+    psapdisplay = psap.objects.using('dataGOA').order_by('time')[:10]
+    apsdisplay = aps.objects.using('dataGOA').order_by('time')[:10]
+
     return render(request, "data.html", {'neph2': resultdisplay, 'cpc2': cpcdisplay, 'aps' : apsdisplay, 'psap' : psapdisplay})
 
 def data2(request):
     # resultdisplay = cpc2.objects.order_by('ID')[:10] #Just to get the X lasts elements of the list
 
-    dataset = cpc.objects.order_by('Time')[:10]
+    dataset = cpc.objects.using('dataGOA').order_by('time')[:10]
 
     return render(request, 'data2.html', {'dataset': dataset})
 
@@ -436,11 +437,6 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 
 
 
-
-
-
-
-
     return render(request, 'data3.html', {
                                         'chartID': chartID,
                                         'chart': chart,
@@ -619,24 +615,45 @@ def cpc_det(request):
     if request.GET:
         start   = int(request.GET['start'])
         end     = int(request.GET['end'])
-        print(type(start))
-        print(start)
-        print(end)
+        # print(type(start))
+        # print(start)
+        # print(end)
 
-        #transform start and end to unix to choose the correct data
+        # TODO: transform start and end to unix to choose the correct data
 
         cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[start:end]
+        print(cpc3display_det)
         for unit in cpc3display_det:
             data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
             data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
             data['N'].insert(0,unit.N)
 
-        print(cpc3display_det)
-        print(data['ID'])
-        print(data['daycpc'])
-        print(data['N'])
+    ############ GRAPH ############
+        cpcdet = "cpcdet"
 
-    return render(request, 'data_det/cpc.html', context)
+        chart = {"renderTo": cpcdet, "type": "line", "height": 500, }
+        title = {"text": 'CPC UBI'}
+        xAxis = {"title": {"text": 'Time'}, "categories": data['ID']}
+        yAxis = {"title": {"text": 'N/#/cm3'}}
+        series = [
+            {"name": 'N/#/cm3', "data": data['N'], "color": "#333fff"},
+        ]
+        daycpc = {"text": data["daycpc"][0] + " - " + data["daycpc"][-1], "verticalAlign": 'bottom', "align": 'right'}
+
+        # add the data to the context to send it to the html
+        context['cpc3display_det'] = cpc3display_det
+        context['cpcdet']= cpcdet
+        context['chart']= chart
+        context['series']= series
+        context['title']= title
+        context['xAxis']= xAxis
+        context['yAxis']= yAxis
+        context['daycpc']= daycpc
+
+        context['N'] = data['N']
+
+
+    return render(request, 'data_det/cpc.html',  context)
 
 
 

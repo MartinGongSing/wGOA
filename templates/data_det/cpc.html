@@ -8,18 +8,91 @@
 {% block content %}
 
 
-<h1>cpc</h1>
-<form action="post">
-    <input type = "datetime-local">
-    <button type="submit">Submit</button>
-</form>
+<!-- tooltip for precise info-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+
+<script src="https://code.highcharts.com/modules/heatmap.js"></script>
+
+<!--Allows to export data : -->
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 
-<h1>CPC 2 </h1>
+
+<!--<h1>cpc</h1>-->
+<!--<form action="post">-->
+<!--    <input type = "datetime-local">-->
+<!--    <button type="submit">Submit</button>-->
+<!--</form>-->
 
 
+<h1>CPC</h1>
+<p>Enter date :</p>
 <form method = "GET">
     {{ form }}
     <input type = "submit" value = "Submit">
 </form>
+
+<br>
+
+<div class="column">
+
+
+    <div class="boxGray">
+        <figure class="highcharts-figure" >
+            <div id="container"></div>
+        </figure>
+    </div>
+
+</div>
+<div class="column">
+
+
+
+    <table border="1">
+        <tr>
+            <th>time</th>
+            <th>N</th>
+        </tr>
+        {% for getdata in cpc3display_det %}
+        <tr>
+            <td>{{getdata.time}}</td>
+            <td>{{getdata.N}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{{N|safe}}
+
+
+
+
+</div>
+<script>
+    var cpcdet =    {{ cpcdet|safe }}
+    var chart =     {{ chart|safe }}
+    var title =     {{ title|safe }}
+    var xAxis =     {{ xAxis|safe }}
+    var yAxis =     {{ yAxis|safe }}
+    var series =    {{ series|safe }}
+    var daycpc =    {{ daycpc|safe }}
+</script>
+<!-- Highchart js. Variable map shown above -->
+
+
+
+<script>
+    Highcharts.chart('container', {
+    title: {'text': 'CPC UBI '} ,
+    subtitle: {'text': '2019/10/17 - 2019/10/17', 'verticalAlign': 'bottom', 'align': 'right'},
+    yAxis: {'title': {'text': 'N/#/cm3'}},
+    xAxis: xAxis,
+    series: series,
+
+
+});
+</script>
+
 {% endblock content %}
