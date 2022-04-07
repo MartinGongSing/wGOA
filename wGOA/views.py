@@ -611,27 +611,41 @@ def cpc_det(request):
     form = DateForm()
     context['form'] = form
     data = {'ID': [], 'N': [], 'daycpc': []}
+    # yoda = {'ID': [], 'N': [], 'daycpc': []}
 
     if request.GET:
-        start_year = int(request.GET['start_year'])
-        start_month = int(request.GET['start_month'])
-        start_day = int(request.GET['start_day'])
-
-        dt = datetime(year=start_year, month=start_month, day=start_day)
-        value = int(time.mktime(dt.timetuple()))
-
-        print("value is : ",value)
-
-        start = start_day
-        # start   = int(request.GET['start'])
-        end     = int(request.GET['end'])
-
-        precisedata = cpc3.objects.using('dataGOA').order_by('-time').filter(time__icontains=value)
-
-        print(precisedata)
-
 
         # TODO: transform start and end to unix to choose the correct data
+
+        #########################################
+        # start_year = int(request.GET['start_year'])
+        # start_month = int(request.GET['start_month'])
+        # start_day = int(request.GET['start_day'])
+        #
+        # dt = datetime(year=start_year, month=start_month, day=start_day)
+        # value = int(time.mktime(dt.timetuple())/10000)
+        #
+        # print("value is : ",value)
+
+        # start = start_day
+        # start   = int(request.GET['start'])
+        # end     = int(request.GET['end'])
+
+        # precisedata = cpc3.objects.using('dataGOA').order_by('-time').filter(time__icontains=value)
+        #
+        # print(precisedata)
+
+        # for unit in precisedata:
+        #     yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
+        #     yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+        #     yoda['N'].insert(0,unit.N)
+
+        ##############################################
+
+        # WORKING :
+
+        start   = int(request.GET['start'])
+        end = int(request.GET['end'])
 
         cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[start:end]
         # print(cpc3display_det)
@@ -650,7 +664,7 @@ def cpc_det(request):
         series = [
             {"name": 'N/#/cm3', "data": data['N'], "color": "#333fff"},
         ]
-        daycpc = {"text": data["daycpc"][0] + " - " + data["daycpc"][-1], "verticalAlign": 'bottom', "align": 'right'}
+        Ddaycpc = {"text": data["daycpc"][0] + " - " + data["daycpc"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
         # add the data to the context to send it to the html
 
@@ -660,14 +674,20 @@ def cpc_det(request):
         context['title']= title
         context['xAxis']= xAxis
         context['yAxis']= yAxis
-        context['daycpc']= daycpc
+        context['Ddaycpc']= Ddaycpc
 
         context['cpc3display_det'] = cpc3display_det
         context['N'] = data['N']
         context['ID'] = data['ID']
         context['daycpc'] = data['daycpc']
 
-        context['precisedata'] = precisedata
+        context['start'] = start
+        context['end'] = end
+
+        # context['precisedata'] = precisedata
+        # context['newN'] = yoda['N']
+        # context['newID'] = yoda['ID']
+        # context['newdaycpc'] = yoda['daycpc']
 
         # print(type(context['cpc3display_det']))
 
@@ -676,6 +696,84 @@ def cpc_det(request):
 
 
 
+
+
+def neph_det(request):
+    # data = cpcDetData.cpc_det_data()
+    # print("data is ", data)
+    context = {}
+    form = DateForm()
+    context['form'] = form
+    data = { 'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [], 'dayneph': [],}
+
+
+    if request.GET:
+
+        # WORKING :
+
+        start   = int(request.GET['start'])
+        end = int(request.GET['end'])
+
+        nephdisplay_det = neph2.objects.using('dataGOA').order_by('-time')[start:end]
+
+        for unity in nephdisplay_det:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
+    ############ GRAPH ############
+        nephdet = "nephdet"
+
+        chartNeph = {"renderTo": nephdet, "type": "line", "height": 500, }
+        titleNeph = {"text": 'Neph UBI'}
+        xAxisNeph = {"title": {"text": 'Time'}, "categories": data['IDneph']}
+        yAxisNeph = [{"title": {"text": 'σs/Mm<sup>-1 *10^6'}, },
+                     {"title": {"text": 'bs/Mm-1 *10^6'}, "opposite": "true"}]  # TODO : Opposite axis
+        seriesNeph = [
+            {"name": 'sBlue', "yAxis": 0, "data": data['sblue'], "color": "#333fff", "marker": {"symbol": "triangle"}},
+            {"name": 'sRed', "yAxis": 0, "data": data['sred'], "color": "#ff3333", "marker": {"symbol": "triangle"}},
+            {"name": 'sGreen', "yAxis": 0, "data": data['sgreen'], "color": "#33ff49", "marker": {"symbol": "triangle"}},
+            {"name": 'bBlue', "yAxis": 1, "data": data['bsblue'], "color": "#b8bcfc", "marker": {"symbol": "circle"}},
+            {"name": 'bRed', "yAxis": 1, "data": data['bsred'], "color": "#fab9b9", "marker": {"symbol": "circle"}},
+            {"name": 'bGreen', "yAxis": 1, "data": data['bsgreen'], "color": "#b5f7bc", "marker": {"symbol": "circle"}},
+        ]
+        Ddayneph = {"text": data["dayneph"][0] + " - " + data["dayneph"][-1], "verticalAlign": 'bottom',
+                   "align": 'right'}
+
+
+        # add the data to the context to send it to the html
+
+        context['nephdet']= nephdet
+        context['chart']=   chartNeph
+        context['seriesNeph']=  seriesNeph
+        context['title']=   titleNeph
+        context['xAxis']=   xAxisNeph
+        context['yAxis']=   yAxisNeph
+        context['Ddayneph']= Ddayneph
+
+        context['nephdisplay_det'] = nephdisplay_det
+        # context['N'] = data['N']
+        # context['ID'] = data['ID']
+        context['dayneph'] = data['dayneph']
+
+        context['start'] = start
+        context['end'] = end
+
+        context['IDneph']=data['IDneph']
+        context['dayneph']=data['dayneph']
+        context['sblue']=data['sblue']
+        context['sred']=data['sred']
+        context['sgreen']=data['sgreen']
+        context['bsblue']=data['bsblue']
+        context['bsred']=data['bsred']
+        context['bsgreen']=data['bsgreen']
+
+    return render(request, 'data_det/neph.html',  context)
 
 
 
@@ -692,8 +790,3 @@ def psap_det(request):
     html_template = loader.get_template('data_det/psap.html')
     return HttpResponse(html_template.render(context, request))
 
-def neph_det(request):
-    context = {'segment': 'neph'}
-
-    html_template = loader.get_template('data_det/neph.html')
-    return HttpResponse(html_template.render(context, request))

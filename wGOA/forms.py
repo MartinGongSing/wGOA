@@ -14,9 +14,9 @@ class ContactForm(ModelForm):
         fields = '__all__'
 
 class DateForm(forms.Form):
-    start   = forms.DateField(widget=forms.SelectDateWidget(years=CPC_YEAR_CHOICES),)
+    # start   = forms.DateField(widget=forms.SelectDateWidget(years=CPC_YEAR_CHOICES),)
     # test2 = forms.DateField(widget =  AdminDateWidget)
-    # start   = forms.IntegerField()
+    start   = forms.IntegerField()
     end     = forms.IntegerField()
 
     # https://stackoverflow.com/questions/3367091/whats-the-cleanest-simplest-to-get-running-datepicker-in-django

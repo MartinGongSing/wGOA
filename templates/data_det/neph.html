@@ -1,13 +1,157 @@
 {% extends "base.html" %}
 
-{% block title %} neph {% endblock %}
+{% block title %} cpc {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-<h1>neph</h1>
+
+<!-- tooltip for precise info-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+
+<script src="https://code.highcharts.com/modules/heatmap.js"></script>
+
+<!--Allows to export data : -->
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
+<!--<h1>cpc</h1>-->
+<!--<form action="post">-->
+<!--    <input type = "datetime-local">-->
+<!--    <button type="submit">Submit</button>-->
+<!--</form>-->
+
+
+<h1>Neph</h1>
+<p>Enter date :             {{start|safe}} - {{end|safe}}</p>
+<form method = "GET">
+    {{ form }}
+    <input type = "submit" value = "Submit">
+</form>
+
+<br>
+
+<div class="column">
+
+
+    <div class="boxGray">
+        <figure class="highcharts-figure" >
+            <div id="container"></div>
+        </figure>
+    </div>
+
+</div>
+
+<div class="column">
+
+
+
+    <script>
+        var dayneph = {{dayneph|safe}};
+        var timeneph = {{IDneph|safe}};
+        var sblue   = {{sblue|safe}};
+        var sred    = {{sred|safe}};
+        var sgreen  = {{sgreen|safe}};
+        var bsblue   = {{bsblue|safe}};
+        var bsred    = {{bsred|safe}};
+        var bsgreen  = {{bsgreen|safe}};
+
+        var newList = [];
+
+
+        // console.log(newList);
+        for (let i = 0; i < timeneph.length; i++) {
+            newList.push('<tr>');
+            newList.push('<td>');
+            newList.push(dayneph[i]);
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(timeneph[i]);
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(parseFloat(sblue[i].toFixed(4)));
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(parseFloat(sred[i].toFixed(4)));
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(parseFloat(sgreen[i].toFixed(4)));
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(parseFloat(bsblue[i].toFixed(4)));
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(parseFloat(bsred[i].toFixed(4)));
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(parseFloat(bsgreen[i].toFixed(4)));
+            newList.push('</td>');
+            newList.push('</tr>');
+        };
+
+
+        console.log(newList);
+
+    </script>
+
+    <div>
+        <figure>
+        <table border="1">
+            <th>Day</th>
+            <th>Time</th>
+            <th>sBlue</th>
+            <th>sRed</th>
+            <th>sGreen</th>
+            <th>bBlue</th>
+            <th>bRed</th>
+            <th>bGreen</th>
+                <tr>
+
+                    <script>
+                        // HERE
+                        document.write(newList.join(' ')) //remove the commas
+                    </script>
+                </tr>
+
+        </table>
+        </figure>
+    </div>
+
+</div>
+
+
+<script>
+    var nephdet =    {{ nephdet|safe }}
+    var chart =     {{ chart|safe }}
+    var title =     {{ title|safe }}
+    var xAxis =     {{ xAxis|safe }}
+    var yAxis =     {{ yAxis|safe }}
+    var seriesNeph =    {{ seriesNeph|safe }}
+    var Ddayneph =    {{ Ddayneph|safe }}
+</script>
+<!-- Highchart js. Variable map shown above -->
+
+
+
+<script>
+    Highcharts.chart('container', {
+
+
+        title: {'text': 'NEPH UBI '} ,
+        subtitle: Ddayneph,
+        yAxis: yAxis,
+        xAxis: xAxis,
+        series: seriesNeph,
+
+    });
+</script>
+
 
 
 
