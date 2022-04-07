@@ -613,11 +613,23 @@ def cpc_det(request):
     data = {'ID': [], 'N': [], 'daycpc': []}
 
     if request.GET:
-        start   = int(request.GET['start'])
+        start_year = int(request.GET['start_year'])
+        start_month = int(request.GET['start_month'])
+        start_day = int(request.GET['start_day'])
+
+        dt = datetime(year=start_year, month=start_month, day=start_day)
+        value = int(time.mktime(dt.timetuple()))
+
+        print("value is : ",value)
+
+        start = start_day
+        # start   = int(request.GET['start'])
         end     = int(request.GET['end'])
-        # print(type(start))
-        # print(start)
-        # print(end)
+
+        precisedata = cpc3.objects.using('dataGOA').order_by('-time').filter(time__icontains=value)
+
+        print(precisedata)
+
 
         # TODO: transform start and end to unix to choose the correct data
 
@@ -655,8 +667,9 @@ def cpc_det(request):
         context['ID'] = data['ID']
         context['daycpc'] = data['daycpc']
 
+        context['precisedata'] = precisedata
 
-        print(type(context['cpc3display_det']))
+        # print(type(context['cpc3display_det']))
 
 
     return render(request, 'data_det/cpc.html',  context)

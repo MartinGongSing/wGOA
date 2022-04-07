@@ -6,62 +6,64 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+<link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 <h1>CONTACT</h1>
 
-/!\ this leads to nowhere yet
+<p>Don't hesitate to e-mail us if you have a matter you would like to discuss with us</p>
 
 
-<link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-<form action="" method="post">
-   {% csrf_token %}
-   {{ form }}
-   <input type="submit" value="Submit">
-</form>
-
-https://www.twilio.com/blog/build-contact-form-python-django-twilio-sendgrid
-
-
-
+<br>
 <div class="boxGray">
-    <form method="post" action="" class="ccform">
-
-        <div class="ccfield-prepend">
-            <span class="ccform-addon"><i class="fa fa-user fa-2x"></i></span>
-            <input class="ccformfield" type="text" placeholder="Full Name" required>
-        </div>
-
-
-        <div class="ccfield-prepend">
-            <span class="ccform-addon"><i class="fa fa-envelope fa-2x"></i></span>
-            <input class="ccformfield" type="text" placeholder="Email" required>
-        </div>
-
-
-        <div class="ccfield-prepend">
-            <span class="ccform-addon"><i class="fa fa-mobile-phone fa-2x"></i></span>
-            <input class="ccformfield" type="text" placeholder="Phone">
-        </div>
-
-
-         <div class="ccfield-prepend">
-            <span class="ccform-addon"><i class="fa fa-info fa-2x"></i></span>
-            <input class="ccformfield" type="text" placeholder="Subject" required>
-        </div>
-
-
-        <div class="ccfield-prepend">
-            <span class="ccform-addon"><i class="fa fa-comment fa-2x"></i></span>
-            <textarea class="ccformfield" name="comments" rows="8" placeholder="Message" required></textarea>
-        </div>
-
-
-        <div class="ccfield-prepend">
-            <input class="ccbtn" type="submit" value="Submit">
-        </div>
+    <form action="" method="post">
+       {% csrf_token %}
+       {{ form }}
+       <input type="submit" value="Submit">
     </form>
 </div>
+<br>
+<url>https://www.twilio.com/blog/build-contact-form-python-django-twilio-sendgrid</url>
+
+
+
+<!--<div class="boxGray">-->
+<!--    <form method="post" action="" class="ccform">-->
+
+<!--        <div class="ccfield-prepend">-->
+<!--            <span class="ccform-addon"><i class="fa fa-user fa-2x"></i></span>-->
+<!--            <input class="ccformfield" type="text" placeholder="Full Name" required>-->
+<!--        </div>-->
+
+
+<!--        <div class="ccfield-prepend">-->
+<!--            <span class="ccform-addon"><i class="fa fa-envelope fa-2x"></i></span>-->
+<!--            <input class="ccformfield" type="text" placeholder="Email" required>-->
+<!--        </div>-->
+
+
+<!--        <div class="ccfield-prepend">-->
+<!--            <span class="ccform-addon"><i class="fa fa-mobile-phone fa-2x"></i></span>-->
+<!--            <input class="ccformfield" type="text" placeholder="Phone">-->
+<!--        </div>-->
+
+
+<!--         <div class="ccfield-prepend">-->
+<!--            <span class="ccform-addon"><i class="fa fa-info fa-2x"></i></span>-->
+<!--            <input class="ccformfield" type="text" placeholder="Subject" required>-->
+<!--        </div>-->
+
+
+<!--        <div class="ccfield-prepend">-->
+<!--            <span class="ccform-addon"><i class="fa fa-comment fa-2x"></i></span>-->
+<!--            <textarea class="ccformfield" name="comments" rows="8" placeholder="Message" required></textarea>-->
+<!--        </div>-->
+
+
+<!--        <div class="ccfield-prepend">-->
+<!--            <input class="ccbtn" type="submit" value="Submit">-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
 
 <br><br><br>
 

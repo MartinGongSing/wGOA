@@ -27,7 +27,7 @@
 <!--    <button type="submit">Submit</button>-->
 <!--</form>-->
 
-
+{{precisedata|safe}}
 <h1>CPC</h1>
 <p>Enter date :</p>
 <form method = "GET">
@@ -47,8 +47,8 @@
     </div>
 
 </div>
-<div class="column">
 
+<div class="column">
 
 
 <!--    <table border="1">-->
@@ -101,6 +101,7 @@
 
         // console.log(newList);
 
+        // CREATE the new list with the values and the
         function makeTableHTML(myArray) {
             var result = "<table border=1>";
             for(var i=0; i<myArray.length; i++) {
@@ -115,44 +116,28 @@
             return result;
         };
 
+
         // document.write(makeTableHTML(newList))
 
     </script>
-
-    <table border="1">
-        <th>Day</th>
-        <th>Time</th>
-        <th>N</th>
-            <tr>
-                <script>
-                    document.write(newList)
-                </script>
-            </tr>
-    </table>
-
-
-
-
-
-    <script>
-
-
-        let table = document.createElement('table');
-
-        for (let row of myListOfArrays) {
-          table.insertRow();
-          for (let cell of row) {
-            let newCell = table.rows[table.rows.length - 1].insertCell();
-            newCell.textContent = cell;
-          }
-        }
-        document.body.appendChild(table);
-
-    </script>
-
-
+    <div class="center">
+        <figure>
+        <table border="1">
+            <th>Day</th>
+            <th>Time</th>
+            <th>N</th>
+                <tr>
+                    <script>
+                        document.write(newList.join(' ')) //remove the commas
+                    </script>
+                </tr>
+        </table>
+        </figure>
+    </div>
 
 </div>
+
+
 <script>
     var cpcdet =    {{ cpcdet|safe }}
     var chart =     {{ chart|safe }}

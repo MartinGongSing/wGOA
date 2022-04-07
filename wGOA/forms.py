@@ -1,10 +1,12 @@
 from django.forms import ModelForm
 from .models import Contact
-
+from django.contrib.admin.widgets import AdminDateWidget
 from django import forms
 
 from django.core.validators import RegexValidator
 numeric = RegexValidator(r'^[0-9+]', 'Only digit characters.')
+
+CPC_YEAR_CHOICES = ['2014', '2015', '2016','2017', '2018', '2019', '2022']
 
 class ContactForm(ModelForm):
     class Meta:
@@ -12,7 +14,9 @@ class ContactForm(ModelForm):
         fields = '__all__'
 
 class DateForm(forms.Form):
-    start   = forms.IntegerField()
+    start   = forms.DateField(widget=forms.SelectDateWidget(years=CPC_YEAR_CHOICES),)
+    # test2 = forms.DateField(widget =  AdminDateWidget)
+    # start   = forms.IntegerField()
     end     = forms.IntegerField()
 
     # https://stackoverflow.com/questions/3367091/whats-the-cleanest-simplest-to-get-running-datepicker-in-django
