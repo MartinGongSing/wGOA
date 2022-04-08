@@ -1,13 +1,144 @@
 {% extends "base.html" %}
 
-{% block title %} psap {% endblock %}
+{% block title %} cpc {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-<h1>psap</h1>
+
+<!-- tooltip for precise info-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+
+<script src="https://code.highcharts.com/modules/heatmap.js"></script>
+
+<!--Allows to export data : -->
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
+<!--<h1>cpc</h1>-->
+<!--<form action="post">-->
+<!--    <input type = "datetime-local">-->
+<!--    <button type="submit">Submit</button>-->
+<!--</form>-->
+
+
+<h1>PSAP</h1>
+<p>Enter date :             {{start|safe}} - {{end|safe}} ------------ {{titleday}}</p>
+<form method = "GET">
+    {{ form }}
+    <input type = "submit" value = "Submit">
+</form>
+
+<br>
+
+<div class="column">
+
+
+    <div class="boxGray">
+        <figure class="highcharts-figure" >
+            <div id="container"></div>
+        </figure>
+    </div>
+
+</div>
+
+<div class="column">
+
+
+
+    <script>
+        var daypsap = {{daypsap|safe}};
+        var timepsap = {{IDpsap|safe}};
+        var blue   = {{blue|safe}};
+        var red    = {{red|safe}};
+        var green  = {{green|safe}};
+
+
+        var newList = [];
+
+
+        // console.log(newList);
+        for (let i = 0; i < timepsap.length; i++) {
+            newList.push('<tr>');
+            newList.push('<td>');
+            newList.push(daypsap[i]);
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(timepsap[i]);
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(parseFloat(blue[i].toFixed(4)));
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(parseFloat(red[i].toFixed(4)));
+            newList.push('</td>');
+            newList.push('<td>');
+            newList.push(parseFloat(green[i].toFixed(4)));
+            newList.push('</td>');
+            newList.push('</tr>');
+        };
+
+
+        // console.log(newList);
+
+    </script>
+
+    <div>
+        <figure>
+        <table border="1">
+            <th>Day</th>
+            <th>Time</th>
+            <th>Blue</th>
+            <th>Red</th>
+            <th>Green</th>
+
+                <tr>
+
+                    <script>
+                        // HERE
+                        document.write(newList.join(' ')) //remove the commas
+                    </script>
+                </tr>
+
+        </table>
+        </figure>
+    </div>
+
+</div>
+
+
+<script>
+    var psapdet =    {{ psapdet|safe }}
+    var chart =     {{ chart|safe }}
+    var title =     {{ title|safe }}
+    var xAxis =     {{ xAxis|safe }}
+    var yAxis =     {{ yAxis|safe }}
+    var seriesPsap =    {{ seriesPsap|safe }}
+    var Ddaypsap=    {{ Ddaypsap|safe }}
+</script>
+<!-- Highchart js. Variable map shown above -->
+
+
+
+<script>
+    Highcharts.chart('container', {
+
+
+        title: {'text': 'NEPH UBI '} ,
+        subtitle: Ddaypsap,
+        yAxis: yAxis,
+        xAxis: xAxis,
+        series: seriesPsap,
+
+    });
+</script>
+
 
 
 

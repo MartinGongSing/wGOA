@@ -29,7 +29,7 @@
 
 
 <h1>CPC</h1>
-<p>Enter date :             {{start|safe}} - {{end|safe}}</p>
+<p>Enter date :             {{start|safe}} - {{end|safe}} ------------ {{titleday}}</p>
 <form method = "GET">
     {{ form }}
     <input type = "submit" value = "Submit">
@@ -38,14 +38,11 @@
 <br>
 
 <div class="column">
-
-
     <div class="boxGray">
         <figure class="highcharts-figure" >
             <div id="container"></div>
         </figure>
     </div>
-
 </div>
 
 <div class="column">
@@ -140,7 +137,6 @@
 
 <script>
     var cpcdet =    {{ cpcdet|safe }}
-    var chart =     {{ chart|safe }}
     var title =     {{ title|safe }}
     var xAxis =     {{ xAxis|safe }}
     var yAxis =     {{ yAxis|safe }}
@@ -153,14 +149,12 @@
 
 <script>
     Highcharts.chart('container', {
-    title: {'text': 'CPC UBI '} ,
-    subtitle: Ddaycpc,
-    yAxis: {'title': {'text': 'N/#/cm3'}},
-    xAxis: xAxis,
-    series: series,
-
-
-});
+        title: title ,
+        subtitle: Ddaycpc,
+        yAxis: yAxis,
+        xAxis: xAxis,
+        series: series,
+    });
 </script>
 
 {% endblock content %}

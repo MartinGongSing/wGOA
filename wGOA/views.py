@@ -517,50 +517,6 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 
 
 
-############### TEST ###############
-
-
-# def filt(ListView):
-#     model: instrument
-#     template_name = 'instrum_detail.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['filter']=instrumFilter(self.request.GET, queryset=self.get_queryset())
-#         return context
-#
-# def search(request):
-#     instrum_list = instrument.objects.all()
-#     instrum_filter = instrumFilter(request, queryset=instrum_list)
-#     return render(request, 'instrum_detail.html', {'filter': instrum_filter})
-
-
-
-
-# def pages(request):
-#     contex = {}
-#
-#     try:
-#
-#
-#     except template.TemplateDoesNotExist:
-#
-#         html_template = loader.get_template('page-404.html')
-#         return HttpResponse(html_template.render(context, request))
-#
-#     except:
-#         html_template = loader.get_template('page-500.html')
-#         return HttpResponse(html_template.render(context, request))
-
-
-# def data(request):
-#     # return HttpResponse("this is the data page")
-#     context = {'segment': 'data'}
-#     # resultdisplay = CPC.objects.all()
-#     html_template = loader.get_template('data.html')
-#     return HttpResponse(html_template.render(context, request, {'CPC': resultdisplay})) #, {'CPC': resultdisplay}
-
-
 
 def data4(request):
     # resultdisplay = cpc.objects.all()
@@ -607,13 +563,13 @@ def data4(request):
 def cpc_det(request):
     # data = cpcDetData.cpc_det_data()
     # print("data is ", data)
-    context = {}
-    form = DateForm()
-    context['form'] = form
-    data = {'ID': [], 'N': [], 'daycpc': []}
+    context = {} #used to pass the info to the HTML
+    form = DateForm() #used to get the form data
+    context['form'] = form #adding the form to the list of variable passed to the html
+    data = {'ID': [], 'N': [], 'daycpc': []} #creating the structure for the data
     # yoda = {'ID': [], 'N': [], 'daycpc': []}
 
-    if request.GET:
+    if request.GET: # getting data from the form
 
         # TODO: transform start and end to unix to choose the correct data
 
@@ -644,16 +600,18 @@ def cpc_det(request):
 
         # WORKING :
 
-        start   = int(request.GET['start'])
-        end = int(request.GET['end'])
+        start = int(request.GET['start'])  # start date
+        end = int(request.GET['end'])  # end date
 
-        cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[start:end]
-        # print(cpc3display_det)
-        for unit in cpc3display_det:
+        cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[start:end]         # returns a QuerySet : <class 'django.db.models.query.QuerySet'>
+
+        # print(type(cpc3display_det))
+
+        for unit in cpc3display_det:    # saving data in the correct format
             data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
             data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
             data['N'].insert(0,unit.N)
-
+        # print(type(data))
     ############ GRAPH ############
         cpcdet = "cpcdet"
 
@@ -683,7 +641,7 @@ def cpc_det(request):
 
         context['start'] = start
         context['end'] = end
-
+        context['titleday'] = data["daycpc"][0] + " - " + data["daycpc"][-1]
         # context['precisedata'] = precisedata
         # context['newN'] = yoda['N']
         # context['newID'] = yoda['ID']
@@ -755,6 +713,7 @@ def neph_det(request):
         context['xAxis']=   xAxisNeph
         context['yAxis']=   yAxisNeph
         context['Ddayneph']= Ddayneph
+        context['titleday'] = data["dayneph"][0] + " - " + data["dayneph"][-1]
 
         context['nephdisplay_det'] = nephdisplay_det
         # context['N'] = data['N']
@@ -778,15 +737,223 @@ def neph_det(request):
 
 
 def aps_det(request):
+    context = {}
+    form = DateForm()
+    context['form'] = form
+    data = {'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],'d20': [],'d21': [],'d22': [], 'd23': [], 'd24': [],'d25': [],'d26': [],'d27': [],'d28': [],'d29': [],'d30': [],'d31': [],'d32': [], 'd33': [], 'd34': [],'d35': [],'d36': [],'d37': [],'d38': [],'d39': [],'d40': [],'d41': [],'d42': [],'d43':[],}
 
-    context = {'segment': 'aps'}
+    if request.GET:
 
-    html_template = loader.get_template('data_det/aps.html')
-    return HttpResponse(html_template.render(context, request))
+        # WORKING :
+
+        start = int(request.GET['start'])
+        end = int(request.GET['end'])
+
+        apsdisplay_det = aps.objects.using('dataGOA').order_by('-time')[start:end]
+
+
+        upperLimit = 600
+
+        for unita in apsdisplay_det:
+            data['IDaps'].insert(0, datetime.fromtimestamp(unita.time / 1000).strftime("%H:%M"))
+            data['dayaps'].insert(0, datetime.fromtimestamp(unita.time / 1000).strftime("%Y/%m/%d"))
+            data['d1'].insert(0, isGreaterThan(unita.d1, upperLimit))
+            data['d2'].insert(0, isGreaterThan(unita.d2, upperLimit))
+            data['d3'].insert(0, isGreaterThan(unita.d3, upperLimit))
+            data['d4'].insert(0, isGreaterThan(unita.d4, upperLimit))
+            data['d5'].insert(0, isGreaterThan(unita.d5, upperLimit))
+            data['d6'].insert(0, isGreaterThan(unita.d6, upperLimit))
+            data['d7'].insert(0, isGreaterThan(unita.d7, upperLimit))
+            data['d8'].insert(0, isGreaterThan(unita.d8, upperLimit))
+            data['d9'].insert(0, isGreaterThan(unita.d9, upperLimit))
+            data['d10'].insert(0, isGreaterThan(unita.d10, upperLimit))
+            data['d11'].insert(0, isGreaterThan(unita.d11, upperLimit))
+            data['d12'].insert(0, isGreaterThan(unita.d12, upperLimit))
+            data['d13'].insert(0, isGreaterThan(unita.d13, upperLimit))
+            data['d14'].insert(0, isGreaterThan(unita.d14, upperLimit))
+            data['d15'].insert(0, isGreaterThan(unita.d15, upperLimit))
+            data['d16'].insert(0, isGreaterThan(unita.d16, upperLimit))
+            data['d17'].insert(0, isGreaterThan(unita.d17, upperLimit))
+            data['d18'].insert(0, isGreaterThan(unita.d18, upperLimit))
+            data['d19'].insert(0, isGreaterThan(unita.d19, upperLimit))
+            data['d20'].insert(0, isGreaterThan(unita.d20, upperLimit))
+            data['d21'].insert(0, isGreaterThan(unita.d21, upperLimit))
+            data['d22'].insert(0, isGreaterThan(unita.d22, upperLimit))
+            data['d23'].insert(0, isGreaterThan(unita.d23, upperLimit))
+            data['d24'].insert(0, isGreaterThan(unita.d24, upperLimit))
+            data['d25'].insert(0, isGreaterThan(unita.d25, upperLimit))
+            data['d26'].insert(0, isGreaterThan(unita.d26, upperLimit))
+            data['d27'].insert(0, isGreaterThan(unita.d27, upperLimit))
+            data['d28'].insert(0, isGreaterThan(unita.d28, upperLimit))
+            data['d29'].insert(0, isGreaterThan(unita.d29, upperLimit))
+            data['d30'].insert(0, isGreaterThan(unita.d30, upperLimit))
+            data['d31'].insert(0, isGreaterThan(unita.d31, upperLimit))
+            data['d32'].insert(0, isGreaterThan(unita.d32, upperLimit))
+            data['d33'].insert(0, isGreaterThan(unita.d33, upperLimit))
+            data['d34'].insert(0, isGreaterThan(unita.d34, upperLimit))
+            data['d35'].insert(0, isGreaterThan(unita.d35, upperLimit))
+            data['d36'].insert(0, isGreaterThan(unita.d36, upperLimit))
+            data['d37'].insert(0, isGreaterThan(unita.d37, upperLimit))
+            data['d38'].insert(0, isGreaterThan(unita.d38, upperLimit))
+            data['d39'].insert(0, isGreaterThan(unita.d39, upperLimit))
+            data['d40'].insert(0, isGreaterThan(unita.d40, upperLimit))
+            data['d41'].insert(0, isGreaterThan(unita.d41, upperLimit))
+            data['d42'].insert(0, isGreaterThan(unita.d42, upperLimit))
+            data['d43'].insert(0, isGreaterThan(unita.d43, upperLimit))
+
+
+
+        ############ GRAPH ############
+        apsdet = "apsdet"
+
+
+        chartAps = {"type": "heatmap",
+                     "marginTop": 40,
+                     "marginBottom": 80,
+                     "plotBorderWidth": 1,
+                     "renderTo": apsdet, "height": 500, }
+        titleAps = {"text": 'APS UBI'}
+        xAxisAps = {"title": {"text": 'Time'}, "categories": data['IDaps'], }
+        yAxisAps = {
+            "title": {"text": 'Particule size'},
+            "categories": ['<0.523', '0.542', '0.583', '0.626', '0.723', '0.777', '0.835', '0.898', '0.965', '1.037',
+                           '1.114', '1.197', '1.286', '1.382', '1;486', '1.596', '1.715', '1.843', '1.981', '2.129',
+                           '2.288', '2.458', '2.642', '2.839', '3.051', '3.278', '3.523', '3.786', '4.068', '4.371',
+                           '4.698', '5.048', '5.425', '5.829', '6.264', '6.732', '7.234', '7.774', '8.354', '8.977',
+                           '9.647', '10.37', '11.14'],
+            # 'type': 'logarithmic', #precise logarithmic scale define upper limit
+        }
+        Ddayaps = {"text": data["dayaps"][0] + " - " + data["dayaps"][-1], "verticalAlign": 'bottom', "align": 'right'}
+
+        context['titleday'] = data["dayaps"][0] + " - " + data["dayaps"][-1]
+        context['datatest1']= data['d1']
+        context['datatest2']= data['d2']
+        context['datatest3']= data['d3']
+        context['datatest4']= data['d4']
+        context['datatest5']= data['d5']
+        context['datatest6']= data['d6']
+        context['datatest7']= data['d7']
+        context['datatest8']= data['d8']
+        context['datatest9']= data['d9']
+        context['datatest10'] = data['d10']
+        context['datatest11'] = data['d11']
+        context['datatest12'] = data['d12']
+        context['datatest13'] = data['d13']
+        context['datatest14'] = data['d14']
+        context['datatest15'] = data['d15']
+        context['datatest16'] = data['d16']
+        context['datatest17'] = data['d17']
+        context['datatest18'] = data['d18']
+        context['datatest19'] = data['d19']
+        context['datatest20'] = data['d20']
+        context['datatest21'] = data['d21']
+        context['datatest22'] = data['d22']
+        context['datatest23'] = data['d23']
+        context['datatest24'] = data['d24']
+        context['datatest25'] = data['d25']
+        context['datatest26'] = data['d26']
+        context['datatest27'] = data['d27']
+        context['datatest28'] = data['d28']
+        context['datatest29'] = data['d29']
+        context['datatest30'] = data['d30']
+        context['datatest31'] = data['d31']
+        context['datatest32'] = data['d32']
+        context['datatest33'] = data['d33']
+        context['datatest34'] = data['d34']
+        context['datatest35'] = data['d35']
+        context['datatest36'] = data['d36']
+        context['datatest37'] = data['d37']
+        context['datatest38'] = data['d38']
+        context['datatest39'] = data['d39']
+        context['datatest40'] = data['d40']
+        context['datatest41'] = data['d41']
+        context['datatest42'] = data['d42']
+        context['datatest43'] = data['d43']
+
+        # add the data to the context to send it to the html
+
+        context['apsdet'] = apsdet
+        context['chartAps'] = chartAps
+        # context['seriesAps'] = seriesAps
+        context['title'] = titleAps
+        context['xAxis'] = xAxisAps
+        context['yAxis'] = yAxisAps
+        context['Ddayaps'] = Ddayaps
+
+        context['apsdisplay_det'] = apsdisplay_det
+        context['dayaps'] = data['dayaps']
+
+        context['start'] = start
+        context['end'] = end
+
+        context['IDaps'] = data['IDaps']
+        context['dayaps'] = data['dayaps']
+
+
+    return render(request, 'data_det/aps.html', context)
 
 def psap_det(request):
-    context = {'segment': 'psap'}
 
-    html_template = loader.get_template('data_det/psap.html')
-    return HttpResponse(html_template.render(context, request))
+    context = {}
+    form = DateForm()
+    context['form'] = form
+    data = {'IDpsap': [], 'blue': [], 'red': [], 'green': [], 'daypsap': [], }
+
+    if request.GET:
+
+        # WORKING :
+
+        start = int(request.GET['start'])
+        end = int(request.GET['end'])
+
+        psapdisplay_det = psap.objects.using('dataGOA').order_by('-time')[start:end]
+
+        for unites in psapdisplay_det:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        ############ GRAPH ############
+        psapdet = "psapdet"
+
+        chartPsap = {"renderTo": psapdet, "type": "line", "height": 500, }
+        titlePsap = {"text": 'PSAP UBI'}
+        xAxisPsap = {"title": {"text": 'Time'}, "categories": data['IDpsap']}
+        yAxisPsap = [{"title": {"text": 'σ<sub>a</sub>/Mm<sup>-1</sup>'}}]
+        seriesPsap = [
+            {"name": 'Blue', "data": data['blue'], "color": "#333fff"},
+            {"name": 'Red', "data": data['red'], "color": "#ff3333"},
+            {"name": 'Green', "data": data['green'], "color": "#33ff49"},
+
+        ]
+        Ddaypsap = {"text": data["daypsap"][0] + " - " + data["daypsap"][-1], "verticalAlign": 'bottom',
+                   "align": 'right'}
+
+        # add the data to the context to send it to the html
+
+        context['titleday'] = data["daypsap"][0] + " - " + data["daypsap"][-1]
+        context['psapdet'] = psapdet
+        context['chart'] = chartPsap
+        context['seriesPsap'] = seriesPsap
+        context['title'] = titlePsap
+        context['xAxis'] = xAxisPsap
+        context['yAxis'] = yAxisPsap
+        context['Ddaypsap'] = Ddaypsap
+
+        context['psapdisplay_det'] = psapdisplay_det
+        context['daypsap'] = data['daypsap']
+
+        context['start'] = start
+        context['end'] = end
+
+        context['IDpsap'] = data['IDpsap']
+        context['daypsap'] = data['daypsap']
+        context['blue'] = data['blue']
+        context['red'] = data['red']
+        context['green'] = data['green']
+
+
+    return render(request, 'data_det/psap.html', context)
 
