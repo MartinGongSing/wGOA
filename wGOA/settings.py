@@ -161,15 +161,15 @@ MEDIA_URL = '/pics/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-#contact form
-CONTACT_EMAIL = 'martin.sing2@gmail.com'
-ADMIN_EMAILS = ['martin.sing2@gmail.com', ]
-
-
-# Twilio SendGrid
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_API_KEY')
+#
+# #contact form
+# CONTACT_EMAIL = 'martin.sing2@gmail.com'
+# ADMIN_EMAILS = ['martin.sing2@gmail.com', ]
+#
+#
+# # Twilio SendGrid
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_API_KEY')

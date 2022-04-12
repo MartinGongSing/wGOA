@@ -53,10 +53,11 @@
   margin-top: 0px;    /* if you want it vertically middle of the navbar. */
 }
 /* NAVBAR END */
-.footer{
+#footer{
   background-color:midnightblue;
   color: white;
-
+  position: bottom;
+  bottom: 0;
 }
 /* Typography START */
 
