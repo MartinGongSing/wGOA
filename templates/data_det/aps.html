@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} cpc {% endblock %}
+{% block title %} aps {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -29,11 +29,12 @@
 
 
 <h1>APS</h1>
-<p>Enter date :             {{start|safe}} - {{end|safe}} ------------ {{titleday}}</p>
+<p>Enter date : </p>
 <form method = "GET">
     {{ form }}
     <input type = "submit" value = "Submit">
 </form>
+<p>You have chosen : {{dateTimeDD|safe}}, data displayed : {{titleday}}</p>
 
 <br>
 
@@ -58,7 +59,7 @@
     var yAxisAps =     {{ yAxis|safe }}
     var Ddayaps=    {{ Ddayaps|safe }}
     var dayaps =       {{ dayaps|safe }}
-    var ending = {{end|safe}}
+
 </script>
 
 <!-- SCRIPT FOR ALL DATA IN LIST -->
@@ -248,7 +249,7 @@
 
 
         }
-        for (let x = 0; x <= ending-2; x++) {
+        for (let x = 0; x <= 20; x++) {
           listing.push([x,y,ylist.shift()]);
         }
         // document.write(listing)

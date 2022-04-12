@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} cpc {% endblock %}
+{% block title %} neph {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -29,11 +29,12 @@
 
 
 <h1>NEPH</h1>
-<p>Enter date :             {{start|safe}} - {{end|safe}} ------------ {{titleday}}</p>
+<p>Enter date : </p>
 <form method = "GET">
     {{ form }}
     <input type = "submit" value = "Submit">
 </form>
+<p>You have chosen : {{dateTimeDD|safe}}, data displayed : {{titleday}}</p>
 
 <br>
 

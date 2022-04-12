@@ -13,10 +13,15 @@ from .models import cpc, instrument, cpc2, neph2, aps, psap, cpc3
 from django.db.models import Count, Q
 import json
 
+from django.conf import settings
+from django.core.mail import send_mail
+
 from .forms import ContactForm, DateForm
 ################ camera START
 from django.http.response import StreamingHttpResponse
 from .camera import IPWebCam
+
+
 # Create your views here.
 
 
@@ -135,6 +140,10 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
+            email_subject = f'New contact {form.cleaned_data["email"]}: {form.cleaned_data["subject"]}'
+            email_message = form.cleaned_data['message']
+            send_mail(email_subject, email_message, settings.CONTACT_EMAIL, settings.ADMIN_EMAIL)
+            print(email_subject, email_message, settings.CONTACT_EMAIL, settings.ADMIN_EMAIL)
             return render(request, 'success.html')
 
     form = ContactForm()
@@ -754,10 +763,17 @@ def neph_det(request):
 
         # WORKING :
 
-        start   = int(request.GET['start'])
-        end = int(request.GET['end'])
+        start_year = int(request.GET['start_year'])
+        start_month = int(request.GET['start_month'])
+        start_day = int(request.GET['start_day'])
+        try:
+            dt = datetime(year=start_year, month=start_month, day=start_day)
+        except ValueError:
+            return render(request, 'data_det/neph.html', context)
+        value = int(time.mktime(dt.timetuple()))
 
-        nephdisplay_det = neph2.objects.using('dataGOA').order_by('-time')[start:end]
+        value = int(value / 10000)
+        nephdisplay_det = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
 
         for unity in nephdisplay_det:
             data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
@@ -785,9 +801,12 @@ def neph_det(request):
             {"name": 'bRed', "yAxis": 1, "data": data['bsred'], "color": "#fab9b9", "marker": {"symbol": "circle"}},
             {"name": 'bGreen', "yAxis": 1, "data": data['bsgreen'], "color": "#b5f7bc", "marker": {"symbol": "circle"}},
         ]
-        Ddayneph = {"text": data["dayneph"][0] + " - " + data["dayneph"][-1], "verticalAlign": 'bottom',
+        try:
+            Ddayneph = {"text": data["dayneph"][0] + " - " + data["dayneph"][-1], "verticalAlign": 'bottom',
                    "align": 'right'}
-
+        except IndexError:
+            Ddayneph = {"text": "Try again, no value", "verticalAlign": 'bottom', "align": 'right'}
+            titleNeph = {"text": 'NO VALUES'}
 
         # add the data to the context to send it to the html
 
@@ -798,15 +817,21 @@ def neph_det(request):
         context['xAxis']=   xAxisNeph
         context['yAxis']=   yAxisNeph
         context['Ddayneph']= Ddayneph
-        context['titleday'] = data["dayneph"][0] + " - " + data["dayneph"][-1]
+
+        try:
+            context['titleday'] = data["dayneph"][0] + " - " + data["dayneph"][-1]
+        except IndexError:
+            context['titleday'] = datetime(year=start_year, month=start_month, day=start_day)
+
+        context['dateTimeDD'] = datetime(year=start_year, month=start_month, day=start_day)
+
 
         context['nephdisplay_det'] = nephdisplay_det
         # context['N'] = data['N']
         # context['ID'] = data['ID']
         context['dayneph'] = data['dayneph']
 
-        context['start'] = start
-        context['end'] = end
+
 
         context['IDneph']=data['IDneph']
         context['dayneph']=data['dayneph']
@@ -831,11 +856,25 @@ def aps_det(request):
 
         # WORKING :
 
-        start = int(request.GET['start'])
-        end = int(request.GET['end'])
 
-        apsdisplay_det = aps.objects.using('dataGOA').order_by('-time')[start:end]
+        start_year = int(request.GET['start_year'])
+        start_month = int(request.GET['start_month'])
+        start_day = int(request.GET['start_day'])
+        try:
+            dt = datetime(year=start_year, month=start_month, day=start_day)
+        except ValueError:
+            return render(request, 'data_det/cpc.html',  context)
+        value = int(time.mktime(dt.timetuple()))
 
+        # QUERIES :
+        # https: // docs.djangoproject.com / en / 4.0 / topics / db / queries /
+
+        value = int(value/10000)
+
+
+        apsdisplay_det = aps.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value) # returns a QuerySet : <class 'django.db.models.query.QuerySet'>
+
+        print(apsdisplay_det)
 
         upperLimit = 600
 
@@ -908,9 +947,21 @@ def aps_det(request):
                            '9.647', '10.37', '11.14'],
             # 'type': 'logarithmic', #precise logarithmic scale define upper limit
         }
-        Ddayaps = {"text": data["dayaps"][0] + " - " + data["dayaps"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
-        context['titleday'] = data["dayaps"][0] + " - " + data["dayaps"][-1]
+        try:
+            Ddayaps = {"text": data["dayaps"][0] + " - " + data["dayaps"][-1], "verticalAlign": 'bottom',
+                       "align": 'right'}
+        except IndexError:
+            Ddayaps = {"text": "Try again, no value", "verticalAlign": 'bottom', "align": 'right'}
+            titleAps = {"text": 'NO VALUES'}
+
+        try:
+            context['titleday'] = data["dayaps"][0] + " - " + data["dayaps"][-1]
+        except IndexError:
+            context['titleday'] = datetime(year=start_year, month=start_month, day=start_day)
+
+        context['dateTimeDD'] = datetime(year=start_year, month=start_month, day=start_day)
+
         context['datatest1']= data['d1']
         context['datatest2']= data['d2']
         context['datatest3']= data['d3']
@@ -966,10 +1017,10 @@ def aps_det(request):
         context['Ddayaps'] = Ddayaps
 
         context['apsdisplay_det'] = apsdisplay_det
+
+
         context['dayaps'] = data['dayaps']
 
-        context['start'] = start
-        context['end'] = end
 
         context['IDaps'] = data['IDaps']
         context['dayaps'] = data['dayaps']
@@ -987,11 +1038,20 @@ def psap_det(request):
     if request.GET:
 
         # WORKING :
+        start_year = int(request.GET['start_year'])
+        start_month = int(request.GET['start_month'])
+        start_day = int(request.GET['start_day'])
+        # start = int(request.GET['start'])
+        # end = int(request.GET['end'])
 
-        start = int(request.GET['start'])
-        end = int(request.GET['end'])
+        try:
+            dt = datetime(year=start_year, month=start_month, day=start_day)
+        except ValueError:
+            return render(request, 'data_det/psap.html', context)
+        value = int(time.mktime(dt.timetuple()))
+        value = int(value / 10000)
 
-        psapdisplay_det = psap.objects.using('dataGOA').order_by('-time')[start:end]
+        psapdisplay_det = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
 
         for unites in psapdisplay_det:
             data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
@@ -1013,12 +1073,21 @@ def psap_det(request):
             {"name": 'Green', "data": data['green'], "color": "#33ff49"},
 
         ]
-        Ddaypsap = {"text": data["daypsap"][0] + " - " + data["daypsap"][-1], "verticalAlign": 'bottom',
+        try:
+            Ddaypsap = {"text": data["daypsap"][0] + " - " + data["daypsap"][-1], "verticalAlign": 'bottom',
                    "align": 'right'}
+        except IndexError:
+            Ddaypsap = {"text": "Try again, no value", "verticalAlign": 'bottom', "align": 'right'}
+            titlePsap = {"text": 'NO VALUES'}
 
         # add the data to the context to send it to the html
+        try:
+            context['titleday'] = data["daypsap"][0] + " - " + data["daypsap"][-1]
+        except IndexError:
+            context['titleday'] = datetime(year=start_year, month=start_month, day=start_day)
 
-        context['titleday'] = data["daypsap"][0] + " - " + data["daypsap"][-1]
+        context['dateTimeDD'] = datetime(year=start_year, month=start_month, day=start_day)
+
         context['psapdet'] = psapdet
         context['chart'] = chartPsap
         context['seriesPsap'] = seriesPsap
@@ -1030,8 +1099,7 @@ def psap_det(request):
         context['psapdisplay_det'] = psapdisplay_det
         context['daypsap'] = data['daypsap']
 
-        context['start'] = start
-        context['end'] = end
+
 
         context['IDpsap'] = data['IDpsap']
         context['daypsap'] = data['daypsap']
