@@ -29,12 +29,12 @@
 
 
 <h1>CPC</h1>
-<p>Enter date :             {{start|safe}} - {{end|safe}} ------------ {{titleday}}</p>
+<p>Enter date :</p>
 <form method = "GET">
     {{ form }}
     <input type = "submit" value = "Submit">
 </form>
-
+ <p>You have chosen : {{dateTimeDD|safe}}, data displayed : {{titleday}}</p>
 <br>
 
 <div class="column">
@@ -48,19 +48,6 @@
 <div class="column">
 
 
-<!--    <table border="1">-->
-<!--        <tr>-->
-<!--&lt;!&ndash;            <th>Day</th>&ndash;&gt;-->
-<!--            <th>Time</th>-->
-<!--            <th>N</th>-->
-<!--        </tr>-->
-<!--        {% for getdata in cpc3display_det %}-->
-<!--        <tr>-->
-<!--            <td>{{getdata.time}}</td>-->
-<!--            <td>{{getdata.N}}</td>-->
-<!--        </tr>-->
-<!--        {% endfor %}-->
-<!--    </table>-->
 
     <script>
         // console.log(typeof cpc3display_det);
@@ -156,5 +143,6 @@
         series: series,
     });
 </script>
+
 
 {% endblock content %}

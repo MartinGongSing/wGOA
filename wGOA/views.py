@@ -42,63 +42,63 @@ def index(request):
     ################
     # start WEATHER
     ################
-
-    city_name = "Covilha"
-    api_key = "79cba0dd8efda8493fa45cbb9c734a40"
-    url = f"http://api.openweathermap.org/data/2.5/forecast?q={city_name}&appid={api_key}"
-    w_dataset = requests.get(url).json()
-
-    try:
-        context = {
-            ####
-            "city_name": w_dataset["city"]["name"],
-            "city_country": w_dataset["city"]["country"],
-            "wind": w_dataset['list'][0]['wind']['speed'],
-            "degree": w_dataset['list'][0]['wind']['deg'],
-            "status": w_dataset['list'][0]['weather'][0]['description'],
-            "cloud": w_dataset['list'][0]['clouds']['all'],
-            'date': w_dataset['list'][0]["dt_txt"],
-            'date1': w_dataset['list'][1]["dt_txt"],
-            'date2': w_dataset['list'][2]["dt_txt"],
-            'date3': w_dataset['list'][3]["dt_txt"],
-            'date4': w_dataset['list'][4]["dt_txt"],
-            'date5': w_dataset['list'][5]["dt_txt"],
-            'date6': w_dataset['list'][6]["dt_txt"],
-
-            "temp": round(w_dataset["list"][0]["main"]["temp"] - 273.0),
-            "temp_min1": math.floor(w_dataset["list"][1]["main"]["temp_min"] - 273.0),
-            "temp_max1": math.ceil(w_dataset["list"][1]["main"]["temp_max"] - 273.0),
-            "temp_min2": math.floor(w_dataset["list"][2]["main"]["temp_min"] - 273.0),
-            "temp_max2": math.ceil(w_dataset["list"][2]["main"]["temp_max"] - 273.0),
-            "temp_min3": math.floor(w_dataset["list"][3]["main"]["temp_min"] - 273.0),
-            "temp_max3": math.ceil(w_dataset["list"][3]["main"]["temp_max"] - 273.0),
-            "temp_min4": math.floor(w_dataset["list"][4]["main"]["temp_min"] - 273.0),
-            "temp_max4": math.ceil(w_dataset["list"][4]["main"]["temp_max"] - 273.0),
-            "temp_min5": math.floor(w_dataset["list"][5]["main"]["temp_min"] - 273.0),
-            "temp_max5": math.ceil(w_dataset["list"][5]["main"]["temp_max"] - 273.0),
-            "temp_min6": math.floor(w_dataset["list"][6]["main"]["temp_min"] - 273.0),
-            "temp_max6": math.ceil(w_dataset["list"][6]["main"]["temp_max"] - 273.0),
-
-            "pressure": w_dataset["list"][0]["main"]["pressure"],
-            "humidity": w_dataset["list"][0]["main"]["humidity"],
-            "sea_level": w_dataset["list"][0]["main"]["sea_level"],
-
-            "weather": w_dataset["list"][1]["weather"][0]["main"],
-            "description": w_dataset["list"][1]["weather"][0]["description"],
-            "icon": w_dataset["list"][0]["weather"][0]["icon"],
-            "icon1": w_dataset["list"][1]["weather"][0]["icon"],
-            "icon2": w_dataset["list"][2]["weather"][0]["icon"],
-            "icon3": w_dataset["list"][3]["weather"][0]["icon"],
-            "icon4": w_dataset["list"][4]["weather"][0]["icon"],
-            "icon5": w_dataset["list"][5]["weather"][0]["icon"],
-            "icon6": w_dataset["list"][6]["weather"][0]["icon"],
-
-        }
-    except:
-        context = {
-
-            "city_name": "Not Found, Check your spelling..."
-        }
+    #
+    # city_name = "Covilha"
+    # api_key = "79cba0dd8efda8493fa45cbb9c734a40"
+    # url = f"http://api.openweathermap.org/data/2.5/forecast?q={city_name}&appid={api_key}"
+    # w_dataset = requests.get(url).json()
+    #
+    # try:
+    #     context = {
+    #         ####
+    #         "city_name": w_dataset["city"]["name"],
+    #         "city_country": w_dataset["city"]["country"],
+    #         "wind": w_dataset['list'][0]['wind']['speed'],
+    #         "degree": w_dataset['list'][0]['wind']['deg'],
+    #         "status": w_dataset['list'][0]['weather'][0]['description'],
+    #         "cloud": w_dataset['list'][0]['clouds']['all'],
+    #         'date': w_dataset['list'][0]["dt_txt"],
+    #         'date1': w_dataset['list'][1]["dt_txt"],
+    #         'date2': w_dataset['list'][2]["dt_txt"],
+    #         'date3': w_dataset['list'][3]["dt_txt"],
+    #         'date4': w_dataset['list'][4]["dt_txt"],
+    #         'date5': w_dataset['list'][5]["dt_txt"],
+    #         'date6': w_dataset['list'][6]["dt_txt"],
+    #
+    #         "temp": round(w_dataset["list"][0]["main"]["temp"] - 273.0),
+    #         "temp_min1": math.floor(w_dataset["list"][1]["main"]["temp_min"] - 273.0),
+    #         "temp_max1": math.ceil(w_dataset["list"][1]["main"]["temp_max"] - 273.0),
+    #         "temp_min2": math.floor(w_dataset["list"][2]["main"]["temp_min"] - 273.0),
+    #         "temp_max2": math.ceil(w_dataset["list"][2]["main"]["temp_max"] - 273.0),
+    #         "temp_min3": math.floor(w_dataset["list"][3]["main"]["temp_min"] - 273.0),
+    #         "temp_max3": math.ceil(w_dataset["list"][3]["main"]["temp_max"] - 273.0),
+    #         "temp_min4": math.floor(w_dataset["list"][4]["main"]["temp_min"] - 273.0),
+    #         "temp_max4": math.ceil(w_dataset["list"][4]["main"]["temp_max"] - 273.0),
+    #         "temp_min5": math.floor(w_dataset["list"][5]["main"]["temp_min"] - 273.0),
+    #         "temp_max5": math.ceil(w_dataset["list"][5]["main"]["temp_max"] - 273.0),
+    #         "temp_min6": math.floor(w_dataset["list"][6]["main"]["temp_min"] - 273.0),
+    #         "temp_max6": math.ceil(w_dataset["list"][6]["main"]["temp_max"] - 273.0),
+    #
+    #         "pressure": w_dataset["list"][0]["main"]["pressure"],
+    #         "humidity": w_dataset["list"][0]["main"]["humidity"],
+    #         "sea_level": w_dataset["list"][0]["main"]["sea_level"],
+    #
+    #         "weather": w_dataset["list"][1]["weather"][0]["main"],
+    #         "description": w_dataset["list"][1]["weather"][0]["description"],
+    #         "icon": w_dataset["list"][0]["weather"][0]["icon"],
+    #         "icon1": w_dataset["list"][1]["weather"][0]["icon"],
+    #         "icon2": w_dataset["list"][2]["weather"][0]["icon"],
+    #         "icon3": w_dataset["list"][3]["weather"][0]["icon"],
+    #         "icon4": w_dataset["list"][4]["weather"][0]["icon"],
+    #         "icon5": w_dataset["list"][5]["weather"][0]["icon"],
+    #         "icon6": w_dataset["list"][6]["weather"][0]["icon"],
+    #
+    #     }
+    # except:
+    #     context = {
+    #
+    #         "city_name": "Not Found, Check your spelling..."
+    #     }
 
     ##############
     # END WEATHER
@@ -222,16 +222,18 @@ class ChartData(object):
         ####################
         nephes = neph2.objects.using('dataGOA').order_by('-time')[:1440]
 
+        downLimit = 0
+
         for unity in nephes:
 
             data['IDneph'].insert(0,datetime.fromtimestamp(unity.time/1000).strftime( "%H:%M"))
             data['dayneph'].insert(0,datetime.fromtimestamp(unity.time/ 1000).strftime("%Y/%m/%d"))
-            data['sblue'].insert(0,unity.sblue * 1000000) # x 10^6
-            data['sred'].insert(0,unity.sred * 1000000)
-            data['sgreen'].insert(0,unity.sgreen * 1000000)
-            data['bsblue'].insert(0,unity.bsblue * 1000000)
-            data['bsred'].insert(0,unity.bsred * 1000000)
-            data['bsgreen'].insert(0,unity.bsgreen * 1000000)
+            data['sblue'].insert(0, isSmallerThan(unity.sblue * 1000000, downLimit)) # x 10^6
+            data['sred'].insert(0,isSmallerThan(unity.sred * 1000000, downLimit))
+            data['sgreen'].insert(0,isSmallerThan(unity.sgreen * 1000000, downLimit))
+            data['bsblue'].insert(0,isSmallerThan(unity.bsblue * 1000000, downLimit))
+            data['bsred'].insert(0,isSmallerThan(unity.bsred * 1000000, downLimit))
+            data['bsgreen'].insert(0,isSmallerThan(unity.bsgreen * 1000000, downLimit))
 
 
         ####################
@@ -242,9 +244,9 @@ class ChartData(object):
         for unites in psapes:
             data['IDpsap'].insert(0,datetime.fromtimestamp(unites.time/1000).strftime( "%H:%M"))            # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
             data['daypsap'].insert(0,datetime.fromtimestamp(unites.time/ 1000).strftime("%Y/%m/%d"))
-            data['pblue'].insert(0,unites.blue)
-            data['pred'].insert(0,unites.red)
-            data['pgreen'].insert(0,unites.green)
+            data['pblue'].insert(0,isSmallerThan(unites.blue, downLimit))
+            data['pred'].insert(0,isSmallerThan(unites.red, downLimit))
+            data['pgreen'].insert(0,isSmallerThan(unites.green, downLimit))
 
 
 
@@ -306,6 +308,14 @@ class ChartData(object):
 
 def isGreaterThan(x,y):
     if x>y:
+        x = y
+    else :
+        x = x
+
+    return x
+
+def isSmallerThan(x,y):
+    if x<y:
         x = y
     else :
         x = x
@@ -567,64 +577,135 @@ def cpc_det(request):
     form = DateForm() #used to get the form data
     context['form'] = form #adding the form to the list of variable passed to the html
     data = {'ID': [], 'N': [], 'daycpc': []} #creating the structure for the data
-    # yoda = {'ID': [], 'N': [], 'daycpc': []}
+    yoda = {'ID': [], 'N': [], 'daycpc': []}
 
     if request.GET: # getting data from the form
 
         # TODO: transform start and end to unix to choose the correct data
 
         #########################################
-        # start_year = int(request.GET['start_year'])
-        # start_month = int(request.GET['start_month'])
-        # start_day = int(request.GET['start_day'])
-        #
-        # dt = datetime(year=start_year, month=start_month, day=start_day)
-        # value = int(time.mktime(dt.timetuple())/10000)
-        #
+        start_year = int(request.GET['start_year'])
+        start_month = int(request.GET['start_month'])
+        start_day = int(request.GET['start_day'])
+        try:
+            dt = datetime(year=start_year, month=start_month, day=start_day)
+        except ValueError:
+            return render(request, 'data_det/cpc.html',  context)
+        value = int(time.mktime(dt.timetuple()))
+
+        # QUERIES :
+        # https: // docs.djangoproject.com / en / 4.0 / topics / db / queries /
+
+        value = int(value/10000)
         # print("value is : ",value)
+        precisedata = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value) # returns a QuerySet : <class 'django.db.models.query.QuerySet'>
 
-        # start = start_day
-        # start   = int(request.GET['start'])
-        # end     = int(request.GET['end'])
+        value = value+1
+        precisedata2 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
 
-        # precisedata = cpc3.objects.using('dataGOA').order_by('-time').filter(time__icontains=value)
-        #
-        # print(precisedata)
+        value = value + 1
+        precisedata3 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
 
-        # for unit in precisedata:
-        #     yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
-        #     yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
-        #     yoda['N'].insert(0,unit.N)
+        value = value + 1
+        precisedata4 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
 
+        value = value + 1
+        precisedata5 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        precisedata6 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        precisedata7 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        precisedata8 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        precisedata9 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        for unit in precisedata9:
+            yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['N'].insert(0, unit.N)
+
+        for unit in precisedata8:
+            yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['N'].insert(0, unit.N)
+
+        for unit in precisedata7:
+            yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['N'].insert(0, unit.N)
+
+        for unit in precisedata6:
+            yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['N'].insert(0, unit.N)
+
+        for unit in precisedata5:
+            yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['N'].insert(0, unit.N)
+
+        for unit in precisedata4:
+            yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
+            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            yoda['N'].insert(0,unit.N)
+
+        for unit in precisedata3:
+            yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
+            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            yoda['N'].insert(0,unit.N)
+
+        for unit in precisedata2:
+            yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
+            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            yoda['N'].insert(0,unit.N)
+
+
+        for unit in precisedata:
+            yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
+            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            yoda['N'].insert(0,unit.N)
+
+        # print("time : ",yoda['ID'])
         ##############################################
 
         # WORKING :
 
-        start = int(request.GET['start'])  # start date
-        end = int(request.GET['end'])  # end date
+        # start = int(request.GET['start'])  # start date
+        # end = int(request.GET['end'])  # end date
 
-        cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[start:end]         # returns a QuerySet : <class 'django.db.models.query.QuerySet'>
+        # cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[end-1:end]
 
         # print(type(cpc3display_det))
 
-        for unit in cpc3display_det:    # saving data in the correct format
-            data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
-            data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
-            data['N'].insert(0,unit.N)
+        # for unit in cpc3display_det:    # saving data in the correct format
+        #     data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
+        #     data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+        #     data['N'].insert(0,unit.N)
         # print(type(data))
     ############ GRAPH ############
         cpcdet = "cpcdet"
 
         chart = {"renderTo": cpcdet, "type": "line", "height": 500, }
         title = {"text": 'CPC UBI'}
-        xAxis = {"title": {"text": 'Time'}, "categories": data['ID']}
+        xAxis = {"title": {"text": 'Time'}, "categories": yoda['ID']}
         yAxis = {"title": {"text": 'N/#/cm3'}}
         series = [
-            {"name": 'N/#/cm3', "data": data['N'], "color": "#333fff"},
+            {"name": 'N/#/cm3', "data": yoda['N'], "color": "#333fff"},
         ]
-        Ddaycpc = {"text": data["daycpc"][0] + " - " + data["daycpc"][-1], "verticalAlign": 'bottom', "align": 'right'}
+        try:
+            Ddaycpc = {"text": yoda["daycpc"][0] + " - " + yoda["daycpc"][-1], "verticalAlign": 'bottom', "align": 'right'}
+        except IndexError:
+            Ddaycpc = {"text": "Try again, no value", "verticalAlign": 'bottom', "align": 'right'}
+            title = {"text": 'NO VALUES'}
 
         # add the data to the context to send it to the html
+
+
 
         context['cpcdet']= cpcdet
         context['chart']= chart
@@ -634,18 +715,22 @@ def cpc_det(request):
         context['yAxis']= yAxis
         context['Ddaycpc']= Ddaycpc
 
-        context['cpc3display_det'] = cpc3display_det
-        context['N'] = data['N']
-        context['ID'] = data['ID']
-        context['daycpc'] = data['daycpc']
+        # context['cpc3display_det'] = cpc3display_det
+        context['N']        = yoda['N']     #data['N']
+        context['ID']       = yoda['ID']        #data['ID']
+        context['daycpc']   = yoda['daycpc']        #data['daycpc']
 
-        context['start'] = start
-        context['end'] = end
-        context['titleday'] = data["daycpc"][0] + " - " + data["daycpc"][-1]
+        # context['start'] = start
+        # context['end'] = end
+        try:
+            context['titleday'] = yoda["daycpc"][0] + " - " + yoda["daycpc"][-1]
+        except IndexError:
+            context['titleday'] = datetime(year=start_year, month=start_month, day=start_day)
+
+        context['dateTimeDD'] = datetime(year=start_year, month=start_month, day=start_day)
+
         # context['precisedata'] = precisedata
-        # context['newN'] = yoda['N']
-        # context['newID'] = yoda['ID']
-        # context['newdaycpc'] = yoda['daycpc']
+
 
         # print(type(context['cpc3display_det']))
 

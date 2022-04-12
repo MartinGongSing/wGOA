@@ -3,8 +3,9 @@
 
 /* Add a black background color to the top navigation */
 .topnav {
-  background-color: red;
+  background-color: midnightblue;
   overflow: hidden;
+
 }
 
 /* Style the links inside the navigation bar */
@@ -52,7 +53,11 @@
   margin-top: 0px;    /* if you want it vertically middle of the navbar. */
 }
 /* NAVBAR END */
+.footer{
+  background-color:midnightblue;
+  color: white;
 
+}
 /* Typography START */
 
 
@@ -373,7 +378,7 @@ text-decoration: none;
 
 input[type=text], input[type=email], textarea {
  width: 100%;
- padding: 12px 20px;
- margin: 8px 0;
+ padding: 20px 0px;
+ /*margin: 8px;*/
  display: inline-block;
 }

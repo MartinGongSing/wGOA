@@ -73,114 +73,159 @@
 
 
 <!--weather-->
-<p style="text-align: right">Weather information coming from openweathermap.org</p>
-<div class="forecast-table" >
-    <div class="container">
-        <div class="forecast-container">
-            <div class="today forecast">
-                <div class="forecast-header">
-                    <div class="day">{{date}}</div>
-                    <div class="date">{% now "l" %}</div>
-                </div> <!-- .forecast-header -->
-                <div class="forecast-content">
-                    <div class="location">{{city_name}},{{city_country}}</div>
-                    <div class="degree">
-                        <div class="num">{{temp}}<sup>o</sup>C</div>
-                        <div class="forecast-icon">
-                            <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="" width=90>
-                        </div>
-                    </div>
-                    <r>
-                    <span><img style="height: 25px; width: 25px" src="../static/assets/img/weather/cloud.png"
-                            alt="">{{cloud}}%</span>
-                    <span><img src="../static/assets/img/weather/icon-wind.png" alt="">{{wind}}km/h</span>
-                    <br>
-                    <span><img src="../static/assets/img/weather/icon-compass.png" alt="degree">{{degree}}<sup> o</sup></span>
-                    <span><img style="height: 25px; width: 25px;" src="../static/assets/img/weather/hot.png"
-                            alt="status">{{status|capfirst }}</span>
-                    </r>
-                </div>
-            </div>
-            <div class="forecast">
-                <div class="forecast-header">
-                    <div class="day">{{date1}}</div>
-                </div> <!-- .forecast-header -->
-                <div class="forecast-content">
-                    <div class="forecast-icon">
-                        <img src="http://openweathermap.org/img/wn/{{icon1}}@2x.png" alt="" width=48>
-                    </div>
-                    <div class="degree">{{temp_max1}}<sup>o</sup>C</div>
-                    <small>{{temp_min1}}<sup>o</sup></small>
-                </div>
-            </div>
-            <div class="forecast">
-                <div class="forecast-header">
-                    <div class="day">{{date2}}</div>
-                </div> <!-- .forecast-header -->
-                <div class="forecast-content">
-                    <div class="forecast-icon">
-                        <img src="http://openweathermap.org/img/wn/{{icon2}}@2x.png" alt="" width=48>
-                    </div>
-                    <div class="degree">{{temp_max2}}<sup>o</sup>C</div>
-                    <small>{{temp_min2}}<sup>o</sup></small>
-                </div>
-            </div>
-            <div class="forecast">
-                <div class="forecast-header">
-                    <div class="day">{{date3}}</div>
-                </div> <!-- .forecast-header -->
-                <div class="forecast-content">
-                    <div class="forecast-icon">
-                        <img src="http://openweathermap.org/img/wn/{{icon3}}@2x.png" alt="" width=48>
-                    </div>
-                    <div class="degree">{{temp_max3}}<sup>o</sup>C</div>
-                    <small>{{temp_min3}}<sup>o</sup></small>
-                </div>
-            </div>
-            <div class="forecast">
-                <div class="forecast-header">
-                    <div class="day">{{date4}}</div>
-                </div> <!-- .forecast-header -->
-                <div class="forecast-content">
-                    <div class="forecast-icon">
-                        <img src="http://openweathermap.org/img/wn/{{icon4}}@2x.png" alt="" width=48>
-                    </div>
-                    <div class="degree">{{temp_max4}}<sup>o</sup>C</div>
-                    <small>{{temp_min4}}<sup>o</sup></small>
-                </div>
-            </div>
-            <div class="forecast">
-                <div class="forecast-header">
-                    <div class="day">{{date5}}</div>
-                </div> <!-- .forecast-header -->
-                <div class="forecast-content">
-                    <div class="forecast-icon">
-                        <img src="http://openweathermap.org/img/wn/{{icon5}}@2x.png" alt="" width=48>
-                    </div>
-                    <div class="degree">{{temp_max5}}<sup>o</sup>C</div>
-                    <small>{{temp_min5}}<sup>o</sup></small>
-                </div>
-            </div>
 
+<div>
+    <TABLE width="100%" align="center" border="0">
+        <TD align="center" width="378px">
+            <div><!-- DO NOT REMOVE THIS LINK -->
+                <a href="https://www.meteoblue.com/pt/tempo/previsao/semana/covilh%c3%a3_portugal_2740313" target="_blank">
+                    Meteoblue weather prediction
+                </a>
+            </div>
+            <iframe src="https://www.meteoblue.com/en/weather/widget/daily/covilha_portugal_2740313?days=7&tempunit=CELSIUS&windunit=METER_PER_SECOND&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=1&winddirection=1&uv=1&humidity=1&precipitation=1&precipitationprobability=1&spot=1&pressure=1&layout=light"  frameborder="1" scrolling="NO" allowtransparency="true" style="width: 378px;height: 428px"></iframe>
+        </TD>
+    </TABLE>
+</div>
+<!--    -->
+<!--<p style="text-align: right">Weather information coming from openweathermap.org</p>-->
+<!--<div class="forecast-table" >-->
+<!--    <div class="container">-->
+<!--        <div class="forecast-container">-->
+<!--            <div class="today forecast">-->
+<!--                <div class="forecast-header">-->
+<!--                    <div class="day">{{date}}</div>-->
+<!--                    <div class="date">{% now "l" %}</div>-->
+<!--                </div> &lt;!&ndash; .forecast-header &ndash;&gt;-->
+<!--                <div class="forecast-content">-->
+<!--                    <div class="location">{{city_name}},{{city_country}}</div>-->
+<!--                    <div class="degree">-->
+<!--                        <div class="num">{{temp}}<sup>o</sup>C</div>-->
+<!--                        <div class="forecast-icon">-->
+<!--                            <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt="" width=90>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <r>-->
+<!--                    <span><img style="height: 25px; width: 25px" src="../static/assets/img/weather/cloud.png"-->
+<!--                            alt="">{{cloud}}%</span>-->
+<!--                    <span><img src="../static/assets/img/weather/icon-wind.png" alt="">{{wind}}km/h</span>-->
+<!--                    <br>-->
+<!--                    <span><img src="../static/assets/img/weather/icon-compass.png" alt="degree">{{degree}}<sup> o</sup></span>-->
+<!--                    <span><img style="height: 25px; width: 25px;" src="../static/assets/img/weather/hot.png"-->
+<!--                            alt="status">{{status|capfirst }}</span>-->
+<!--                    </r>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="forecast">-->
+<!--                <div class="forecast-header">-->
+<!--                    <div class="day">{{date1}}</div>-->
+<!--                </div> &lt;!&ndash; .forecast-header &ndash;&gt;-->
+<!--                <div class="forecast-content">-->
+<!--                    <div class="forecast-icon">-->
+<!--                        <img src="http://openweathermap.org/img/wn/{{icon1}}@2x.png" alt="" width=48>-->
+<!--                    </div>-->
+<!--                    <div class="degree">{{temp_max1}}<sup>o</sup>C</div>-->
+<!--                    <small>{{temp_min1}}<sup>o</sup></small>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="forecast">-->
+<!--                <div class="forecast-header">-->
+<!--                    <div class="day">{{date2}}</div>-->
+<!--                </div> &lt;!&ndash; .forecast-header &ndash;&gt;-->
+<!--                <div class="forecast-content">-->
+<!--                    <div class="forecast-icon">-->
+<!--                        <img src="http://openweathermap.org/img/wn/{{icon2}}@2x.png" alt="" width=48>-->
+<!--                    </div>-->
+<!--                    <div class="degree">{{temp_max2}}<sup>o</sup>C</div>-->
+<!--                    <small>{{temp_min2}}<sup>o</sup></small>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="forecast">-->
+<!--                <div class="forecast-header">-->
+<!--                    <div class="day">{{date3}}</div>-->
+<!--                </div> &lt;!&ndash; .forecast-header &ndash;&gt;-->
+<!--                <div class="forecast-content">-->
+<!--                    <div class="forecast-icon">-->
+<!--                        <img src="http://openweathermap.org/img/wn/{{icon3}}@2x.png" alt="" width=48>-->
+<!--                    </div>-->
+<!--                    <div class="degree">{{temp_max3}}<sup>o</sup>C</div>-->
+<!--                    <small>{{temp_min3}}<sup>o</sup></small>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="forecast">-->
+<!--                <div class="forecast-header">-->
+<!--                    <div class="day">{{date4}}</div>-->
+<!--                </div> &lt;!&ndash; .forecast-header &ndash;&gt;-->
+<!--                <div class="forecast-content">-->
+<!--                    <div class="forecast-icon">-->
+<!--                        <img src="http://openweathermap.org/img/wn/{{icon4}}@2x.png" alt="" width=48>-->
+<!--                    </div>-->
+<!--                    <div class="degree">{{temp_max4}}<sup>o</sup>C</div>-->
+<!--                    <small>{{temp_min4}}<sup>o</sup></small>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="forecast">-->
+<!--                <div class="forecast-header">-->
+<!--                    <div class="day">{{date5}}</div>-->
+<!--                </div> &lt;!&ndash; .forecast-header &ndash;&gt;-->
+<!--                <div class="forecast-content">-->
+<!--                    <div class="forecast-icon">-->
+<!--                        <img src="http://openweathermap.org/img/wn/{{icon5}}@2x.png" alt="" width=48>-->
+<!--                    </div>-->
+<!--                    <div class="degree">{{temp_max5}}<sup>o</sup>C</div>-->
+<!--                    <small>{{temp_min5}}<sup>o</sup></small>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+<!--Maybe this : https://pvlib-python.readthedocs.io/en/stable/auto_examples/plot_sunpath_diagrams.html-->
+
+<div class="boxGray">
+    <div class="row">
+        <div class="column">
+            <img src="../static/assets/img/sun.png" alt="weather" style="width:100%">
+        </div>
+
+
+
+        <div class="column">
+            <div class="center">
+                <!-- // Begin Current Moon Phase HTML (c) MoonConnection.com // -->
+                <table cellpadding="0" cellspacing="0" border="0" width="128">
+                    <tr>
+                        <td align="center">
+                            <a href="https://www.moonconnection.com/current_moon_phase.phtml" target="mc_moon_ph">
+                                <img src="https://www.moonmodule.com/cs/dm/vn.gif" width="128" height="196" border="0" alt="" />
+                            </a>
+<!--                            <div style="position:relative;width:128px;">-->
+<!--                                <div style="position:absolute;top:-20px;left:6px;background:#000000;width:116px;text-align:center;">-->
+<!--                                    <a href="https://www.moonconnection.com/" target="mc_moon_ph"></a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </td>
+                    </tr>
+                </table><!-- // end moon phase HTML // -->
+
+                <a href="https://www.ubi.pt/Entidade/Departamento_de_Ciencias_Aeroespaciais ">
+                    <p>Dpt.of Aerospace Science – UBI</p>
+                </a>
+                <a href="https://www.flightradar24.com/38.69,-5.3/6">
+                    <img src="../static/assets/img/flightradar24.jpg" style="width: 10%">
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
 
 
-<!--Maybe this : https://pvlib-python.readthedocs.io/en/stable/auto_examples/plot_sunpath_diagrams.html-->
 
-<div class="center">
-    <img src="../static/assets/img/sun.png" alt="weather" style="width:100%">
-</div>
 
-<div class="column">
-    <a href="https://www.ubi.pt/Entidade/Departamento_de_Ciencias_Aeroespaciais ">
-        <p>Dpt.of Aerospace Science – UBI</p>
-    </a>
-    <a href="https://www.flightradar24.com/38.69,-5.3/6">
-        <img src="../static/assets/img/flightradar24.jpg" style="width: 10%">
-    </a>
-</div>
+
+
 
 {% endblock content %}

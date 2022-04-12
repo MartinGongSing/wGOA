@@ -130,3 +130,4 @@ dmypy.json
 
 #passwords for db etc
 wGOA/passwords.py
+wGOA/.env
