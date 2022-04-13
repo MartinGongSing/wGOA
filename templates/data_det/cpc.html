@@ -46,24 +46,11 @@
 </div>
 
 <div class="column">
-
-
-
     <script>
-        // console.log(typeof cpc3display_det);
-        // console.log( {{daycpc|safe}})
 
         var daycpc = {{daycpc|safe}};
         var ncpc = {{N|safe}};
         var timecpc = {{ID|safe}};
-
-        // var myListOfArrays = [];
-        //
-        // myListOfArrays.push(daycpc);
-        // myListOfArrays.push(timecpc);
-        // myListOfArrays.push(ncpc);
-        // console.log(myListOfArrays)
-        // document.write(myListOfArrays)
 
         var newList = [];
 
@@ -85,20 +72,20 @@
 
         // console.log(newList);
 
-        // CREATE the new list with the values and the
-        function makeTableHTML(myArray) {
-            var result = "<table border=1>";
-            for(var i=0; i<myArray.length; i++) {
-                result += "<tr>";
-                for(var j=0; j<myArray[i].length; j++){
-                    result += "<td>"+myArray[i][j]+"</td>";
-                }
-                result += "</tr>";
-            }
-            result += "</table>";
-
-            return result;
-        };
+        // // CREATE the new list with the values and the
+        // function makeTableHTML(myArray) {
+        //     var result = "<table border=1>";
+        //     for(var i=0; i<myArray.length; i++) {
+        //         result += "<tr>";
+        //         for(var j=0; j<myArray[i].length; j++){
+        //             result += "<td>"+myArray[i][j]+"</td>";
+        //         }
+        //         result += "</tr>";
+        //     }
+        //     result += "</table>";
+        //
+        //     return result;
+        // };
 
 
         // document.write(makeTableHTML(newList))
@@ -145,4 +132,13 @@
 </script>
 
 <br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+<a href="/cpcD">Show available days</a>
+<!--<details>-->
+<!--    <summary>Days available :</summary>-->
+<!--    <table>{{daysList|safe}}</table>-->
+
+<!--</details>-->
+
 {% endblock content %}

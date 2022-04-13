@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %} cpc {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<script>
+
+        var daycpc = {{daysList|safe}}
+
+
+        var newList = [];
+
+
+        for (let i = 0; i < daycpc.length; i++) {
+            newList.push('<tr>')
+            newList.push('<td>')
+            newList.push(daycpc[i]);
+            newList.push('</td>')
+            newList.push('</tr>')
+
+        }
+
+
+        // document.write(makeTableHTML(newList))
+
+    </script>
+    <div class="center">
+        <figure>
+        <table border="1">
+            <tr>
+                <script>
+                    document.write(newList.join(' ')) //remove the commas
+                </script>
+            </tr>
+        </table>
+        </figure>
+    </div>
+
+
+{% endblock content %}
