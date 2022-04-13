@@ -8,36 +8,40 @@
 {% block content %}
 <script>
 
-        var daycpc = {{daysList|safe}}
+    var daycpc = {{daysList|safe}}
 
 
-        var newList = [];
+    var newList = [];
 
 
-        for (let i = 0; i < daycpc.length; i++) {
-            newList.push('<tr>')
-            newList.push('<td>')
-            newList.push(daycpc[i]);
-            newList.push('</td>')
-            newList.push('</tr>')
+    for (let i = 0; i < daycpc.length; i++) {
+        newList.push('<tr>')
+        newList.push('<td>')
+        newList.push(daycpc[i]);
+        newList.push('</td>')
+        newList.push('</tr>')
 
-        }
+    }
 
 
-        // document.write(makeTableHTML(newList))
+    // document.write(makeTableHTML(newList))
 
-    </script>
-    <div class="center">
-        <figure>
-        <table border="1">
-            <tr>
-                <script>
-                    document.write(newList.join(' ')) //remove the commas
-                </script>
-            </tr>
-        </table>
-        </figure>
-    </div>
+</script>
+<a href="/cpc">
+    <button>More info CPC</button>
+</a>
+<div class="center">
+
+    <table border="1">
+        <th>Date</th>
+        <tr>
+            <script>
+                document.write(newList.join(' ')) //remove the commas
+            </script>
+        </tr>
+    </table>
+
+</div>
 
 
 {% endblock content %}
