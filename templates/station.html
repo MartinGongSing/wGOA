@@ -7,76 +7,325 @@
 
 {% block content %}
 <h1>Weather station</h1>
-
+<url>https://github.com/weewx/weewx/tree/master/skins/Standard</url>
 <h2 style="color: red">NOT WORKING</h2>
+
+<style>
+
+    /* CSS for the weewx Standard skin
+ *
+ *  Copyright (c) 2015 Tom Keffer <tkeffer@gmail.com>
+ *
+ *  See the file LICENSE.txt for your rights.
+ */
+
+/* Global */
+
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    background-color: #f2f2f7;
+    background-image: url('backgrounds/band.gif');
+    background-repeat: repeat;
+    background-attachment: scroll;
+}
+
+#container {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/*
+ * This is the big header at the top of the page
+ */
+#masthead {
+    margin: 1% 1% 0 1%;
+    padding: 5px;
+    text-align: center;
+    border-top: 1px solid #dcdcdc;
+    border-right: 1px solid #a9a9a9;
+    border-bottom: 1px solid #808080;
+    border-left: 1px solid #a9a9a9;
+    background-color: #fafaff;
+}
+
+#masthead h1 {
+    color: #3d6c87;
+}
+#masthead h3 {
+    color: #5f8ea9;
+}
+
+/*
+ * This holds the statistics (daily high/low, etc.) on the left:
+ */
+#stats_group {
+    width: 30%;
+    min-height: 500px;
+    margin: 1%;
+    padding: 5px;
+    float: left;
+    border-top: 1px solid #dcdcdc;
+    border-right: 1px solid #a9a9a9;
+    border-bottom: 1px solid #808080;
+    border-left: 1px solid #a9a9a9;
+    background-color: #fafaff;
+}
+
+.stats table {
+    border: thin solid #000000;
+    width: 100%;
+}
+.stats td {
+    border: thin solid #000000;
+    padding: 2px;
+}
+
+.stats_header  {
+    background-color: #000000;
+    color: #a8b8c8;
+    font-size: 14pt;
+    font-weight: bolder;
+}
+
+.stats_label {
+    color: green;
+}
+
+.stats_data {
+    color: red;
+}
+
+/*
+ * This holds the "About", "Almanac", and plots on the right
+ */
+#content {
+    width: 62%;
+    min-height: 500px;
+    margin: 1%;
+    padding: 5px;
+    float: right;
+    border-top: 1px solid #dcdcdc;
+    border-right: 1px solid #a9a9a9;
+    border-bottom: 1px solid #808080;
+    border-left: 1px solid #a9a9a9;
+    background-color: #fafaff;
+    text-align: center;
+}
+
+#content .header {
+    font-size: 14pt;
+    font-weight: bolder;
+    color: #3d6c87;
+    margin-bottom: 10px;
+}
+
+
+#content .caption {
+    font-weight: bold;
+    color: #3d6c87;
+}
+
+#content table {
+    text-align: center;
+    width: 100%;
+}
+
+#content td {
+    width: 50%;
+}
+
+#content .label {
+    text-align: right;
+    font-style: italic;
+}
+
+#content .data {
+    text-align: left;
+}
+
+#about, #almanac {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
+
+.celestial_group {
+}
+
+.celestial_body {
+    width: 48%;
+    vertical-align: top;
+    display:inline-block;
+}
+
+#plots {
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#plots img {
+    border: thin solid #3d6c87;
+    margin: 3px;
+    padding: 3px;
+}
+
+#radar_img {
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 3px;
+    padding: 3px;
+}
+
+#radar_img img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    margin: 3px;
+    padding: 3px;
+}
+
+#radar_img p {
+    width: 90%;
+    font-style: italic;
+    font-size: smaller;
+    text-align: center;
+    margin-top: 0;
+}
+
+/*
+ * Navigation bar (week, month, etc.) at the bottom
+ */
+#navbar {
+    margin: 0 1% 1% 1%;
+    padding: 5px;
+    text-align: center;
+    clear: both;
+    border-top: 1px solid #dcdcdc;
+    border-right: 1px solid #a9a9a9;
+    border-bottom: 1px solid #808080;
+    border-left: 1px solid #a9a9a9;
+    background-color: #fafaff;
+}
+
+/*************** Global Styles ***************/
+
+h2, h3, h4, h5, h6 {
+    color: #3d6c87;
+}
+</style>
+
+<!--## Copyright 2009-2021 Tom Keffer-->
+<!--## Distributed under terms of GPLv3.  See LICENSE.txt for your rights.-->
+<!--#errorCatcher Echo-->
+<!--#encoding UTF-8-->
+<!--##-->
+
+
+  <head>
+    ## Specifying an encoding of UTF-8 is usually safe:
+    <meta charset="UTF-8">
+
+
+    <script type="text/javascript">
+      function openURL(urlname)
+      {
+        window.location=urlname;
+      }
+      function openNoaaFile(date)
+      {
+        var url = "NOAA/NOAA-";
+        url = url + date;
+        url = url + ".txt";
+        window.location=url;
+      }
+    </script>
+  </head>
+
+  <body>
     <div id="container">
       <div id="masthead">
-        <h1>UBI, Covilha-PT</h1>
-        <h2>Current Weather Conditions</h2>
-          <h2>08/04/22 14:45:00</h2>
+        <h1>$station.location</h1>
+        <h2>$gettext("Current Weather Conditions")</h2>
+          <h2>$current.dateTime</h2>
       </div>
 
       <div id="stats_group">
 
         <div class="stats">
           <div class="stats_header">
-            Current Conditions
+            $gettext("Current Conditions")
           </div>
 
-          <table border="1">
+          <table>
             <tbody>
               <tr>
-                <td class="stats_label">Outside Temperature</td>
-                <td class="stats_data">13.2&#176;C</td>
+                <td class="stats_label">$obs.label.outTemp</td>
+                <td class="stats_data">$current.outTemp</td>
               </tr>
               <tr>
-                <td class="stats_label">Wind Chill</td>
-                <td class="stats_data">13.2&#176;C</td>
+                <td class="stats_label">$obs.label.windchill</td>
+                <td class="stats_data">$current.windchill</td>
               </tr>
               <tr>
-                <td class="stats_label">Heat Index</td>
-                <td class="stats_data">13.2&#176;C</td>
+                <td class="stats_label">$obs.label.heatindex</td>
+                <td class="stats_data">$current.heatindex</td>
               </tr>
               <tr>
-                <td class="stats_label">Dewpoint</td>
-                <td class="stats_data">7.8&#176;C</td>
+                <td class="stats_label">$obs.label.dewpoint</td>
+                <td class="stats_data">$current.dewpoint</td>
               </tr>
               <tr>
-                <td class="stats_label">Humidity</td>
-                <td class="stats_data">70%</td>
+                <td class="stats_label">$obs.label.outHumidity</td>
+                <td class="stats_data">$current.outHumidity</td>
               </tr>
               <tr>
-                <td class="stats_label">Barometer</td>
-                <td class="stats_data">936.9 mbar</td>
+                <td class="stats_label">$obs.label.barometer</td>
+                <td class="stats_data">$current.barometer</td>
               </tr>
               <tr>
-                <td class="stats_label">Barometer Trend (3 hours)</td>
-                <td class="stats_data">-0.7 mbar</td>
+                <td class="stats_label">$obs.label.barometerRate ($trend.time_delta.hour.format("%.0f"))</td>
+                <td class="stats_data">$trend.barometer</td>
               </tr>
               <tr>
-                <td class="stats_label">Wind</td>
-                <td class="stats_data">2.9 m/s from 297&#176; (WNW)</td>
+                <td class="stats_label">$obs.label.wind</td>
+                <td class="stats_data">$current.windSpeed $gettext("from") $current.windDir ($current.windDir.ordinal_compass)</td>
               </tr>
               <tr>
-                <td class="stats_label">Rain Rate</td>
-                <td class="stats_data">0.0 mm/hr</td>
+                <td class="stats_label">$obs.label.rainRate</td>
+                <td class="stats_data">$current.rainRate</td>
               </tr>
               <tr>
-                <td class="stats_label">Inside Temperature</td>
-                <td class="stats_data">19.1&#176;C</td>
+                <td class="stats_label">$obs.label.inTemp</td>
+                <td class="stats_data">$current.inTemp</td>
               </tr>
+              #if $day.UV.has_data
               <tr>
-                <td class="stats_label">UV</td>
-                <td class="stats_data">2.8</td>
+                <td class="stats_label">$obs.label.UV</td>
+                <td class="stats_data">$current.UV</td>
               </tr>
+              #end if
+              #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw > 0.0
               <tr>
-                <td class="stats_label">ET</td>
-                <td class="stats_data">0.0 mm</td>
+                <td class="stats_label">$obs.label.ET</td>
+                <td class="stats_data">$current.ET</td>
               </tr>
+              #end if
+              #if $day.radiation.has_data
               <tr>
-                <td class="stats_label">Solar Radiation</td>
-                <td class="stats_data">393 W/m&#178;</td>
+                <td class="stats_label">$obs.label.radiation</td>
+                <td class="stats_data">$current.radiation</td>
               </tr>
+              #end if
             </tbody>
           </table>
         </div>
@@ -85,207 +334,353 @@
 
         <div class="stats">
           <div class="stats_header">
-            Since Midnight
+            $gettext("Since Midnight")
           </div>
-          <table border="1">
+          <table>
             <tbody>
               <tr>
                 <td class="stats_label">
-                  High Temperature<br/>
-                  Low Temperature
+                  $gettext("High Temperature")<br/>
+                  $gettext("Low Temperature")
                 </td>
                 <td class="stats_data">
-                  13.7&#176;C at 14:28:59<br/>
-                  6.4&#176;C at 06:41:16
+                  $day.outTemp.max $gettext("at") $day.outTemp.maxtime<br/>
+                  $day.outTemp.min $gettext("at") $day.outTemp.mintime
                 </td>
               </tr>
               <tr>
                 <td class="stats_label">
-                  High Heat Index<br/>
-                  Low Wind Chill
+                  $gettext("High Heat Index")<br/>
+                  $gettext("Low Wind Chill")
                 </td>
                 <td class="stats_data">
-                  13.7&#176;C at 14:28:59<br/>
-                  2.2&#176;C at 06:44:56
+                  $day.heatindex.max $gettext("at") $day.heatindex.maxtime<br/>
+                  $day.windchill.min $gettext("at") $day.windchill.mintime
                 </td>
               </tr>
               <tr>
                 <td class="stats_label">
-                  High Humidity<br/>
-                  Low Humidity
+                  $gettext("High Humidity")<br/>
+                  $gettext("Low Humidity")
                 </td>
                 <td class="stats_data">
-                  85% at 02:19:00<br/>
-                  69% at 14:36:07
+                  $day.outHumidity.max $gettext("at") $day.outHumidity.maxtime<br/>
+                  $day.outHumidity.min $gettext("at") $day.outHumidity.mintime
                 </td>
               </tr>
               <tr>
                 <td class="stats_label">
-                  High Dewpoint<br/>
-                  Low Dewpoint
+                  $gettext("High Dewpoint")<br/>
+                  $gettext("Low Dewpoint")
                 </td>
                 <td class="stats_data">
-                  8.8&#176;C at 13:21:31<br/>
-                  3.9&#176;C at 06:41:16
+                  $day.dewpoint.max $gettext("at") $day.dewpoint.maxtime<br/>
+                  $day.dewpoint.min $gettext("at") $day.dewpoint.mintime
                 </td>
               </tr>
               <tr>
                 <td class="stats_label">
-                  High Barometer<br/>
-                  Low Barometer
+                  $gettext("High Barometer")<br/>
+                  $gettext("Low Barometer")
                 </td>
                 <td class="stats_data">
-                  939.4 mbar at 00:10:01<br/>
-                  936.6 mbar at 07:03:02
+                  $day.barometer.max $gettext("at") $day.barometer.maxtime<br/>
+                  $day.barometer.min $gettext("at") $day.barometer.mintime
                 </td>
               </tr>
               <tr>
-                <td class="stats_label">Today's Rain</td>
-                <td class="stats_data">0.0 mm</td>
+                <td class="stats_label">$gettext("Today's Rain")</td>
+                <td class="stats_data">$day.rain.sum</td>
               </tr>
               <tr>
-                <td class="stats_label">High Rain Rate</td>
-                <td class="stats_data">0.0 mm/hr at 00:00:01</td>
+                <td class="stats_label">$gettext("High Rain Rate")</td>
+                <td class="stats_data">$day.rainRate.max $gettext("at") $day.rainRate.maxtime</td>
               </tr>
               <tr>
                 <td class="stats_label">
-                  High Wind
+                  $gettext("High Wind")
                 </td>
                 <td class="stats_data">
-                  9.4 m/s from 316&#176; at 14:14:01
-                </td>
-              </tr>
-              <tr>
-                <td class="stats_label">
-                  Average Wind
-                </td>
-                <td class="stats_data">
-                  1.1 m/s
+                  $day.wind.max $gettext("from") $day.wind.gustdir $gettext("at") $day.wind.maxtime
                 </td>
               </tr>
               <tr>
                 <td class="stats_label">
-                  RMS Wind
+                  $gettext("Average Wind")
                 </td>
                 <td class="stats_data">
-                  1.4 m/s
+                  $day.wind.avg
+                </td>
+              </tr>
+              <tr>
+                <td class="stats_label">
+                  $gettext("RMS Wind")
+                </td>
+                <td class="stats_data">
+                  $day.wind.rms
                 </td>
               </tr>
 
               <tr>
                 <td class="stats_label">
-                  Vector Average Speed<br/>
-                  Vector Average Direction
+                  $gettext("Vector Average Speed")<br/>
+                  $gettext("Vector Average Direction")
                 </td>
                 <td class="stats_data">
-                  0.4 m/s<br/>
-                  344&#176;
+                  $day.wind.vecavg<br/>
+                  $day.wind.vecdir
                 </td>
               </tr>
 
               <tr>
                 <td class="stats_label">
-                  High Inside Temperature<br/>
-                  Low Inside Temperature
+                  $gettext("High Inside Temperature")<br/>
+                  $gettext("Low Inside Temperature")
                 </td>
                 <td class="stats_data">
-                  19.1&#176;C at 14:43:03<br/>
-                  11.8&#176;C at 07:24:02
+                  $day.inTemp.max $gettext("at") $day.inTemp.maxtime<br/>
+                  $day.inTemp.min $gettext("at") $day.inTemp.mintime
                 </td>
               </tr>
+              #if $day.UV.has_data
               <tr>
                 <td class="stats_label">
-                  High UV<br/>
-                  Low UV
+                  $gettext("High UV")<br/>
+                  $gettext("Low UV")
                 </td>
                 <td class="stats_data">
-                  5.0 at 14:24:41<br/>
-                  0.0 at 00:00:01
+                  $day.UV.max $gettext("at") $day.UV.maxtime<br/>
+                  $day.UV.min $gettext("at") $day.UV.mintime
                 </td>
               </tr>
+              #end if
+              #if $day.ET.has_data and $day.ET.sum.raw is not None and $day.ET.sum.raw >0.0
               <tr>
                 <td class="stats_label">
-                  High ET<br/>
-                  Low ET
+                  $gettext("High ET")<br/>
+                  $gettext("Low ET")
                 </td>
                 <td class="stats_data">
-                  0.4 mm at 14:00:00<br/>
-                  0.0 mm at 00:15:00
+                  $day.ET.max $gettext("at") $day.ET.maxtime<br/>
+                  $day.ET.min $gettext("at") $day.ET.mintime
                 </td>
               </tr>
+              #end if
+              #if $day.radiation.has_data
               <tr>
                 <td class="stats_label">
-                  High Radiation<br/>
-                  Low Radiation
+                  $gettext("High Radiation")<br/>
+                  $gettext("Low Radiation")
                 </td>
                 <td class="stats_data">
-                  1062 W/m&#178; at 13:07:39<br/>
-                  0 W/m&#178; at 00:00:01
+                  $day.radiation.max $gettext("at") $day.radiation.maxtime<br/>
+                  $day.radiation.min $gettext("at") $day.radiation.mintime
                 </td>
               </tr>
+              #end if
             </tbody>
           </table>
         </div> <!--End class "stats" -->
 
         <p>&nbsp;</p>
 
+        #if 'radar_img' in $Extras
+        <div id="radar_img">
+          #if 'radar_url' in $Extras
+          <a  href="$Extras.radar_url">
+          #end if
+            <img src="$Extras.radar_img" alt="Radar" />
+          #if 'radar_url' in $Extras
+          </a>
+          <p>$gettext("Click image for expanded radar loop")</p>
+          #end if
+        </div>
+        #end if
 
       </div> <!--End class "stats_group" -->
 
       <div id="content">
         <div id="about">
           <div class="header">
-            About this weather station:
+            $gettext("About this weather station"):
           </div>
           <table>
-            <caption class="caption">Location</caption>
+            <caption class="caption">$gettext("Location")</caption>
             <tr>
-              <td class="label">Latitude:</td>
-              <td class="data">40&deg; 16.50' N</td>
+              <td class="label">$gettext("Latitude"):</td>
+              <td class="data">$station.latitude[0]&deg; $station.latitude[1]' $station.latitude[2]</td>
             </tr>
             <tr>
-              <td class="label">Longitude:</td>
-              <td class="data">007&deg; 30.60' W</td>
+              <td class="label">$gettext("Longitude"):</td>
+              <td class="data">$station.longitude[0]&deg; $station.longitude[1]' $station.longitude[2]</td>
             </tr>
             <tr>
-              <td class="label">Altitude:</td>
-              <td class="data">0 meters</td>
+              <td class="label">$pgettext("Geographical", "Altitude"):</td>
+              <td class="data">$station.altitude</td>
             </tr>
           </table>
           <p>
-            This station uses a Vantage Pro2, controlled by
-            <a href="http://www.weewx.com">'weewx'</a>, an experimental
-            weather software system written in Python. Weewx
-            was designed to be simple, fast, and easy to understand by
-            leveraging modern software concepts.
+            $gettext("This station uses a")
+            $station.hardware,
+            $gettext("controlled by <a href='http://www.weewx.com'>'WeeWX'</a>,")
+            $gettext("an experimental weather software system written in Python.")
+            $gettext("Weewx was designed to be simple, fast, and easy to understand by leveraging modern software concepts.")
           </p>
-          <p><a href="RSS/weewx_rss.xml">RSS feed</a></p>
-          <p><a href="mobile.html">Mobile formatted</a></p>
-          <p><a href="smartphone/index.html">Smartphone formatted</a></p>
-          <p>Weewx uptime:  10 days, 2 hours, 28 minutes<br/>
-             Server uptime: 10 days, 2 hours, 27 minutes<br/>
-             weewx v3.8.0</p>
+          <p><a href="RSS/weewx_rss.xml">$gettext("RSS feed")</a></p>
+          <p><a href="smartphone/index.html">$gettext("Smartphone formatted")</a></p>
+          <p>$gettext("WeeWX uptime"):  $station.uptime<br/>
+             $gettext("Server uptime"): $station.os_uptime<br/>
+             weewx v$station.version</p>
         </div> <!-- End id "about" -->
 
         <div id="almanac">
           <div class="header">
-            Today's Almanac
+            $gettext("Today's Almanac")
           </div>
           <div class="celestial_group">
-            <table border="1">
+            #if $almanac.hasExtras
+            ## Extended almanac information is available. Do the full set of tables.
+            #set $sun_altitude = $almanac.sun.alt
+            #if $sun_altitude < 0
+            #set $sun_None="<i>(" + $gettext("Always down") + ")</i>"
+            #else
+            #set $sun_None="<i>(" + $gettext("Always up") + ")</i>"
+            #end if
+            <div class="celestial_body">
+              <table>
+                <caption class="caption">$gettext("Sun")</caption>
+                <tr>
+                  <td class="label">$gettext("Start civil twilight"):</td>
+                  <td class="data">$almanac(horizon=-6).sun(use_center=1).rise</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Sunrise"):</td>
+                  <td class="data">$almanac.sun.rise.string($sun_None)</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Transit"):</td>
+                  <td class="data">$almanac.sun.transit</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Sunset"):</td>
+                  <td class="data">$almanac.sun.set.string($sun_None)</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("End civil twilight"):</td>
+                  <td class="data">$almanac(horizon=-6).sun(use_center=1).set</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Azimuth"):</td>
+                  <td class="data">$("%.1f&deg;" % $almanac.sun.az)</td>
+                </tr>
+                <tr>
+                  <td class="label">$pgettext("Astronomical", "Altitude"):</td>
+                  <td class="data">$("%.1f&deg;" % $sun_altitude)</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Right ascension"):</td>
+                  <td class="data">$("%.1f&deg;" % $almanac.sun.ra)</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Declination"):</td>
+                  <td class="data">$("%.1f&deg;" % $almanac.sun.dec)</td>
+                </tr>
+                #if $almanac.next_equinox.raw < $almanac.next_solstice.raw
+                ## The equinox is before the solstice. Display them in order.
+                <tr>
+                  <td class="label">$gettext("Equinox"):</td>
+                  <td class="data">$almanac.next_equinox</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Solstice"):</td>
+                  <td class="data">$almanac.next_solstice</td>
+                </tr>
+                #else
+                ## The solstice is before the equinox. Display them in order.
+                <tr>
+                  <td class="label">$gettext("Solstice"):</td>
+                  <td class="data">$almanac.next_solstice</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Equinox"):</td>
+                  <td class="data">$almanac.next_equinox</td>
+                </tr>
+                #end if
+              </table>
+            </div> <!-- end class "celestial_body" -->
+            <div class="celestial_body">
+              <table>
+                <caption class="caption">$gettext("Moon")</caption>
+                <tr>
+                  <td class="label">$gettext("Rise"):</td>
+                  <td class="data">$almanac.moon.rise</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Transit"):</td>
+                  <td class="data">$almanac.moon.transit</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Set"):</td>
+                  <td class="data">$almanac.moon.set</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Azimuth"):</td>
+                  <td class="data">$("%.1f&deg;" % $almanac.moon.az)</td>
+                </tr>
+                <tr>
+                  <td class="label">$pgettext("Astronomical", "Altitude"):</td>
+                  <td class="data">$("%.1f&deg;" % $almanac.moon.alt)</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Right ascension"):</td>
+                  <td class="data">$("%.1f&deg;" % $almanac.moon.ra)</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Declination"):</td>
+                  <td class="data">$("%.1f&deg;" % $almanac.moon.dec)</td>
+                </tr>
+                #if $almanac.next_full_moon.raw < $almanac.next_new_moon.raw
+                <tr>
+                  <td class="label">$gettext("Full moon"):</td>
+                  <td class="data">$almanac.next_full_moon</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("New moon"):</td>
+                  <td class="data">$almanac.next_new_moon</td>
+                </tr>
+                #else
+                <tr>
+                  <td class="label">$gettext("New moon"):</td>
+                  <td class="data">$almanac.next_new_moon</td>
+                </tr>
+                <tr>
+                  <td class="label">$gettext("Full moon"):</td>
+                  <td class="data">$almanac.next_full_moon</td>
+                </tr>
+                #end if
+                <tr>
+                  <td class="label">$gettext("Phase"):</td>
+                  <td class="data">$almanac.moon_phase<br/>($almanac.moon_fullness% full)</td>
+                </tr>
+              </table>
+            </div> <!-- end class "celestial_body" -->
+            #else
+            ## No extended almanac information available. Fall back to a simple table.
+            <table>
               <tr>
-                <td class="label">Sunrise:</td>
-                <td class="data">07:02:24</td>
+                <td class="label">$gettext("Sunrise"):</td>
+                <td class="data">$almanac.sunrise</td>
               </tr>
               <tr>
-                <td class="label">Sunset:</td>
-                <td class="data">20:01:23</td>
+                <td class="label">$gettext("Sunset"):</td>
+                <td class="data">$almanac.sunset</td>
               </tr>
               <tr>
-                <td class="label">Moon Phase:</td>
-                <td class="data">First quarter<br/>(41% full)</td>
+                <td class="label">$gettext("Moon Phase"):</td>
+                <td class="data">$almanac.moon_phase<br/>($almanac.moon_fullness% full)</td>
               </tr>
             </table>
+            #end if
           </div> <!-- end class "celestial_group" -->
         </div> <!-- end id "almanac" -->
 
@@ -299,204 +694,55 @@
           <img src="daywinddir.png"   alt="Hi Wind" />
           <img src="dayinside.png"    alt="Inside" />
           <img src="daywindvec.png"   alt="Wind Vector" />
+          #if $day.radiation.has_data
           <img src="dayradiation.png" alt="Radiation" />
+          #end if
+          #if $day.UV.has_data
           <img src="dayuv.png" alt="UV Index" />
+          #end if
+          #if $day.rxCheckPercent.has_data
           <img src="dayrx.png"        alt="day rx percent"/>
+          #end if
         </div> <!-- End id "plots" -->
       </div> <!-- End id "content" -->
 
       <div id="navbar">
-        <input type="button" value="   Current   " onclick="openURL('index.html')" />
-        <input type="button" value="    Week     " onclick="openURL('week.html')" />
-        <input type="button" value="    Month    " onclick="openURL('month.html')" />
-        <input type="button" value="    Year     " onclick="openURL('year.html')" />
-        <p>Monthly summary:&nbsp;
+        <input type="button" value=$pgettext("Buttons","Current") onclick="openURL('index.html')" />
+        <input type="button" value=$pgettext("Buttons","Week") onclick="openURL('week.html')" />
+        <input type="button" value=$pgettext("Buttons","Month") onclick="openURL('month.html')" />
+        <input type="button" value=$pgettext("Buttons","Year") onclick="openURL('year.html')" />
+        <p>$gettext("Monthly summary"):&nbsp;
         <select NAME=noaaselect onchange="openNoaaFile(value)">
-            <option value="2009-01">2009-01</option>
-            <option value="2009-02">2009-02</option>
-            <option value="2009-03">2009-03</option>
-            <option value="2009-04">2009-04</option>
-            <option value="2009-05">2009-05</option>
-            <option value="2009-06">2009-06</option>
-            <option value="2009-07">2009-07</option>
-            <option value="2009-08">2009-08</option>
-            <option value="2009-09">2009-09</option>
-            <option value="2009-10">2009-10</option>
-            <option value="2009-11">2009-11</option>
-            <option value="2009-12">2009-12</option>
-            <option value="2010-01">2010-01</option>
-            <option value="2010-02">2010-02</option>
-            <option value="2010-03">2010-03</option>
-            <option value="2010-04">2010-04</option>
-            <option value="2010-05">2010-05</option>
-            <option value="2010-06">2010-06</option>
-            <option value="2010-07">2010-07</option>
-            <option value="2010-08">2010-08</option>
-            <option value="2010-09">2010-09</option>
-            <option value="2010-10">2010-10</option>
-            <option value="2010-11">2010-11</option>
-            <option value="2010-12">2010-12</option>
-            <option value="2011-01">2011-01</option>
-            <option value="2011-02">2011-02</option>
-            <option value="2011-03">2011-03</option>
-            <option value="2011-04">2011-04</option>
-            <option value="2011-05">2011-05</option>
-            <option value="2011-06">2011-06</option>
-            <option value="2011-07">2011-07</option>
-            <option value="2011-08">2011-08</option>
-            <option value="2011-09">2011-09</option>
-            <option value="2011-10">2011-10</option>
-            <option value="2011-11">2011-11</option>
-            <option value="2011-12">2011-12</option>
-            <option value="2012-01">2012-01</option>
-            <option value="2012-02">2012-02</option>
-            <option value="2012-03">2012-03</option>
-            <option value="2012-04">2012-04</option>
-            <option value="2012-05">2012-05</option>
-            <option value="2012-06">2012-06</option>
-            <option value="2012-07">2012-07</option>
-            <option value="2012-08">2012-08</option>
-            <option value="2012-09">2012-09</option>
-            <option value="2012-10">2012-10</option>
-            <option value="2012-11">2012-11</option>
-            <option value="2012-12">2012-12</option>
-            <option value="2013-01">2013-01</option>
-            <option value="2013-02">2013-02</option>
-            <option value="2013-03">2013-03</option>
-            <option value="2013-04">2013-04</option>
-            <option value="2013-05">2013-05</option>
-            <option value="2013-06">2013-06</option>
-            <option value="2013-07">2013-07</option>
-            <option value="2013-08">2013-08</option>
-            <option value="2013-09">2013-09</option>
-            <option value="2013-10">2013-10</option>
-            <option value="2013-11">2013-11</option>
-            <option value="2013-12">2013-12</option>
-            <option value="2014-01">2014-01</option>
-            <option value="2014-02">2014-02</option>
-            <option value="2014-03">2014-03</option>
-            <option value="2014-04">2014-04</option>
-            <option value="2014-05">2014-05</option>
-            <option value="2014-06">2014-06</option>
-            <option value="2014-07">2014-07</option>
-            <option value="2014-08">2014-08</option>
-            <option value="2014-09">2014-09</option>
-            <option value="2014-10">2014-10</option>
-            <option value="2014-11">2014-11</option>
-            <option value="2014-12">2014-12</option>
-            <option value="2015-01">2015-01</option>
-            <option value="2015-02">2015-02</option>
-            <option value="2015-03">2015-03</option>
-            <option value="2015-04">2015-04</option>
-            <option value="2015-05">2015-05</option>
-            <option value="2015-06">2015-06</option>
-            <option value="2015-07">2015-07</option>
-            <option value="2015-08">2015-08</option>
-            <option value="2015-09">2015-09</option>
-            <option value="2015-10">2015-10</option>
-            <option value="2015-11">2015-11</option>
-            <option value="2015-12">2015-12</option>
-            <option value="2016-01">2016-01</option>
-            <option value="2016-02">2016-02</option>
-            <option value="2016-03">2016-03</option>
-            <option value="2016-04">2016-04</option>
-            <option value="2016-05">2016-05</option>
-            <option value="2016-06">2016-06</option>
-            <option value="2016-07">2016-07</option>
-            <option value="2016-08">2016-08</option>
-            <option value="2016-09">2016-09</option>
-            <option value="2016-10">2016-10</option>
-            <option value="2016-11">2016-11</option>
-            <option value="2016-12">2016-12</option>
-            <option value="2017-01">2017-01</option>
-            <option value="2017-02">2017-02</option>
-            <option value="2017-03">2017-03</option>
-            <option value="2017-04">2017-04</option>
-            <option value="2017-05">2017-05</option>
-            <option value="2017-06">2017-06</option>
-            <option value="2017-07">2017-07</option>
-            <option value="2017-08">2017-08</option>
-            <option value="2017-09">2017-09</option>
-            <option value="2017-10">2017-10</option>
-            <option value="2017-11">2017-11</option>
-            <option value="2017-12">2017-12</option>
-            <option value="2018-01">2018-01</option>
-            <option value="2018-02">2018-02</option>
-            <option value="2018-03">2018-03</option>
-            <option value="2018-04">2018-04</option>
-            <option value="2018-05">2018-05</option>
-            <option value="2018-06">2018-06</option>
-            <option value="2018-07">2018-07</option>
-            <option value="2018-08">2018-08</option>
-            <option value="2018-09">2018-09</option>
-            <option value="2018-10">2018-10</option>
-            <option value="2018-11">2018-11</option>
-            <option value="2018-12">2018-12</option>
-            <option value="2019-01">2019-01</option>
-            <option value="2019-02">2019-02</option>
-            <option value="2019-03">2019-03</option>
-            <option value="2019-04">2019-04</option>
-            <option value="2019-05">2019-05</option>
-            <option value="2019-06">2019-06</option>
-            <option value="2019-07">2019-07</option>
-            <option value="2019-08">2019-08</option>
-            <option value="2019-09">2019-09</option>
-            <option value="2019-10">2019-10</option>
-            <option value="2019-11">2019-11</option>
-            <option value="2019-12">2019-12</option>
-            <option value="2020-01">2020-01</option>
-            <option value="2020-02">2020-02</option>
-            <option value="2020-03">2020-03</option>
-            <option value="2020-04">2020-04</option>
-            <option value="2020-05">2020-05</option>
-            <option value="2020-06">2020-06</option>
-            <option value="2020-07">2020-07</option>
-            <option value="2020-08">2020-08</option>
-            <option value="2020-09">2020-09</option>
-            <option value="2020-10">2020-10</option>
-            <option value="2020-11">2020-11</option>
-            <option value="2020-12">2020-12</option>
-            <option value="2021-01">2021-01</option>
-            <option value="2021-02">2021-02</option>
-            <option value="2021-03">2021-03</option>
-            <option value="2021-04">2021-04</option>
-            <option value="2021-05">2021-05</option>
-            <option value="2021-06">2021-06</option>
-            <option value="2021-07">2021-07</option>
-            <option value="2021-08">2021-08</option>
-            <option value="2021-09">2021-09</option>
-            <option value="2021-10">2021-10</option>
-            <option value="2021-11">2021-11</option>
-            <option value="2021-12">2021-12</option>
-            <option value="2022-01">2022-01</option>
-            <option value="2022-02">2022-02</option>
-            <option value="2022-03">2022-03</option>
-            <option value="2022-04">2022-04</option>
-	    <option selected>-Select month-</option>
+        #for $monthYear in $SummaryByMonth
+            <option value="$monthYear">$monthYear</option>
+        #end for
+	    <option selected>-$gettext("Select month")-</option>
         </select>
         <br/>
-        Yearly summary:&nbsp;
+        $gettext("Yearly summary"):&nbsp;
         <select NAME=noaaselect onchange="openNoaaFile(value)">
-            <option value="2009">2009</option>
-            <option value="2010">2010</option>
-            <option value="2011">2011</option>
-            <option value="2012">2012</option>
-            <option value="2013">2013</option>
-            <option value="2014">2014</option>
-            <option value="2015">2015</option>
-            <option value="2016">2016</option>
-            <option value="2017">2017</option>
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-	    <option selected>-Select year-</option>
+        #for $yr in $SummaryByYear
+            <option value="$yr">$yr</option>
+        #end for
+	    <option selected>-$gettext("Select year")-</option>
         </select>
         </p>
       </div>
     </div>
 
+    ## Include the Google Analytics code if the user has supplied an ID:
+    #if 'googleAnalyticsId' in $Extras
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try{
+            var pageTracker = _gat._getTracker("$Extras.googleAnalyticsId");
+            pageTracker._trackPageview();
+        } catch(err) {}
+    </script>
+    #end if
 
-
+</body>
 {% endblock content %}">

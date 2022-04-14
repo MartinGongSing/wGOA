@@ -38,7 +38,10 @@ urlpatterns = [
 
     path('data4/', views.data4, name='data4'),
     path('cpc/', views.cpc_det, name='cpc'),
-    path('cpcD/', views.Dcpc_det, name='cpc'),
+    path('cpcD/', views.Dcpc_det, name='cpcD'),
+    path('apsD/', views.Daps_det, name='apsD'),
+    path('nephD/', views.Dneph_det, name='nephD'),
+    path('psapD/', views.Dpsap_det, name='psapD'),
     path('aps/', views.aps_det, name='aps'),
     path('psap/', views.psap_det, name='psap'),
     path('neph/', views.neph_det, name='neph'),

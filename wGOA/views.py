@@ -597,6 +597,72 @@ def Dcpc_det(request):
     context['daysList'] = yoda['daysList']
 
     return render(request, 'data_det/cpcD.html',  context)
+
+def Daps_det(request):
+    context = {}  # used to pass the info to the HTML
+    yoda = {'daysList': []}
+
+    theDaysData = aps.objects.using('dataGOA').order_by('-time').all()
+    day1 = 0
+    month1 = 0
+    for days in theDaysData:
+        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
+        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
+        if day2 != day1:
+            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
+        # if month2 != month1:
+        #     yoda['daysList'].insert(0, '<br>')
+        day1 = day2
+        month1 = month2
+    # print(yoda['daysList'])
+    context['daysList'] = yoda['daysList']
+
+    return render(request, 'data_det/apsD.html',  context)
+
+def Dneph_det(request):
+    context = {}  # used to pass the info to the HTML
+    yoda = {'daysList': []}
+
+    theDaysData = neph2.objects.using('dataGOA').order_by('-time').all()
+    day1 = 0
+    month1 = 0
+    for days in theDaysData:
+        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
+        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
+        if day2 != day1:
+            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
+        # if month2 != month1:
+        #     yoda['daysList'].insert(0, '<br>')
+        day1 = day2
+        month1 = month2
+    # print(yoda['daysList'])
+    context['daysList'] = yoda['daysList']
+
+    return render(request, 'data_det/nephD.html',  context)
+
+
+def Dpsap_det(request):
+    context = {}  # used to pass the info to the HTML
+    yoda = {'daysList': []}
+
+    theDaysData = psap.objects.using('dataGOA').order_by('-time').all()
+    day1 = 0
+    month1 = 0
+    for days in theDaysData:
+        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
+        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
+        if day2 != day1:
+            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
+        # if month2 != month1:
+        #     yoda['daysList'].insert(0, '<br>')
+        day1 = day2
+        month1 = month2
+    # print(yoda['daysList'])
+    context['daysList'] = yoda['daysList']
+
+    return render(request, 'data_det/psapD.html',  context)
+
+
 def cpc_det(request):
     # data = cpcDetData.cpc_det_data()
     # print("data is ", data)
@@ -796,22 +862,9 @@ def neph_det(request):
     context = {}
     form = DateForm()
     context['form'] = form
-    data = { 'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [], 'dayneph': [], 'daysList':[]}
+    data = { 'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [], 'dayneph': [],}
 
-    theDaysData = neph2.objects.using('dataGOA').order_by('-time').all()
-    day1 = 0
-    month1 = 0
-    for days in theDaysData:
-        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
-        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
-        if day2 != day1:
-            data['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
-        if month2 != month1:
-            data['daysList'].insert(0, '<br>')
-        day1 = day2
-        month1 = month2
 
-    context['daysList'] = data['daysList']
 
     if request.GET:
 
@@ -904,22 +957,10 @@ def aps_det(request):
     context = {}
     form = DateForm()
     context['form'] = form
-    data = {'IDaps': [], 'daysList':[], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],'d20': [],'d21': [],'d22': [], 'd23': [], 'd24': [],'d25': [],'d26': [],'d27': [],'d28': [],'d29': [],'d30': [],'d31': [],'d32': [], 'd33': [], 'd34': [],'d35': [],'d36': [],'d37': [],'d38': [],'d39': [],'d40': [],'d41': [],'d42': [],'d43':[],}
+    data = {'IDaps': [],  'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],'d20': [],'d21': [],'d22': [], 'd23': [], 'd24': [],'d25': [],'d26': [],'d27': [],'d28': [],'d29': [],'d30': [],'d31': [],'d32': [], 'd33': [], 'd34': [],'d35': [],'d36': [],'d37': [],'d38': [],'d39': [],'d40': [],'d41': [],'d42': [],'d43':[],}
 
 
-    theDaysData = aps.objects.using('dataGOA').order_by('-time').all()
-    day1 = 0
-    month1 = 0
-    for days in theDaysData:
-        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
-        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
-        if day2 != day1:
-            data['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
-        if month2 != month1:
-            data['daysList'].insert(0, '<br>')
-        day1 = day2
-        month1 = month2
-    context['daysList'] = data['daysList']
+
 
 
 
@@ -1104,21 +1145,8 @@ def psap_det(request):
     context = {}
     form = DateForm()
     context['form'] = form
-    data = {'IDpsap': [], 'blue': [], 'red': [], 'green': [], 'daypsap': [],'daysList':[] }
+    data = {'IDpsap': [], 'blue': [], 'red': [], 'green': [], 'daypsap': [],}
 
-    theDaysData = psap.objects.using('dataGOA').order_by('-time').all()
-    day1 = 0
-    month1 = 0
-    for days in theDaysData:
-        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
-        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
-        if day2 != day1:
-            data['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
-        if month2 != month1:
-            data['daysList'].insert(0, '<br>')
-        day1 = day2
-        month1 = month2
-    context['daysList'] = data['daysList']
 
 
     if request.GET:
