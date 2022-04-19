@@ -17,13 +17,16 @@
 	        <p>40° 16' 30"N, 7° 30' 35"W, 704 m</p>
         </div>
         <div class="column">
-            <img src="{% url 'webcam_feed' %}" style='height: 300px;'>
+            <a href="{% url 'webcam_feed' %}">
+                <img src="{% url 'webcam_feed' %}" style='height: 300px;'>
+            </a>
             <p>Webcamera live feed (reload to updated)</p>
+            <p>Current datetime:{% now "jS F Y H:i" %}</p>
         </div>
     </div>
 </div>
 
-<br>
+
 
 
 <script>
@@ -187,7 +190,9 @@
 <div class="boxGray">
     <div class="row">
         <div class="column">
-            <img src="../static/assets/img/sun.png" alt="weather" style="width:100%">
+            <a href="https://www.timeanddate.com/worldclock/sunearth.html?iso={% now 'Ymj'%}T{% now 'Hi' %}&earth=1">
+                <img src="https://www.timeanddate.com/scripts/sunmap.php?iso={% now 'Ymj'%}T{% now 'Hi' %}&earth=1" style='height: 300px;'>
+            </a>
         </div>
 
 
@@ -195,7 +200,7 @@
         <div class="column">
             <div class="center">
                 <!-- // Begin Current Moon Phase HTML (c) MoonConnection.com // -->
-                <table cellpadding="0" cellspacing="0" border="0" width="128">
+                <table cellpadding="0" cellspacing="0" border="0" width="128" class="center">
                     <tr>
                         <td align="center">
                             <a href="https://www.moonconnection.com/current_moon_phase.phtml" target="mc_moon_ph">
@@ -209,12 +214,13 @@
                         </td>
                     </tr>
                 </table><!-- // end moon phase HTML // -->
-
+            </div>
+            <div class="center">
                 <a href="https://www.ubi.pt/Entidade/Departamento_de_Ciencias_Aeroespaciais ">
                     <p>Dpt.of Aerospace Science – UBI</p>
                 </a>
                 <a href="https://www.flightradar24.com/38.69,-5.3/6">
-                    <img src="../static/assets/img/flightradar24.jpg" style="width: 10%">
+                    <img src="../static/assets/img/flightradar24.jpg" style="width: 10%" >
                 </a>
             </div>
         </div>
