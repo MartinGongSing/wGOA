@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %} TEST {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+
+<table width="100%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>PSAP SOP</b></td>
+</tr>
+</table>
+
+<div style="text-align: center">Version 1: 2015.10.12</div>
+
+<table width="50%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>Changing filters</b></td>
+</tr>
+</table>
+
+<OL>
+
+<LI><font color="green">Desktop:</font> on konsole, stop <FONT face="courier" size="-1"><b>PSAPacquire</b></FONT> script:<BR>
+	<FONT face="courier" size="-1">Ctrl+c</FONT></li>
+
+<LI><font color="orange">Laptop:</font> on nephelometer software:<BR>
+	Click <FONT face="courier" size="-1"><b>Stop Data</b></FONT> button</li>
+
+<LI><font color="blue">Rack:</font> on the PSAP instrument:<BR>
+	Turn <FONT face="courier" size="-1"><b>power switch</b> off</FONT> <BR>
+	Open the <FONT face="courier" size="-1"><b>filter holder</b></FONT> and discard the old filters to the box labeled <FONT face="courier" size="-1">DISCARDED FILTERS</FONT><BR>
+	Install new filters in holder: sample side of the filter up<BR>
+	Check that all 4 <FONT face="courier" size="-1"><b>O-rings</b></FONT> are in the optic unit (above and below holder) and haven't fallen out<BR>
+	Turn <FONT face="courier" size="-1"><b>power switch</b> on</FONT><BR>
+	Check <FONT face="courier" size="-1"><b>rotameter flow</b></FONT> is <FONT face="courier" size="-1">90&nbsp;l/h</FONT> and <FONT face="courier" size="-1"><b>manometer pressure</b></FONT> is near <FONT face="courier" size="-1">-0.2&nbsp;bar</FONT><BR>
+	Hold <FONT face="courier" size="-1"><b>reset switch</b></FONT> up for <FONT face="courier" size="-1">30&nbsp;s</FONT></li>
+
+<LI><font color="orange">Laptop:</font> on nephelometer software:<BR>
+	Click <FONT face="courier" size="-1"><b>Start Data</b></FONT> button<BR>
+	Verify the suggested name is ok and click <FONT face="courier" size="-1"><b>Open</b></FONT> button<BR>
+	<FONT face="courier" size="-1"><b>Neph Status</b></FONT> should show a green button and say <FONT face="courier" size="-1">Okay</FONT><BR>
+	<FONT face="courier" size="-1"><b>Next Data in... secs</b></FONT> should start a countdown</li>
+
+<LI><font color="green">Desktop:</font> on konsole, restart <FONT face="courier" size="-1">PSAPacquire</FONT> script:<BR>
+	<FONT face="courier" size="-1">./PSAPacquire</FONT></li>
+
+<LI><font color="green">Desktop:</font> on <FONT face="courier" size="-1"><b>elog</b></FONT> take note of the filter change just done<BR>
+	Click <FONT face="courier" size="-1">New</FONT><BR>
+	<b>Author:</b> your <FONT face="courier" size="-1">username</FONT><BR>
+	<b>Type:</b> select <FONT face="courier" size="-1">Routine</FONT><BR>
+	<b>Category:</b> select <FONT face="courier" size="-1">PSAP</FONT><BR>
+	<b>Subject:</b> Filter change<BR>
+	Click <FONT face="courier" size="-1">Submit</FONT><BR>
+	Create a new event for any other occurrence you found during the procedure.</li>
+
+</ol>
+
+
+
+
+
+{% endblock content %}

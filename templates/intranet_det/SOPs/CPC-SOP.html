@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %} CPC-SOP {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+
+<table width="100%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>CPC SOP</b></td>
+</tr>
+</table>
+
+<div style="text-align: center">Version 2: 2015.05.25</div>
+
+<table width="50%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>Start measuring</b></td>
+</tr>
+</table>
+
+<OL>
+
+<LI>On Windows7 desktop, click <b>AIM-CPC icon</b></li>
+
+<LI><FONT face="courier"><b>File</b></FONT> &#8594; <FONT face="courier"><b>New</b></FONT>:<BR>
+	Select folder: <b>Look in</b>: <FONT face="courier" size="-1">DATA/CPC</FONT><BR>
+	<b>Files of type</b>: <FONT face="courier" size="-1">CPC 3022 Data file (*.C22)</FONT><BR>
+	<b>File name</b>: <FONT face="courier" size="-1">yyyymmdd.C22</FONT><BR>
+	Click <FONT face="courier"><b>Open</b></FONT></li>
+
+<LI><FONT face="courier"><b>Run</b></FONT> &#8594; <FONT face="courier"><b>Auto Export...</b></FONT>:<BR>
+	<b>Extension</b>: <FONT face="courier" size="-1">(*.csv)</FONT><BR>
+	<b>Delimiter</b>: <FONT face="courier" size="-1">Comma</FONT><BR>
+	<b>Orientation</b>: <FONT face="courier" size="-1">Column</FONT><BR>
+	<b>Output file name</b>: <FONT face="courier" size="-1">yyyymmdd.csv</FONT><BR>
+	<B>Data point time format</b>: <FONT face="courier" size="-1">Time Stamp &lt;hh:mm:ss&gt;</FONT><BR>
+	Click <FONT face="courier"><b>OK</b></FONT><BR></li>
+
+<LI><FONT face="courier"><b>File</b></FONT> &#8594; <FONT face="courier"><b>Properties</b></FONT>:<BR>
+	<b>Communications</b>:
+	<UL>
+	<LI>Select <FONT face="courier"><b>Com port 5</b></FONT></li>
+	</ul>
+	<b>Scheduling</b>:
+	<UL>
+	<LI><b>Sample length (sec)</b>: <FONT face="courier" size="-1">86100</FONT></li>
+	<LI><b>Number of samples</b>: <FONT face="courier" size="-1">1</FONT></li>
+	<LI><b>Total sample time</b>: <FONT face="courier" size="-1">23h 55m</FONT></li>
+	<LI><b>Averaging intervl (Sec)</b>: <FONT face="courier" size="-1">300</FONT></li>
+	<LI><b>Scheduled</b>: <FONT face="courier" size="-1">Repeat every: 24h 0m</FONT></li>
+	<LI><b>Start at time</b>: <FONT size="-1">any multiple of 5</FONT></li>
+	</ul>
+	Click <FONT face="courier"><b>OK</b></FONT></li>
+
+</ol>
+
+<table width="50%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>Drain CPC</b></td>
+</tr>
+</table>
+
+<OL>
+
+<LI>On AIM-CPC, stop data acquisition</li>
+
+<LI>On CPC's front panel, turn off the CPC pump: press <b>PUMP</b></li>
+
+<LI>On CPC's back panel, connect the fitting from the drain bottle to the <b>LIQUID DRAIN</b> connector</li>
+
+<LI>Place the bottle below the CPC's base
+   <UL>
+   <LI>help the liquid flow by removing all air from the drain tube</LI>
+   <LI>remove all liquid from the CPC's bottle to the "old butanol" bottle</LI>
+   </UL></li>
+
+<LI>On CPC's front panel, press <b>DRAIN/FILL</b> button
+   <UL>
+   <LI>the display reads <FONT face="courier"><b>Draining</b></FONT></LI>
+   </UL></li>
+
+<LI>Disconnect bottle from CPC</li>
+
+</ol>
+
+<table width="50%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>Fill CPC (after draining)</b></td>
+</tr>
+</table>
+
+<OL>
+
+<LI>Fill bottle with new butanol to at least one-third full</li>
+
+<LI>On CPC's back panel, connect the liquid-filled bottle to the <b>LIQUID SUPPLY</b> connector</li>
+
+<LI>On CPC's front panel, press <b>DRAIN/FILL</b> button (only if CPC was previously in draining mode)</li>
+
+<LI>On CPC's front panel, turn on the CPC pump: press <b>PUMP</b>
+   <UL>
+   <LI>the display reads <FONT face="courier"><b>Filling</b></FONT> or the actual reading, depending on configuration<BR>
+     (CPC can be configured so that the liquid reservoir must be full to get a readout of the concentration)</li>
+   </UL></li>
+
+</ol>
+
+
+
+
+
+{% endblock content %}

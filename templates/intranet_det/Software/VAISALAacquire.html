@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %} VAISALAacquire {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<br>#/bin/bash
+<br>#VAISALAacquire
+<br>#11 Fev 2017
+<br>stty -F /dev/ttyUSB0 19200 -cstopb cs8 -parenb -crtscts -ixon -ixoff onlcr
+<br># -F open and use the specified DEVICE instead of stdin
+<br># -cstopb use 1 stop bit per character
+<br># cs8 set character size to 8 bits
+<br># -parenb generate parity bit in output and expect parity bit in input
+<br># -crtscts enable RTS/CTS handshaking
+<br># -ixon enable XON/XOFF flow control
+<br># -ixoff enable sending of start/stop characters
+<br># onlcr translate newline to carriage return-newline
+<br>echo "Power-up the Vaisala HMT330 [ENTER]:"
+<br>  read
+<br>echo -e "S\n\r" > /dev/ttyUSB0
+<br># -e enable interpretation of backslash escapes
+<br>echo -e "DATE" > /dev/ttyUSB0
+<br>  echo "Enter new date [yyyy-mm-dd]:"
+<br>  read "data"
+<br>  echo -e "$data" > /dev/ttyUSB0
+<br>echo -e "TIME" > /dev/ttyUSB0
+<br>  echo "Enter time [hh:mm:ss]:"
+<br>  read "time"
+<br>  echo -e "$time" > /dev/ttyUSB0
+<br>echo "Enter file name [*.txt]:"
+<br>  read "filename"
+<br>echo -e "R\n\r" > /dev/ttyUSB0
+<br>while true
+<br>do
+<br>  read X < /dev/ttyUSB0
+<br>  echo $X
+<br>  p="$X\n\r"
+<br>  echo $X >> $filename
+<br>  echo $X > Tape_Control_File.out
+<br>done
+<br>
+
+
+{% endblock content %}

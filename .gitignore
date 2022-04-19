@@ -129,5 +129,14 @@ dmypy.json
 .pyre/
 
 #passwords for db etc
-wGOA/passwords.py
 wGOA/.env
+
+# this token contains your sensitive google service account info
+wGOA/google-credentials.json
+
+# pdf
+.static/intranet
+static/intranet/
+/static/intranet/
+
+*.pdf

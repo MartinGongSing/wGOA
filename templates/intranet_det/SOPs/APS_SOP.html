@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %} APS_SOP {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<table width="100%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>APS SOP</b></td>
+</tr>
+</table>
+
+<div style="text-align: center">Version 1: 2014.11.11</div>
+
+<OL>
+
+<LI>On Windows7 desktop, click <b>AIM-APS icon</b></li>
+
+<LI><FONT face="courier"><b>File</b></FONT> &#8594; <FONT face="courier"><b>New</b></FONT>:<BR>
+	Select folder: <b>Look in</b>: <FONT face="courier" size="-1">DATA/APS</FONT><BR>
+	<b>Files of type</b>: <FONT face="courier" size="-1">APS 3321 Data file (*.A21)</FONT><BR>
+	<b>File name</b>: <FONT face="courier" size="-1">yyyymmdd.A21</FONT><BR>
+	Click <FONT face="courier"><b>Open</b></FONT></li>
+
+<LI><FONT face="courier"><b>Run</b></FONT> &#8594; <FONT face="courier"><b>Auto Export...</b></FONT>:<BR>
+	<b>Data types</b>: <FONT face="courier" size="-1">Aerodynamic</FONT><BR>
+	<b>Units and Weights</b>: <FONT face="courier" size="-1">Number / Raw Counts</FONT><BR>
+	<b>Delimiter</b>: <FONT face="courier" size="-1">Comma</FONT><BR>
+	Click <FONT face="courier"><b>OK</b></FONT><BR>
+	Export as: confirm <b>file name</b>: <FONT face="courier" size="-1">yyyymmdd.txt</FONT><BR>
+	Click <FONT face="courier"><b>Save</b></FONT><BR></li>
+
+<LI><FONT face="courier"><b>File</b></FONT> &#8594; <FONT face="courier"><b>Properties</b></FONT>:<BR>
+	<b>Communications</b>:
+	<UL>
+	<LI>Select <FONT face="courier"><b>Com port 6</b></FONT></li>
+	</ul>
+	<b>Scheduling</b>:
+	<UL>
+	<LI><b>Sample length (sec)</b>: <FONT face="courier" size="-1">297</FONT></li>
+	<LI><b>Number of samples</b>: <FONT face="courier" size="-1">1</FONT></li>
+	<LI><b>Total sample time</b>: <FONT face="courier" size="-1">4m 57s</FONT></li>
+	<LI><b>Scheduled</b>: <FONT face="courier" size="-1">Repeat every: 0h 5m</FONT></li>
+	<LI><b>Start at time</b>: <FONT size="-1">any multiple of 5</FONT></li>
+	</ul>
+	Click <FONT face="courier"><b>OK</b></FONT></li>
+
+</ol>
+
+
+
+
+
+{% endblock content %}

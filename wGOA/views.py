@@ -17,10 +17,14 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 from .forms import ContactForm, DateForm
+
+from .calendar_API import test_calendar
 ################ camera START
 from django.http.response import StreamingHttpResponse
 from .camera import IPWebCam
 
+from django.http import FileResponse
+import os
 
 # Create your views here.
 
@@ -537,11 +541,16 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 
 
 
-def data4(request):
+def test(request):
+    context = {}  # used to pass the info to the HTML
     # resultdisplay = cpc.objects.all()
 
-    cpc3display = psap.objects.using('dataGOA').order_by('-time')[1:10] #all()
-    return render(request, "data4.html", {'psap': cpc3display})
+    cpc3display = cpc2.objects.order_by('-ID')[1:10] #all()
+
+
+    context['psap'] = cpc3display
+
+    return render(request, "test.html", context)
 
 
 
@@ -1224,3 +1233,113 @@ def psap_det(request):
 
     return render(request, 'data_det/psap.html', context)
 
+def demo(request):
+    results = test_calendar()
+    context = {"results": results}
+    return render(request, 'demo.html', context)
+
+
+
+# INTRANET
+
+def GOAUVa_Station_SOP(request):
+    context = {}
+    return render(request, 'intranet_det/SOPs/GOA-UVa-Station-SOP.html', context)
+
+def Neph_SOP(request):
+    context = {}
+    return render(request, 'intranet_det/SOPs/Neph-SOP.html', context)
+def APS_SOP(request):
+    context = {}
+    return render(request, 'intranet_det/SOPs/APS_SOP.html', context)
+def CPC_SOP(request):
+    context = {}
+    return render(request, 'intranet_det/SOPs/CPC-SOP.html', context)
+def PSAP_SOP(request):
+    context = {}
+    return render(request, 'intranet_det/SOPs/PSAP-SOP.html', context)
+
+
+
+def show_Gilib(request):
+    filepath = os.path.join('static', 'intranet/Gilib-2_850190M-H.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_HMT330(request):
+    filepath = os.path.join('static', 'intranet/HMT330 User Guide in English.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_HTWC(request):
+    filepath = os.path.join('static', 'intranet/HTWC_Series.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_M1046(request):
+    filepath = os.path.join('static', 'intranet/M1046.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_WMR928NX(request):
+    filepath = os.path.join('static', 'intranet/WMR928NX.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_MANUAL000000300(request):
+    filepath = os.path.join('static', 'intranet/MANUAL000000300.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_p172401_en(request):
+    filepath = os.path.join('static', 'intranet/p172401_en.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_dcs910(request):
+    filepath = os.path.join('static', 'intranet/dcs910.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_J2H20(request):
+    filepath = os.path.join('static', 'intranet/J2H20.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_MR300(request):
+    filepath = os.path.join('static', 'intranet/MR300.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_Seco_SV_1003(request):
+    filepath = os.path.join('static', 'intranet/Seco-SV-1003-D.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_3828A28001B_MANUAL_OWNERS(request):
+    filepath = os.path.join('static', 'intranet/3828A28001B_MANUAL_OWNERS.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_td_ecowatt_fid4578(request):
+    filepath = os.path.join('static', 'intranet/td_ecowatt_fid4578.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_J3C_Catalogue_WebRev9(request):
+    filepath = os.path.join('static', 'intranet/J3C-Catalogue-WebRev9.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_MS_02_346(request):
+    filepath = os.path.join('static', 'intranet/MS-02-346.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_KNF003_EN(request):
+    filepath = os.path.join('static', 'intranet/KNF003_EN.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_MuB_el_Stellantrieb_Serie_J3_J3C_en(request):
+    filepath = os.path.join('static', 'intranet/MuB_el_Stellantrieb_Serie_J3_J3C_en.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_2000_esp(request):
+    filepath = os.path.join('static', 'intranet/2000_esp.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_00000038(request):
+    filepath = os.path.join('static', 'intranet/00000038.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+def show_MI_2000_rev2(request):
+    filepath = os.path.join('static', 'intranet/MI_2000_rev2.pdf')
+    return FileResponse(open(filepath, 'rb'), content_type='application/pdf')
+
+
+def PSAPacquire(request):
+    context = {}
+    return render(request, 'intranet_det/Software/PSAPacquire.html', context)
+def VAISALAacquire(request):
+    context = {}
+    return render(request, 'intranet_det/Software/VAISALAacquire.html', context)
+
+def rsync_webcam(request):
+    context = {}
+    return render(request, 'intranet_det/Software/rsync_webcam.html', context)
+def save_webcam(request):
+    context = {}
+    return render(request, 'intranet_det/Software/save_webcam.html', context)
+
+def rsync_laptop(request):
+    context = {}
+    return render(request, 'intranet_det/Software/rsync_laptop.html', context)
+def rsync_rawData(request):
+    context = {}
+    return render(request, 'intranet_det/Software/rsync_rawData.html', context)

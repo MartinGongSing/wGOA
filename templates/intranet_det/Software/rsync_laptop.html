@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %} rsync_laptop {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<br>REM rsync-laptop.bat
+<br>REM 30 Jul 2014
+<br>REM Script to backup APS + CPC + Neph data from windows laptop to SuSE desktop
+<br>REM This script should be located on C:\Users\Sandra\Documents\rsync-laptop.bat
+<br>REM The script runs through Cygwin, from a scheduled task programmed on Windows 7
+<br>REM Data is synced with /home/goa/Documents/DATA/
+<br>rsync.exe -qrtz --password-file=/cygdrive/c/cygwin/secret /cygdrive/c/Users/Sandra/Documents/DATA/ goa@10.1.1.186::rsync-laptop
+
+
+
+
+
+
+{% endblock content %}

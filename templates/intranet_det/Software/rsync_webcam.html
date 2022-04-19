@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}  rsync-webcam {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<br>#!/bin/bash
+<br>#rsync-webcam.sh
+<br>#04 Apr 2014
+<br>#S.Mogo
+<br>#Script to copy webcam file to the server
+<br>
+<br>SYNC_LOG=/home/goa/Documents/logs/rsync-webcam.log # folder to save log file
+<br>
+<br>echo "******************************" >> $SYNC_LOG
+<br>date >> $SYNC_LOG
+<br>echo "Start sync" >> $SYNC_LOG
+<br>rsync -avur /home/goa/public_html/DATA/webcam/ goa@unix.ubi.pt:~/public_html/DATA/webcam/ >> $SYNC_LOG
+<br>
+<br>echo "End sync" >> $SYNC_LOG
+<br>echo "******************************" >> $SYNC_LOG
+<br>
+
+
+
+
+{% endblock content %}

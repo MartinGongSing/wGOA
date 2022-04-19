@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %} Neph SOP {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<table width="100%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>Neph SOP</b></td>
+</tr>
+</table>
+
+<div style="text-align: center">Version 1: 2017.06.21</div>
+
+<table width="50%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>Nephelometer calibration</b></td>
+</tr>
+</table>
+
+<OL>
+
+<LI>Pump 1 should be running and ModuloCorte should be off</LI>
+<LI>Run NephWin Software</LI>
+<LI>Run -> Calibration</LI>
+<LI>Click 1 to set Low Span Gas to Air</LI>
+<LI>Click 2 to Set High Span Gas to CO2</LI>
+<LI>Set lower valve to the position CLEAN: rotameter flow increases to 2400 l/h and manometer pressure decreases to zero</LI>
+<LI>Click 3 <BR>
+    Click Graph Meas Data to see the graph<BR>
+    Wait until the values are stable</LI>
+<LI>Click 4</LI>
+<LI>Click 5 and wait 300 s</LI>
+<LI>Click 6</LI>
+<LI>Click 7</LI>
+<LI>Turn off pump 1</LI>
+<LI>Set both valves to the position CLOSED</LI>
+<LI>Click 8</LI>
+<LI>Connect CO2 tube to the inlet</LI>
+<LI>Open CO2 bottle and set the manometer to 0.2 bar</LI>
+<LI>Set rotameter to 5 lpm</LI>
+<LI>Click 9</LI>
+<LI>Click 10 and wait 300 s</LI>
+<LI>Click 11</LI>
+<LI>Click 12</LI>
+<LI>Check on the calibration constants (take a photo for elog)</LI>
+<LI>Click 13<BR>
+    Write calibration label as hh:mm dd month yyyy COVILHA SN70844204 AIR/CO2<BR>
+    Click OK</LI>
+<LI>Click 14</LI>
+<LI>Put CO2 bottle manometer to zero</LI>
+<LI>Close the CO2 bottle</LI>
+<LI>Disconnect the CO2 tube from the neph</LI>
+<LI>Connect the instrument tube inside</LI>
+<LI>Set the upper valve to OPEN and the lower valve to CLEAN</LI>
+<LI>Turn on pump 1</LI>
+<LI>Click 15 and wait until the zero measurement ends (the sound of the motor will be heard)</LI>
+<LI>Exit Calibration and close the NephWin Software</LI>
+<LI>Set the lower valve to OPEN</LI>
+</ol>
+
+{% endblock content %}

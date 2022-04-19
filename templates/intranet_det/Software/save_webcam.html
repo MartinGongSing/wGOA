@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}  rsync-webcam {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<br>#!/bin/bash
+<br>#save-webcam.sh
+<br>#29 Apr 2014
+<br>#Script to save webcam image
+<br>#The execution of this script is controled by crontab to save webcam images 3x each day: 08:00 - 13:00 - 18:00
+<br>#Include this on the crontab file: 00 08,13,18 * * * goa /home/goa/Documents/Software/scripts/save-webcam.sh
+<br>
+<br>actualday=$(date +"%Y%m%d")           # reads current date
+<br>actualhour=$(date +"%H")              # reads current time
+<br>file="$actualday-$actualhour.jpg"     # creates a file with current date-hour appended to the name
+<br>cp /home/goa/public_html/DATA/webcam/DCS-910.jpg /home/goa/Documents/DATA/Webcam/$file
+
+{% endblock content %}

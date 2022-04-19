@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} rsync_laptop {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<br>#!/bin/bash
+<br>#rsync-rawData.sh
+<br>#15 May 2015
+<br>#S.Mogo
+<br>#Script to copy raw data and logs to the server
+<br>
+<br>rsync -avur /home/goa/Documents/DATA/webcam/ goa@unix.ubi.pt:~/GOA-UVa-database/DATA-raw/webcam/
+<br>rsync -avur /home/goa/Documents/DATA/Vaisala/ goa@unix.ubi.pt:~/GOA-UVa-database/DATA-raw/Vaisala/
+<br>rsync -avur /var/lib/wview/archive/ /home/goa/Documents/DATA-raw/MeteoStation/
+<br>rsync -avur /var/lib/wview/archive/ goa@unix.ubi.pt:~/GOA-UVa-database/DATA-raw/MeteoStation/
+<br>rsync -avur /home/goa/Documents/DATA/PSAP/ goa@unix.ubi.pt:~/GOA-UVa-database/DATA-raw/PSAP/
+<br>rsync -avur /home/goa/Documents/DATA/Neph/ goa@unix.ubi.pt:~/GOA-UVa-database/DATA-raw/Neph/
+<br>rsync -avur /home/goa/Documents/DATA/APS/ goa@unix.ubi.pt:~/GOA-UVa-database/DATA-raw/APS/
+<br>rsync -avur /home/goa/Documents/DATA/CPC/ goa@unix.ubi.pt:~/GOA-UVa-database/DATA-raw/CPC/
+<br>rsync -avur /home/goa/Documents/logs/ goa@unix.ubi.pt:~/GOA-UVa-database/logs/
+<br>rsync -avur /home/goa/Documents/elog/elog-2.9.2/logbooks/GOA-UVa-InSitu-Station/ goa@unix.ubi.pt:~/GOA-UVa-database/elog/
+<br>
+<br>
+
+{% endblock content %}

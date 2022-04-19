@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %} PSAPacquire {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<br>  #/bin/bash
+<br>  # This script reads the COM where the PSAP is connected (may be necessary to change ttyS4 to whatever)
+<br>  # The data is written to a file named PSAP-currenteday.txt
+<br>  # If the script is interrupted for any reason and started later on the same day, data is appended to the same file
+<br>  # The data is also shown on the stdout
+<br>  actualday=$(date +"%Y%m%d")           # reads current date
+<br>  #actualtime=$(date +"%T")             # reads current time
+<br>  file="PSAP-$actualday.txt"            # creates a file with current date appended to the name
+<br>  stty -F /dev/ttyS4 9600 -cstopb cs8
+<br>  while true
+<br>  # while [[ "$(date +"%T")" != '13:31:00' ]]
+<br>  #    do
+<br>  #      if [[ "$(date +"%T")" != '13:31:00' ]]
+<br>  #      then
+<br>  #        echo "Saving data to: $PWD/PSAP-$actualday.txt"
+<br>  #        cat /dev/ttyS4|awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; fflush() }'|tee -a $file
+<br>  #                 #The tee command writes the input to standard output as well as to a file at the same time.
+<br>  #                 #-a: append to the given FILEs, do not overwrite
+<br>  #      else
+<br>  #        echo "Saving data to: new?"
+<br>  #      fi
+<br>  #    done
+<br>  # while [[ "$(date +"%T")" != '13:28:00' ]]
+<br>    do
+<br>      echo "Saving data to: $PWD/PSAP-$actualday.txt"
+<br>      cat /dev/ttyS4|awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; fflush() }'|tee -a $file
+<br>    done
+<br>
+<br>
+<br>
+
+
+{% endblock content %}

@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %} GOA-UVa Station SOP {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<table width="100%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>GOA-UVa Station SOP</b></td>
+</tr>
+</table>
+
+<div style="text-align: center">Version 3: 2017.08.18</div>
+
+<table width="50%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>Start station</b></td>
+</tr>
+</table>
+
+<OL>
+
+<LI><font color="green">Desktop 10.1.1.186:</font> Start elog:<BR>
+<font face="courier" size="-1">
+cd /home/goa/Documents/elog/elog-2.9.2<BR>
+./elogd &<BR>
+http://localhost:8080/GOA-UVa-InSitu-Station
+</font>
+</li>
+
+<LI><font color="green">Desktop 10.1.1.186:</font> Start weather station:<BR>
+<font face="courier" size="-1">
+su<BR>
+Password:<BR>
+/etc/init.d/wview start<BR>
+http://localhost/wviewmgmt/system_status.php
+</font>
+</li>
+
+<LI><font color="green">Desktop 10.1.1.186:</font> Start rsync daemon:<BR>
+<font face="courier" size="-1">
+su<BR>
+Password:<BR>
+/etc/init.d/rsyncd start
+</font>
+</li>
+
+<LI><font color="blue">Rack:</font> Clean impactor + cyclone</li>
+
+<LI><font color="blue">Rack:</font> Pump 1 ON:<BR>
+<font size="-1">
+Verify flow is 1800 l/h<BR>
+Verify pressure is 0.2 bar
+</font>
+</li>
+
+<LI><font color="blue">Rack:</font> Pump 2 ON:<BR>
+<font size="-1">
+Verify flow is 20 l/min<BR>
+Verify flow is 5 l/h
+</font>
+</li>
+
+<LI><font color="blue">Rack:</font> Pump PSAP ON</li>
+
+<!-- <LI><font color="blue">Rack:</font> ModuloCorte ON</li> -->
+
+<LI><font color="blue">Rack:</font> PSAP ON</li>
+
+<LI><font color="blue">Rack:</font> Neph ON</li>
+
+<LI><font color="blue">Rack:</font> APS ON</li>
+
+<LI><font color="blue">Rack:</font> CPC ON</li>
+
+<LI><font color="green">Desktop 10.1.1.186:</font> Launch Vaisala data acquisition:<BR>
+<font face="courier" size="-1">
+ssh pi@10.1.1.130<BR>
+Password:<BR>
+cd /Desktop/Vaisala/<BR>
+./VAISALAacquire
+</font>
+</li>
+
+<!-- <LI><font color="green">Desktop 10.1.1.186:</font> Launch ModuloCorte control:<BR>
+<font face="courier" size="-1">
+su<BR>
+cd Documents/Software/ModuloCorteV3-java/dist/<BR>
+java -jar ModuloCorteCaseta.jar &
+</font>
+</li> -->
+
+<LI><font color="blue">Rack:</font> PSAP filter change and reset <A HREF="PSAP-SOP.html"><font size="-2">(How-to)</font></A></li>
+
+<LI><font color="green">Desktop 10.1.1.186:</font> Launch PSAP data acquisition:<BR>
+<font face="courier" size="-1">
+su<BR>
+Password:<BR>
+cd /home/goa/Documents/DATA/PSAP/<BR>
+./PSAPacquire
+</font>
+</li>
+
+<LI><font color="orange">Laptop:</font> Launch nephelometer software <A HREF="Neph-SOP.html"><font size="-2">(How-to)</font></A></li>
+
+<LI><font color="orange">Laptop:</font> Launch APS software <A HREF="APS-SOP.html"><font size="-2">(How-to)</font></A></li>
+
+<LI><font color="orange">Laptop:</font> Launch CPC software <A HREF="CPC-SOP.html"><font size="-2">(How-to)</font></A></li>
+
+</ol>
+
+<table width="50%" cellspacing="0" cellpadding="0">
+<TR>
+<TD style="width:100%; background-color:#6495ED" align="center"><b>Stop station</b></td>
+</tr>
+</table>
+
+<OL>
+
+<LI><font color="green">Desktop 10.1.1.186:</font> Stop weather station:<BR>
+<font face="courier" size="-1">
+/etc/init.d/wview stop
+</font>
+</li>
+
+<LI><font color="green">Desktop 10.1.1.186:</font> Stop Vaisala data acquisition:<BR>
+<font face="courier" size="-1">
+Ctrl^c
+</font>
+</li>
+
+<LI><font color="green">Desktop 10.1.1.186:</font> Stop PSAP data acquisition:<BR>
+<font face="courier" size="-1">
+Ctrl^c
+</font>
+</li>
+
+<!-- <LI><font color="green">Desktop:</font> Stop ModuloCorte control:<BR>
+Click <font face="courier" size="-1"><b>Stop</b></font><BR>
+Click <font face="courier" size="-1"><b>Desconectar</b></font></BR>
+Close software window
+</li> -->
+
+<LI><font color="green">Desktop 10.1.1.186:</font> Shutdown desktop</LI>
+
+<LI><font color="orange">Laptop:</font> Stop data acquisition on nephelometer software and close it</li>
+
+<LI><font color="orange">Laptop:</font> Stop data acquisition on APS software and close it</li>
+
+<LI><font color="orange">Laptop:</font> Stop data acquisition on CPC software and close it</li>
+
+<LI><font color="orange">Laptop:</font> Shutdown laptop</LI>
+
+<LI>Desktop UPS OFF</li>
+
+<LI><font color="blue">Rack:</font> CPC OFF</li>
+
+<LI><font color="blue">Rack:</font> APS OFF</li>
+
+<LI><font color="blue">Rack:</font> Neph OFF</li>
+
+<LI><font color="blue">Rack:</font> PSAP OFF</li>
+
+<!-- <LI><font color="blue">Rack:</font> ModuloCorte OFF</li> -->
+
+<LI><font color="blue">Rack:</font> Pump PSAP OFF</LI>
+
+<LI><font color="blue">Rack:</font> Pump 2 OFF</LI>
+
+<LI><font color="blue">Rack:</font> Pump 1 OFF</LI>
+
+<LI><font color="red">Desktop 10.1.1.96:</font> Shutdown desktop</LI>
+
+<LI><font color="blue">Rack:</font> Disconnect electric extension cord</li>
+
+<LI><font color="blue">Rack:</font> Main UPS OFF</li>
+
+<LI>Air conditioner OFF</li>
+
+<LI>Disconnect station general power source</li>
+
+</ol>
+
+
+
+
+
+
+
+{% endblock content %}
