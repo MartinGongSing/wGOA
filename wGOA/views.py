@@ -43,82 +43,14 @@ def webcam_feed(request):
 ################ camera END
 
 def index(request):
-    # return HttpResponse("Hello world ! ")
+
     context = {'segment': 'index'}
 
     html_template = loader.get_template('index.html')
 
-    ################
-    # start WEATHER
-    ################
-    #
-    # city_name = "Covilha"
-    # api_key = "79cba0dd8efda8493fa45cbb9c734a40"
-    # url = f"http://api.openweathermap.org/data/2.5/forecast?q={city_name}&appid={api_key}"
-    # w_dataset = requests.get(url).json()
-    #
-    # try:
-    #     context = {
-    #         ####
-    #         "city_name": w_dataset["city"]["name"],
-    #         "city_country": w_dataset["city"]["country"],
-    #         "wind": w_dataset['list'][0]['wind']['speed'],
-    #         "degree": w_dataset['list'][0]['wind']['deg'],
-    #         "status": w_dataset['list'][0]['weather'][0]['description'],
-    #         "cloud": w_dataset['list'][0]['clouds']['all'],
-    #         'date': w_dataset['list'][0]["dt_txt"],
-    #         'date1': w_dataset['list'][1]["dt_txt"],
-    #         'date2': w_dataset['list'][2]["dt_txt"],
-    #         'date3': w_dataset['list'][3]["dt_txt"],
-    #         'date4': w_dataset['list'][4]["dt_txt"],
-    #         'date5': w_dataset['list'][5]["dt_txt"],
-    #         'date6': w_dataset['list'][6]["dt_txt"],
-    #
-    #         "temp": round(w_dataset["list"][0]["main"]["temp"] - 273.0),
-    #         "temp_min1": math.floor(w_dataset["list"][1]["main"]["temp_min"] - 273.0),
-    #         "temp_max1": math.ceil(w_dataset["list"][1]["main"]["temp_max"] - 273.0),
-    #         "temp_min2": math.floor(w_dataset["list"][2]["main"]["temp_min"] - 273.0),
-    #         "temp_max2": math.ceil(w_dataset["list"][2]["main"]["temp_max"] - 273.0),
-    #         "temp_min3": math.floor(w_dataset["list"][3]["main"]["temp_min"] - 273.0),
-    #         "temp_max3": math.ceil(w_dataset["list"][3]["main"]["temp_max"] - 273.0),
-    #         "temp_min4": math.floor(w_dataset["list"][4]["main"]["temp_min"] - 273.0),
-    #         "temp_max4": math.ceil(w_dataset["list"][4]["main"]["temp_max"] - 273.0),
-    #         "temp_min5": math.floor(w_dataset["list"][5]["main"]["temp_min"] - 273.0),
-    #         "temp_max5": math.ceil(w_dataset["list"][5]["main"]["temp_max"] - 273.0),
-    #         "temp_min6": math.floor(w_dataset["list"][6]["main"]["temp_min"] - 273.0),
-    #         "temp_max6": math.ceil(w_dataset["list"][6]["main"]["temp_max"] - 273.0),
-    #
-    #         "pressure": w_dataset["list"][0]["main"]["pressure"],
-    #         "humidity": w_dataset["list"][0]["main"]["humidity"],
-    #         "sea_level": w_dataset["list"][0]["main"]["sea_level"],
-    #
-    #         "weather": w_dataset["list"][1]["weather"][0]["main"],
-    #         "description": w_dataset["list"][1]["weather"][0]["description"],
-    #         "icon": w_dataset["list"][0]["weather"][0]["icon"],
-    #         "icon1": w_dataset["list"][1]["weather"][0]["icon"],
-    #         "icon2": w_dataset["list"][2]["weather"][0]["icon"],
-    #         "icon3": w_dataset["list"][3]["weather"][0]["icon"],
-    #         "icon4": w_dataset["list"][4]["weather"][0]["icon"],
-    #         "icon5": w_dataset["list"][5]["weather"][0]["icon"],
-    #         "icon6": w_dataset["list"][6]["weather"][0]["icon"],
-    #
-    #     }
-    # except:
-    #     context = {
-    #
-    #         "city_name": "Not Found, Check your spelling..."
-    #     }
-
-    ##############
-    # END WEATHER
-    ##############
-
-
-
     return HttpResponse(html_template.render(context, request))
 
 def station(request):
-    # return HttpResponse("this is the weather station page")
     context = {'segment': 'station'}
 
     html_template = loader.get_template('station.html')
@@ -155,7 +87,6 @@ def contact(request):
 
     return render(request, 'contact.html', context)
 
-    # return HttpResponse(html_template.render(context, request))
 
 
 ############### INSTRUMENTS PAGES ###############
@@ -170,8 +101,6 @@ def dyna_instrum(request, id):
         "instrum" : obj
     }
     return render(request, '../templates/instrum_detail.html', context)
-
-
 
 
 
@@ -554,37 +483,6 @@ def test(request):
 
 
 
-        ##################
-        ## Graph detail ##
-        ##################
-
-
-
-
-# class cpcDetData(object):
-#     def cpc_det_data():
-#
-#         data = {'ID': [], 'N': [], 'daycpc': [] }
-#
-#         ###################
-#         ##### CPC_UBI #####
-#         ###################
-#
-#         # cpces = cpc2.objects.all() # we take all the items
-#         # cpces = cpc2.objects.order_by('ID')[:288]  # we take only 40 items
-#
-#         start = 3
-#         end = 5
-#
-#         cpc3display_det = cpc3.objects.using('dataGOA').order_by('-time')[start:end]
-#
-#         # print("this is : ", cpc3display_det)
-#         for unit in cpc3display_det:
-#             data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
-#             data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
-#             data['N'].insert(0,unit.N)
-#
-#         return data
 
 def Dcpc_det(request):
     context = {}  # used to pass the info to the HTML
@@ -680,23 +578,6 @@ def cpc_det(request):
     context['form'] = form #adding the form to the list of variable passed to the html
     # data = {'ID': [], 'N': [], 'daycpc': []} #creating the structure for the data
     yoda = {'ID': [], 'N': [], 'daycpc': [], 'daysList':[]}
-
-
-
-    # theDaysData = cpc3.objects.using('dataGOA').order_by('-time').all()
-    # day1 = 0
-    # month1 = 0
-    # for days in theDaysData:
-    #     day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
-    #     month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
-    #     if day2 != day1:
-    #         yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
-    #     if month2 != month1:
-    #         yoda['daysList'].insert(0,'<br>')
-    #     day1 = day2
-    #     month1 = month2
-    # # print(yoda['daysList'])
-    # context['daysList'] = yoda['daysList']
 
 
 
@@ -891,6 +772,123 @@ def neph_det(request):
         value = int(value / 10000)
         nephdisplay_det = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
 
+        value = value+1
+        nephdisplay_det2 = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        nephdisplay_det3 = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        nephdisplay_det4 = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        nephdisplay_det5 = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        nephdisplay_det6 = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        nephdisplay_det7 = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        nephdisplay_det8 = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        nephdisplay_det9 = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        nephdisplay_det10 = neph2.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+
+        for unity in nephdisplay_det10:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
+        for unity in nephdisplay_det9:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
+        for unity in nephdisplay_det8:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
+        for unity in nephdisplay_det7:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
+        for unity in nephdisplay_det6:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
+        for unity in nephdisplay_det5:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
+        for unity in nephdisplay_det4:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
+        for unity in nephdisplay_det3:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
+        for unity in nephdisplay_det2:
+            data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
+            data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
+            data['sblue'].insert(0, unity.sblue * 1000000)  # x 10^6
+            data['sred'].insert(0, unity.sred * 1000000)
+            data['sgreen'].insert(0, unity.sgreen * 1000000)
+            data['bsblue'].insert(0, unity.bsblue * 1000000)
+            data['bsred'].insert(0, unity.bsred * 1000000)
+            data['bsgreen'].insert(0, unity.bsgreen * 1000000)
+
         for unity in nephdisplay_det:
             data['IDneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%H:%M"))
             data['dayneph'].insert(0, datetime.fromtimestamp(unity.time / 1000).strftime("%Y/%m/%d"))
@@ -968,15 +966,9 @@ def aps_det(request):
     context['form'] = form
     data = {'IDaps': [],  'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],'d20': [],'d21': [],'d22': [], 'd23': [], 'd24': [],'d25': [],'d26': [],'d27': [],'d28': [],'d29': [],'d30': [],'d31': [],'d32': [], 'd33': [], 'd34': [],'d35': [],'d36': [],'d37': [],'d38': [],'d39': [],'d40': [],'d41': [],'d42': [],'d43':[],}
 
-
-
-
-
-
     if request.GET:
 
         # WORKING :
-
 
         start_year = int(request.GET['start_year'])
         start_month = int(request.GET['start_month'])
@@ -984,7 +976,7 @@ def aps_det(request):
         try:
             dt = datetime(year=start_year, month=start_month, day=start_day)
         except ValueError:
-            return render(request, 'data_det/cpc.html',  context)
+            return render(request, 'data_det/aps.html',  context)
         value = int(time.mktime(dt.timetuple()))
 
         # QUERIES :
@@ -1164,8 +1156,7 @@ def psap_det(request):
         start_year = int(request.GET['start_year'])
         start_month = int(request.GET['start_month'])
         start_day = int(request.GET['start_day'])
-        # start = int(request.GET['start'])
-        # end = int(request.GET['end'])
+
 
         try:
             dt = datetime(year=start_year, month=start_month, day=start_day)
@@ -1173,8 +1164,105 @@ def psap_det(request):
             return render(request, 'data_det/psap.html', context)
         value = int(time.mktime(dt.timetuple()))
         value = int(value / 10000)
+        finishby = 50000
+        psapdisplay_det = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+                                                                                 time__iendswith=finishby)
+        print("psapdisplay_det", psapdisplay_det)
 
-        psapdisplay_det = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+        value = value + 1
+        psapdisplay_det1 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+                                                                                  time__iendswith=finishby)
+
+        value = value + 1
+        psapdisplay_det2 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+                                                                                  time__iendswith=finishby)
+
+        value = value + 1
+        psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+                                                                                  time__iendswith=finishby)
+
+        value = value + 1
+        psapdisplay_det4 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+                                                                                  time__iendswith=finishby)
+
+        value = value + 1
+        psapdisplay_det5 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+                                                                                  time__iendswith=finishby)
+
+        value = value + 1
+        psapdisplay_det6 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+                                                                                  time__iendswith=finishby)
+
+        value = value + 1
+        psapdisplay_det7 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+                                                                                  time__iendswith=finishby)
+
+        value = value + 1
+        psapdisplay_det8 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+                                                                                  time__iendswith=finishby)
+
+        for unites in psapdisplay_det8:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det7:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det6:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det5:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det4:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det3:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det2:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det1:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
 
         for unites in psapdisplay_det:
             data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
@@ -1182,6 +1270,7 @@ def psap_det(request):
             data['blue'].insert(0, unites.blue)
             data['red'].insert(0, unites.red)
             data['green'].insert(0, unites.green)
+
 
         ############ GRAPH ############
         psapdet = "psapdet"

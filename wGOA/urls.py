@@ -48,7 +48,8 @@ urlpatterns = [
     path('psap/', views.psap_det, name='psap'),
     path('neph/', views.neph_det, name='neph'),
 
-    # INTRANET
+    ######### INTRANET START
+
     path('intranet/SOPs/GOA-UVa-Station-SOP/', views.GOAUVa_Station_SOP, name='GOA-UVa-Station-SOP'),
     path('intranet/SOPs/Neph-SOP/', views.Neph_SOP, name='Neph-SOP'),
     path('intranet/SOPs/APS-SOP/', views.APS_SOP, name='Neph-SOP'),
@@ -59,13 +60,10 @@ urlpatterns = [
     path('intranet/Manuals/VAISALA/HMT330', views.show_HMT330, name='pdf-file'),
     path('intranet/Manuals/HeaterTape-HTWC102-004/HTWC_Series', views.show_HTWC, name='pdf-file'),
     path('intranet/Manuals/HeaterTape-HTWC102-004/M1046', views.show_M1046, name='pdf-file'),
-
     path('intranet/Manuals/WeatherStation-Oregon-WMR928NX/WMR928NX', views.show_WMR928NX, name='pdf-file'),
     path('intranet/Manuals/Routers-Linksys/MANUAL000000300', views.show_MANUAL000000300, name='pdf-file'),
     path('intranet/Manuals/Antenna/p172401_en', views.show_p172401_en, name='pdf-file'),
     path('intranet/Manuals/Webcam-DLink-DCS910/dcs910', views.show_dcs910, name='pdf-file'),
-
-
     path('intranet/Manuals/Electric-Actuator-J2H20/J2H20', views.show_J2H20, name='pdf-file'),
     path('intranet/Manuals/Rotameters/KeyInstruments-MR300/mr-manual', views.show_MR300, name='pdf-file'),
     path('intranet/Manuals/Pumps/Busch/Seco-SV-1003-D', views.show_Seco_SV_1003, name='pdf-file'),
@@ -79,15 +77,14 @@ urlpatterns = [
     path('intranet/Manuals/Electric-Actuator-J3CH20/00000038', views.show_00000038, name='pdf-file'),
     path('intranet/Manuals/Rotameters/Tecfluid-2150/MI_2000_rev2', views.show_MI_2000_rev2, name='pdf-file'),
 
-    # path('intranet/Manuals/', views.show_, name='pdf-file'),
-    # path('intranet/Manuals/', views.show_, name='pdf-file'),
-
     path('intranet/Software/PSAP/PSAPacquire', views.PSAPacquire, name='PSAPacquire'),
     path('intranet/Software/HTsensor/VAISALAacquire', views.VAISALAacquire, name='VAISALAacquire'),
     path('intranet/Software/scripts/rsync-webcam', views.rsync_webcam, name='rsync_webcam'),
     path('intranet/Software/scripts/save-webcam', views.save_webcam, name='save_webcam'),
     path('intranet/Software/scripts/rsync-laptop', views.rsync_laptop, name='rsync_laptop'),
     path('intranet/Software/scripts/rsync-rawData', views.rsync_rawData, name='rsync-rawData'),
+
+    ######### INTRANET END
 
     # Matches any html file
     # re_path(r'^.*\.*', views.pages, name='pages'),

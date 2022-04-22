@@ -20,8 +20,8 @@
             <a href="{% url 'webcam_feed' %}">
                 <img src="{% url 'webcam_feed' %}" style='height: 300px;'>
             </a>
-            <p>Webcamera live feed (reload to updated)</p>
-            <p>Current datetime:{% now "jS F Y H:i" %}</p>
+            <p>Webcamera <a href="webcam_feed" title="should be...">live feed</a> (reload to update) </p>
+            <p>Current datetime:{% now "jS F Y H:i" %} (GMT / UTC)</p>
         </div>
     </div>
 </div>
