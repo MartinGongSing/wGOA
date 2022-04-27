@@ -96,6 +96,16 @@ DATABASES = {
         'OPTIONS':{
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"            }
     },
+    'default2': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'goa001_db',
+        'USER': 'goa001',
+        'PASSWORD': os.environ.get('DATABASE2_PASSWORD'),
+        'HOST': 'goa-ubi.ubi.pt',
+        'PORT':'3306',
+        'OPTIONS':{
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"            }
+    },
 
     'dataGOA': {
         'ENGINE': 'django.db.backends.mysql',
@@ -164,7 +174,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #contact form
-CONTACT_EMAIL = 'martin.sing2@gmail.com' #goainsitu@gmail.com
+CONTACT_EMAIL = 'martin.sing2@gmail.com' #goainsitu@gmail.com   AutomatedDripCampaigns
 ADMIN_EMAIL = ['martin.sing2@gmail.com', ]
 
 

@@ -195,7 +195,18 @@ class ChartData(object):
         ###################
         ##### APS_UBI #####
         ###################
-        apses = aps.objects.using('dataGOA').order_by('-time')[:144]
+        apses = aps.objects.using('dataGOA').order_by('-time')[:144]        #.filter(time__endswith='65000')
+        # print(apses)
+        print(apses)
+
+        # time_to_exclude = ['265000', '865000', '765000', '565000',  '465000']
+        # apsess = aps.objects.using('dataGOA').order_by('-time')
+        # for exclude_time in time_to_exclude:
+        #     apsess = apsess.exclude(time__endswith=exclude_time)
+        # erg = apsess[:144]
+        #
+        # print("apsess", erg)
+
 
         upperLimit = 600
 
@@ -478,6 +489,10 @@ def test(request):
 
 
     context['psap'] = cpc3display
+
+
+    downSampling()
+
 
     return render(request, "test.html", context)
 
@@ -1165,107 +1180,106 @@ def psap_det(request):
         value = int(time.mktime(dt.timetuple()))
         value = int(value / 10000)
         finishby = 50000
-        psapdisplay_det = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-                                                                                 time__iendswith=finishby)
+        psapdisplay_det = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,time__iendswith=finishby)
         print("psapdisplay_det", psapdisplay_det)
 
-        value = value + 1
-        psapdisplay_det1 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-                                                                                  time__iendswith=finishby)
-
-        value = value + 1
-        psapdisplay_det2 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-                                                                                  time__iendswith=finishby)
-
-        value = value + 1
-        psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-                                                                                  time__iendswith=finishby)
-
-        value = value + 1
-        psapdisplay_det4 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-                                                                                  time__iendswith=finishby)
-
-        value = value + 1
-        psapdisplay_det5 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-                                                                                  time__iendswith=finishby)
-
-        value = value + 1
-        psapdisplay_det6 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-                                                                                  time__iendswith=finishby)
-
-        value = value + 1
-        psapdisplay_det7 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-                                                                                  time__iendswith=finishby)
-
-        value = value + 1
-        psapdisplay_det8 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-                                                                                  time__iendswith=finishby)
-
-        for unites in psapdisplay_det8:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-            data['blue'].insert(0, unites.blue)
-            data['red'].insert(0, unites.red)
-            data['green'].insert(0, unites.green)
-
-        for unites in psapdisplay_det7:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-            data['blue'].insert(0, unites.blue)
-            data['red'].insert(0, unites.red)
-            data['green'].insert(0, unites.green)
-
-        for unites in psapdisplay_det6:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-            data['blue'].insert(0, unites.blue)
-            data['red'].insert(0, unites.red)
-            data['green'].insert(0, unites.green)
-
-        for unites in psapdisplay_det5:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-            data['blue'].insert(0, unites.blue)
-            data['red'].insert(0, unites.red)
-            data['green'].insert(0, unites.green)
-
-        for unites in psapdisplay_det4:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-            data['blue'].insert(0, unites.blue)
-            data['red'].insert(0, unites.red)
-            data['green'].insert(0, unites.green)
-
-        for unites in psapdisplay_det3:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-            data['blue'].insert(0, unites.blue)
-            data['red'].insert(0, unites.red)
-            data['green'].insert(0, unites.green)
-
-        for unites in psapdisplay_det2:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-            data['blue'].insert(0, unites.blue)
-            data['red'].insert(0, unites.red)
-            data['green'].insert(0, unites.green)
-
-        for unites in psapdisplay_det1:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-            data['blue'].insert(0, unites.blue)
-            data['red'].insert(0, unites.red)
-            data['green'].insert(0, unites.green)
+        # value = value + 1
+        # psapdisplay_det1 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+        #                                                                           time__iendswith=finishby)
+        #
+        # value = value + 1
+        # psapdisplay_det2 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+        #                                                                           time__iendswith=finishby)
+        #
+        # value = value + 1
+        # psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+        #                                                                           time__iendswith=finishby)
+        #
+        # value = value + 1
+        # psapdisplay_det4 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+        #                                                                           time__iendswith=finishby)
+        #
+        # value = value + 1
+        # psapdisplay_det5 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+        #                                                                           time__iendswith=finishby)
+        #
+        # value = value + 1
+        # psapdisplay_det6 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+        #                                                                           time__iendswith=finishby)
+        #
+        # value = value + 1
+        # psapdisplay_det7 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+        #                                                                           time__iendswith=finishby)
+        #
+        # value = value + 1
+        # psapdisplay_det8 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
+        #                                                                           time__iendswith=finishby)
+        #
+        # for unites in psapdisplay_det8:
+        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+        #     data['blue'].insert(0, unites.blue)
+        #     data['red'].insert(0, unites.red)
+        #     data['green'].insert(0, unites.green)
+        #
+        # for unites in psapdisplay_det7:
+        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+        #     data['blue'].insert(0, unites.blue)
+        #     data['red'].insert(0, unites.red)
+        #     data['green'].insert(0, unites.green)
+        #
+        # for unites in psapdisplay_det6:
+        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+        #     data['blue'].insert(0, unites.blue)
+        #     data['red'].insert(0, unites.red)
+        #     data['green'].insert(0, unites.green)
+        #
+        # for unites in psapdisplay_det5:
+        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+        #     data['blue'].insert(0, unites.blue)
+        #     data['red'].insert(0, unites.red)
+        #     data['green'].insert(0, unites.green)
+        #
+        # for unites in psapdisplay_det4:
+        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+        #     data['blue'].insert(0, unites.blue)
+        #     data['red'].insert(0, unites.red)
+        #     data['green'].insert(0, unites.green)
+        #
+        # for unites in psapdisplay_det3:
+        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+        #     data['blue'].insert(0, unites.blue)
+        #     data['red'].insert(0, unites.red)
+        #     data['green'].insert(0, unites.green)
+        #
+        # for unites in psapdisplay_det2:
+        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+        #     data['blue'].insert(0, unites.blue)
+        #     data['red'].insert(0, unites.red)
+        #     data['green'].insert(0, unites.green)
+        #
+        # for unites in psapdisplay_det1:
+        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+        #     data['blue'].insert(0, unites.blue)
+        #     data['red'].insert(0, unites.red)
+        #     data['green'].insert(0, unites.green)
 
         for unites in psapdisplay_det:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M:%S"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
             data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
             data['blue'].insert(0, unites.blue)
             data['red'].insert(0, unites.red)
@@ -1432,3 +1446,66 @@ def rsync_laptop(request):
 def rsync_rawData(request):
     context = {}
     return render(request, 'intranet_det/Software/rsync_rawData.html', context)
+
+
+
+
+
+
+def downSampling():
+    context = {}
+    form = DateForm()
+    context['form'] = form
+    data = {'IDpsap': [], 'daypsap': [], 'blue': [], 'red': [], 'green': [], 'newblue': [], 'newred': [], 'newgreen': [],'newIDpsap': [], 'newdaypsap': [],}
+    x=0
+    while x < 75555:
+
+        psapdisplay_det = psap.objects.using('dataGOA').order_by('-time')[x:x+100]
+
+        for unit in psapdisplay_det :
+            data['blue'].insert(0, unit.blue)
+            data['red'].insert(0, unit.red)
+            data['green'].insert(0, unit.green)
+
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))
+            data['daypsap'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+
+        # print(data['blue'], data['red'], data['green'])
+
+        avgBlue = sum(data['blue']) / len(data['blue'])
+        avgRed = sum(data['red']) / len(data['red'])
+        avgGreen = sum(data['green']) / len(data['green'])
+
+        data['newblue'].insert(0, avgBlue)
+        data['newred'].insert(0, avgRed)
+        data['newgreen'].insert(0, avgGreen)
+
+        data['newIDpsap'].insert(0,data['IDpsap'][0])
+        data['newdaypsap'].insert(0,data['daypsap'][0])
+
+        # print('blue',avgBlue, 'red', avgRed, 'green', avgGreen)
+
+        x = x + 100
+
+    print('out blue', data['newblue'], 'red', data['newred'], 'green', data['newgreen'], 'time', data['newIDpsap'])
+
+    return avgBlue, avgRed, avgGreen
+
+        # if new_time == previous_time :
+        #
+        #     break
+
+        # downSampling()
+
+
+
+
+
+# .raw('''SELECT *
+#    FROM (
+#        SELECT
+#            @row := @row +1 AS rownum, time
+#        FROM (
+#            SELECT @row :=0) r, PSAP_UBI
+#        ) ranked
+#    WHERE rownum % 5 = 1 ''')
