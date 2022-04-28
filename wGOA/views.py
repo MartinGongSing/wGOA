@@ -136,7 +136,18 @@ class ChartData(object):
         data = {'ID': [], 'N': [], 'daycpc': [],
                 'IDneph': [], 'sblue': [], 'sred' : [], 'sgreen': [],'bsblue': [], 'bsred' : [], 'bsgreen': [], 'dayneph': [],
                 'IDaps': [], 'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [], 'dayaps': [], 'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],'d20': [],'d21': [],'d22': [], 'd23': [], 'd24': [],'d25': [],'d26': [],'d27': [],'d28': [],'d29': [],'d30': [],'d31': [],'d32': [], 'd33': [], 'd34': [],'d35': [],'d36': [],'d37': [],'d38': [],'d39': [],'d40': [],'d41': [],'d42': [],'d43':[],
-                'IDpsap': [], 'pblue': [], 'pred': [], 'pgreen': [], 'daypsap': [],
+                'newIDaps': [], 'newdayaps': [],
+                'newd1': [], 'newd2': [], 'newd3': [], 'newd4': [], 'newd5': [], 'newd6': [], 'newd7': [], 'newd8': [],
+                'newd9': [], 'newd10': [],
+                'newd11': [], 'newd12': [], 'newd13': [], 'newd14': [], 'newd15': [], 'newd16': [], 'newd17': [],
+                'newd18': [], 'newd19': [], 'newd20': [],
+                'newd21': [], 'newd22': [], 'newd23': [], 'newd24': [], 'newd25': [], 'newd26': [], 'newd27': [],
+                'newd28': [], 'newd29': [], 'newd30': [],
+                'newd31': [], 'newd32': [], 'newd33': [], 'newd34': [], 'newd35': [], 'newd36': [], 'newd37': [],
+                'newd38': [], 'newd39': [], 'newd40': [],
+                'newd41': [], 'newd42': [], 'newd43': [],
+
+                'IDpsap': [], 'pblue': [], 'pred': [], 'pgreen': [], 'daypsap': [],'newIDpsap': [], 'newblue':[], 'newred': [], 'newgreen': [], 'newdaypsap': [],
                 }
 
         ###################
@@ -181,23 +192,57 @@ class ChartData(object):
         ####################
         ##### PSAP_UBI #####
         ####################
-        psapes = psap.objects.using('dataGOA').order_by('-time')[1:1440]
+        # psapes = psap.objects.using('dataGOA').order_by('-time')[1:1440]
+        #
+        # for unites in psapes:
+        #     data['IDpsap'].insert(0,datetime.fromtimestamp(unites.time/1000).strftime( "%H:%M"))            # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+        #     data['daypsap'].insert(0,datetime.fromtimestamp(unites.time/ 1000).strftime("%Y/%m/%d"))
+        #     data['pblue'].insert(0,isSmallerThan(unites.blue, downLimit))
+        #     data['pred'].insert(0,isSmallerThan(unites.red, downLimit))
+        #     data['pgreen'].insert(0,isSmallerThan(unites.green, downLimit))
 
-        for unites in psapes:
-            data['IDpsap'].insert(0,datetime.fromtimestamp(unites.time/1000).strftime( "%H:%M"))            # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0,datetime.fromtimestamp(unites.time/ 1000).strftime("%Y/%m/%d"))
-            data['pblue'].insert(0,isSmallerThan(unites.blue, downLimit))
-            data['pred'].insert(0,isSmallerThan(unites.red, downLimit))
-            data['pgreen'].insert(0,isSmallerThan(unites.green, downLimit))
+
+
+        # downsampling :
+        x = 0
+        while x < 75555:
+
+            newpsapdisplay = psap.objects.using('dataGOA').order_by('-time')[x:x + 100]
+
+            for unit in newpsapdisplay:
+                data['pblue'].insert(0, unit.blue)
+                data['pred'].insert(0, unit.red)
+                data['pgreen'].insert(0, unit.green)
+
+                data['IDpsap'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))
+                data['daypsap'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+
+            # print(data['blue'], data['red'], data['green'])
+
+            avgBlue = sum(data['pblue']) / len(data['pblue'])
+            avgRed = sum(data['pred']) / len(data['pred'])
+            avgGreen = sum(data['pgreen']) / len(data['pgreen'])
+
+            data['newblue'].insert(0, avgBlue)
+            data['newred'].insert(0, avgRed)
+            data['newgreen'].insert(0, avgGreen)
+
+            data['newIDpsap'].insert(0, data['IDpsap'][0])
+            data['newdaypsap'].insert(0, data['daypsap'][0])
+
+            # print('blue',avgBlue, 'red', avgRed, 'green', avgGreen)
+
+            x = x + 100
+
 
 
 
         ###################
         ##### APS_UBI #####
         ###################
-        apses = aps.objects.using('dataGOA').order_by('-time')[:144]        #.filter(time__endswith='65000')
+        # apses = aps.objects.using('dataGOA').order_by('-time')[:144]        #.filter(time__endswith='65000')
         # print(apses)
-        print(apses)
+        # print(apses)
 
         # time_to_exclude = ['265000', '865000', '765000', '565000',  '465000']
         # apsess = aps.objects.using('dataGOA').order_by('-time')
@@ -207,56 +252,210 @@ class ChartData(object):
         #
         # print("apsess", erg)
 
+######################## WORKING ####################################
+        # upperLimit = 600
+        #
+        # for unita in apses:
+        #     data['IDaps'].insert(0,datetime.fromtimestamp(unita.time/1000).strftime( "%H:%M"))
+        #     data['dayaps'].insert(0,datetime.fromtimestamp(unita.time/ 1000).strftime("%Y/%m/%d"))
+        #     data['d1'].insert(0,isGreaterThan(unita.d1,upperLimit))
+        #     data['d2'].insert(0,isGreaterThan(unita.d2,upperLimit))
+        #     data['d3'].insert(0,isGreaterThan(unita.d3,upperLimit))
+        #     data['d4'].insert(0,isGreaterThan(unita.d4,upperLimit))
+        #     data['d5'].insert(0,isGreaterThan(unita.d5,upperLimit))
+        #     data['d6'].insert(0,isGreaterThan(unita.d6,upperLimit))
+        #     data['d7'].insert(0,isGreaterThan(unita.d7,upperLimit))
+        #     data['d8'].insert(0,isGreaterThan(unita.d8,upperLimit))
+        #     data['d9'].insert(0,isGreaterThan(unita.d9,upperLimit))
+        #     data['d10'].insert(0,isGreaterThan(unita.d10,upperLimit))
+        #     data['d11'].insert(0,isGreaterThan(unita.d11, upperLimit))
+        #     data['d12'].insert(0,isGreaterThan(unita.d12, upperLimit))
+        #     data['d13'].insert(0,isGreaterThan(unita.d13, upperLimit))
+        #     data['d14'].insert(0,isGreaterThan(unita.d14, upperLimit))
+        #     data['d15'].insert(0,isGreaterThan(unita.d15, upperLimit))
+        #     data['d16'].insert(0,isGreaterThan(unita.d16, upperLimit))
+        #     data['d17'].insert(0,isGreaterThan(unita.d17, upperLimit))
+        #     data['d18'].insert(0,isGreaterThan(unita.d18, upperLimit))
+        #     data['d19'].insert(0,isGreaterThan(unita.d19, upperLimit))
+        #     data['d20'].insert(0,isGreaterThan(unita.d20, upperLimit))
+        #     data['d21'].insert(0,isGreaterThan(unita.d21, upperLimit))
+        #     data['d22'].insert(0,isGreaterThan(unita.d22, upperLimit))
+        #     data['d23'].insert(0,isGreaterThan(unita.d23, upperLimit))
+        #     data['d24'].insert(0,isGreaterThan(unita.d24, upperLimit))
+        #     data['d25'].insert(0,isGreaterThan(unita.d25, upperLimit))
+        #     data['d26'].insert(0,isGreaterThan(unita.d26, upperLimit))
+        #     data['d27'].insert(0,isGreaterThan(unita.d27, upperLimit))
+        #     data['d28'].insert(0,isGreaterThan(unita.d28, upperLimit))
+        #     data['d29'].insert(0,isGreaterThan(unita.d29, upperLimit))
+        #     data['d30'].insert(0,isGreaterThan(unita.d30, upperLimit))
+        #     data['d31'].insert(0,isGreaterThan(unita.d31, upperLimit))
+        #     data['d32'].insert(0,isGreaterThan(unita.d32, upperLimit))
+        #     data['d33'].insert(0,isGreaterThan(unita.d33, upperLimit))
+        #     data['d34'].insert(0,isGreaterThan(unita.d34, upperLimit))
+        #     data['d35'].insert(0,isGreaterThan(unita.d35, upperLimit))
+        #     data['d36'].insert(0,isGreaterThan(unita.d36, upperLimit))
+        #     data['d37'].insert(0,isGreaterThan(unita.d37, upperLimit))
+        #     data['d38'].insert(0,isGreaterThan(unita.d38, upperLimit))
+        #     data['d39'].insert(0,isGreaterThan(unita.d39, upperLimit))
+        #     data['d40'].insert(0,isGreaterThan(unita.d40, upperLimit))
+        #     data['d41'].insert(0,isGreaterThan(unita.d41, upperLimit))
+        #     data['d42'].insert(0,isGreaterThan(unita.d42, upperLimit))
+        #     data['d43'].insert(0,isGreaterThan(unita.d43, upperLimit))
 
-        upperLimit = 600
 
-        for unita in apses:
-            data['IDaps'].insert(0,datetime.fromtimestamp(unita.time/1000).strftime( "%H:%M"))
-            data['dayaps'].insert(0,datetime.fromtimestamp(unita.time/ 1000).strftime("%Y/%m/%d"))
-            data['d1'].insert(0,isGreaterThan(unita.d1,upperLimit))
-            data['d2'].insert(0,isGreaterThan(unita.d2,upperLimit))
-            data['d3'].insert(0,isGreaterThan(unita.d3,upperLimit))
-            data['d4'].insert(0,isGreaterThan(unita.d4,upperLimit))
-            data['d5'].insert(0,isGreaterThan(unita.d5,upperLimit))
-            data['d6'].insert(0,isGreaterThan(unita.d6,upperLimit))
-            data['d7'].insert(0,isGreaterThan(unita.d7,upperLimit))
-            data['d8'].insert(0,isGreaterThan(unita.d8,upperLimit))
-            data['d9'].insert(0,isGreaterThan(unita.d9,upperLimit))
-            data['d10'].insert(0,isGreaterThan(unita.d10,upperLimit))
-            data['d11'].insert(0,isGreaterThan(unita.d11, upperLimit))
-            data['d12'].insert(0,isGreaterThan(unita.d12, upperLimit))
-            data['d13'].insert(0,isGreaterThan(unita.d13, upperLimit))
-            data['d14'].insert(0,isGreaterThan(unita.d14, upperLimit))
-            data['d15'].insert(0,isGreaterThan(unita.d15, upperLimit))
-            data['d16'].insert(0,isGreaterThan(unita.d16, upperLimit))
-            data['d17'].insert(0,isGreaterThan(unita.d17, upperLimit))
-            data['d18'].insert(0,isGreaterThan(unita.d18, upperLimit))
-            data['d19'].insert(0,isGreaterThan(unita.d19, upperLimit))
-            data['d20'].insert(0,isGreaterThan(unita.d20, upperLimit))
-            data['d21'].insert(0,isGreaterThan(unita.d21, upperLimit))
-            data['d22'].insert(0,isGreaterThan(unita.d22, upperLimit))
-            data['d23'].insert(0,isGreaterThan(unita.d23, upperLimit))
-            data['d24'].insert(0,isGreaterThan(unita.d24, upperLimit))
-            data['d25'].insert(0,isGreaterThan(unita.d25, upperLimit))
-            data['d26'].insert(0,isGreaterThan(unita.d26, upperLimit))
-            data['d27'].insert(0,isGreaterThan(unita.d27, upperLimit))
-            data['d28'].insert(0,isGreaterThan(unita.d28, upperLimit))
-            data['d29'].insert(0,isGreaterThan(unita.d29, upperLimit))
-            data['d30'].insert(0,isGreaterThan(unita.d30, upperLimit))
-            data['d31'].insert(0,isGreaterThan(unita.d31, upperLimit))
-            data['d32'].insert(0,isGreaterThan(unita.d32, upperLimit))
-            data['d33'].insert(0,isGreaterThan(unita.d33, upperLimit))
-            data['d34'].insert(0,isGreaterThan(unita.d34, upperLimit))
-            data['d35'].insert(0,isGreaterThan(unita.d35, upperLimit))
-            data['d36'].insert(0,isGreaterThan(unita.d36, upperLimit))
-            data['d37'].insert(0,isGreaterThan(unita.d37, upperLimit))
-            data['d38'].insert(0,isGreaterThan(unita.d38, upperLimit))
-            data['d39'].insert(0,isGreaterThan(unita.d39, upperLimit))
-            data['d40'].insert(0,isGreaterThan(unita.d40, upperLimit))
-            data['d41'].insert(0,isGreaterThan(unita.d41, upperLimit))
-            data['d42'].insert(0,isGreaterThan(unita.d42, upperLimit))
-            data['d43'].insert(0,isGreaterThan(unita.d43, upperLimit))
+################################# TEST #######################
 
+        y = 0
+        while y < 235:
+
+            apses = aps.objects.using('dataGOA').order_by('-time')[y:y + 5]
+            # print(apses)
+
+            upperLimit = 600
+
+            for unita in apses:
+                data['IDaps'].insert(0, datetime.fromtimestamp(unita.time / 1000).strftime("%H:%M"))
+                data['dayaps'].insert(0, datetime.fromtimestamp(unita.time / 1000).strftime("%Y/%m/%d"))
+                data['d1'].insert(0, unita.d1)
+                data['d2'].insert(0, unita.d2)
+                data['d3'].insert(0, unita.d3)
+                data['d4'].insert(0, unita.d4)
+                data['d5'].insert(0, unita.d5)
+                data['d6'].insert(0, unita.d6)
+                data['d7'].insert(0, unita.d7)
+                data['d8'].insert(0, unita.d8)
+                data['d9'].insert(0, unita.d9)
+                data['d10'].insert(0, unita.d10)
+                data['d11'].insert(0, unita.d11)
+                data['d12'].insert(0, unita.d12)
+                data['d13'].insert(0, unita.d13)
+                data['d14'].insert(0, unita.d14)
+                data['d15'].insert(0, unita.d15)
+                data['d16'].insert(0, unita.d16)
+                data['d17'].insert(0, unita.d17)
+                data['d18'].insert(0, unita.d18)
+                data['d19'].insert(0, unita.d19)
+                data['d20'].insert(0, unita.d20)
+                data['d21'].insert(0, unita.d21)
+                data['d22'].insert(0, unita.d22)
+                data['d23'].insert(0, unita.d23)
+                data['d24'].insert(0, unita.d24)
+                data['d25'].insert(0, unita.d25)
+                data['d26'].insert(0, unita.d26)
+                data['d27'].insert(0, unita.d27)
+                data['d28'].insert(0, unita.d28)
+                data['d29'].insert(0, unita.d29)
+                data['d30'].insert(0, unita.d30)
+                data['d31'].insert(0, unita.d31)
+                data['d32'].insert(0, unita.d32)
+                data['d33'].insert(0, unita.d33)
+                data['d34'].insert(0, unita.d34)
+                data['d35'].insert(0, unita.d35)
+                data['d36'].insert(0, unita.d36)
+                data['d37'].insert(0, unita.d37)
+                data['d38'].insert(0, unita.d38)
+                data['d39'].insert(0, unita.d39)
+                data['d40'].insert(0, unita.d40)
+                data['d41'].insert(0, unita.d41)
+                data['d42'].insert(0, unita.d42)
+                data['d43'].insert(0, unita.d43)
+
+            avgd1 = sum(data['d1']) / len(data['d1'])
+            avgd2 = sum(data['d2']) / len(data['d2'])
+            avgd3 = sum(data['d3']) / len(data['d3'])
+            avgd4 = sum(data['d4']) / len(data['d4'])
+            avgd5 = sum(data['d5']) / len(data['d5'])
+            avgd6 = sum(data['d6']) / len(data['d6'])
+            avgd7 = sum(data['d7']) / len(data['d7'])
+            avgd8 = sum(data['d8']) / len(data['d8'])
+            avgd9 = sum(data['d9']) / len(data['d9'])
+            avgd10 = sum(data['d10']) / len(data['d10'])
+            avgd11 = sum(data['d11']) / len(data['d11'])
+            avgd12 = sum(data['d12']) / len(data['d12'])
+            avgd13 = sum(data['d13']) / len(data['d13'])
+            avgd14 = sum(data['d14']) / len(data['d14'])
+            avgd15 = sum(data['d15']) / len(data['d15'])
+            avgd16 = sum(data['d16']) / len(data['d16'])
+            avgd17 = sum(data['d17']) / len(data['d17'])
+            avgd18 = sum(data['d18']) / len(data['d18'])
+            avgd19 = sum(data['d19']) / len(data['d19'])
+            avgd20 = sum(data['d20']) / len(data['d20'])
+            avgd21 = sum(data['d21']) / len(data['d21'])
+            avgd22 = sum(data['d22']) / len(data['d22'])
+            avgd23 = sum(data['d23']) / len(data['d23'])
+            avgd24 = sum(data['d24']) / len(data['d24'])
+            avgd25 = sum(data['d25']) / len(data['d25'])
+            avgd26 = sum(data['d26']) / len(data['d26'])
+            avgd27 = sum(data['d27']) / len(data['d27'])
+            avgd28 = sum(data['d28']) / len(data['d28'])
+            avgd29 = sum(data['d29']) / len(data['d29'])
+            avgd30 = sum(data['d30']) / len(data['d30'])
+            avgd31 = sum(data['d31']) / len(data['d31'])
+            avgd32 = sum(data['d32']) / len(data['d32'])
+            avgd33 = sum(data['d33']) / len(data['d33'])
+            avgd34 = sum(data['d34']) / len(data['d34'])
+            avgd35 = sum(data['d35']) / len(data['d35'])
+            avgd36 = sum(data['d36']) / len(data['d36'])
+            avgd37 = sum(data['d37']) / len(data['d37'])
+            avgd38 = sum(data['d38']) / len(data['d38'])
+            avgd39 = sum(data['d39']) / len(data['d39'])
+            avgd40 = sum(data['d40']) / len(data['d40'])
+            avgd41 = sum(data['d41']) / len(data['d41'])
+            avgd42 = sum(data['d42']) / len(data['d42'])
+            avgd43 = sum(data['d43']) / len(data['d43'])
+
+            data['newd1'].insert(0, isGreaterThan(avgd1, upperLimit))
+            data['newd2'].insert(0, isGreaterThan(avgd2, upperLimit))
+            data['newd3'].insert(0, isGreaterThan(avgd3, upperLimit))
+            data['newd4'].insert(0, isGreaterThan(avgd4, upperLimit))
+            data['newd5'].insert(0, isGreaterThan(avgd5, upperLimit))
+            data['newd6'].insert(0, isGreaterThan(avgd6, upperLimit))
+            data['newd7'].insert(0, isGreaterThan(avgd7, upperLimit))
+            data['newd8'].insert(0, isGreaterThan(avgd8, upperLimit))
+            data['newd9'].insert(0, isGreaterThan(avgd9, upperLimit))
+            data['newd10'].insert(0, isGreaterThan(avgd10, upperLimit))
+            data['newd11'].insert(0, isGreaterThan(avgd11, upperLimit))
+            data['newd12'].insert(0, isGreaterThan(avgd12, upperLimit))
+            data['newd13'].insert(0, isGreaterThan(avgd13, upperLimit))
+            data['newd14'].insert(0, isGreaterThan(avgd14, upperLimit))
+            data['newd15'].insert(0, isGreaterThan(avgd15, upperLimit))
+            data['newd16'].insert(0, isGreaterThan(avgd16, upperLimit))
+            data['newd17'].insert(0, isGreaterThan(avgd17, upperLimit))
+            data['newd18'].insert(0, isGreaterThan(avgd18, upperLimit))
+            data['newd19'].insert(0, isGreaterThan(avgd19, upperLimit))
+            data['newd20'].insert(0, isGreaterThan(avgd20, upperLimit))
+            data['newd21'].insert(0, isGreaterThan(avgd21, upperLimit))
+            data['newd22'].insert(0, isGreaterThan(avgd22, upperLimit))
+            data['newd23'].insert(0, isGreaterThan(avgd23, upperLimit))
+            data['newd24'].insert(0, isGreaterThan(avgd24, upperLimit))
+            data['newd25'].insert(0, isGreaterThan(avgd25, upperLimit))
+            data['newd26'].insert(0, isGreaterThan(avgd26, upperLimit))
+            data['newd27'].insert(0, isGreaterThan(avgd27, upperLimit))
+            data['newd28'].insert(0, isGreaterThan(avgd28, upperLimit))
+            data['newd29'].insert(0, isGreaterThan(avgd29, upperLimit))
+            data['newd30'].insert(0, isGreaterThan(avgd30, upperLimit))
+            data['newd31'].insert(0, isGreaterThan(avgd31, upperLimit))
+            data['newd32'].insert(0, isGreaterThan(avgd32, upperLimit))
+            data['newd33'].insert(0, isGreaterThan(avgd33, upperLimit))
+            data['newd34'].insert(0, isGreaterThan(avgd34, upperLimit))
+            data['newd35'].insert(0, isGreaterThan(avgd35, upperLimit))
+            data['newd36'].insert(0, isGreaterThan(avgd36, upperLimit))
+            data['newd37'].insert(0, isGreaterThan(avgd37, upperLimit))
+            data['newd38'].insert(0, isGreaterThan(avgd38, upperLimit))
+            data['newd39'].insert(0, isGreaterThan(avgd39, upperLimit))
+            data['newd40'].insert(0, isGreaterThan(avgd40, upperLimit))
+            data['newd41'].insert(0, isGreaterThan(avgd41, upperLimit))
+            data['newd42'].insert(0, isGreaterThan(avgd42, upperLimit))
+            data['newd43'].insert(0, isGreaterThan(avgd43, upperLimit))
+
+            # print(data['newd1'])
+
+            data['newIDaps'].insert(0, data['IDaps'][0])
+            data['newdayaps'].insert(0, data['dayaps'][0])
+
+            # print('blue',avgBlue, 'red', avgRed, 'green', avgGreen)
+
+            y = y + 5
         return data
 
 def isGreaterThan(x,y):
@@ -320,15 +519,15 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 
     chartPsap = {"renderTo": chartIDPsap, "type": chart_type_psap, "height": chart_height, }
     titlePsap = {"text": 'PSAP UBI'}
-    xAxisPsap = {"title": {"text": 'Time'}, "categories": data['IDpsap']}
+    xAxisPsap = {"title": {"text": 'Time'}, "categories": data['newIDpsap']}
     yAxisPsap = [{"title": {"text": 'σ<sub>a</sub>/Mm<sup>-1</sup>'}}]
     seriesPsap = [
-        {"name": 'Blue', "data": data['pblue'], "color": "#333fff"},
-        {"name": 'Red', "data": data['pred'], "color": "#ff3333"},
-        {"name": 'Green', "data": data['pgreen'], "color": "#33ff49"},
+        {"name": 'Blue', "data": data['newblue'], "color": "#333fff"},
+        {"name": 'Red', "data": data['newred'], "color": "#ff3333"},
+        {"name": 'Green', "data": data['newgreen'], "color": "#33ff49"},
 
     ]
-    daypsap = {"text": data["daypsap"][0] + " - " + data["daypsap"][-1], "verticalAlign": 'bottom', "align": 'right'}
+    daypsap = {"text": data["newdaypsap"][0] + " - " + data["newdaypsap"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
 
 
@@ -347,55 +546,55 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
                 "plotBorderWidth": 1,
                 "renderTo": chartIDAps, "height": chart_height, }
     titleAps = {"text": 'APS UBI'}
-    xAxisAps= {"title": {"text": 'Time'}, "categories": data['IDaps'],}
+    xAxisAps= {"title": {"text": 'Time'}, "categories": data['newIDaps'],}
     yAxisAps= {
         "title": {"text": 'Particule size'},
         "categories": ['<0.523','0.542','0.583','0.626','0.723','0.777','0.835','0.898','0.965','1.037','1.114','1.197','1.286','1.382','1;486','1.596','1.715','1.843','1.981','2.129','2.288','2.458','2.642','2.839','3.051','3.278','3.523','3.786','4.068','4.371','4.698','5.048','5.425','5.829','6.264','6.732','7.234','7.774','8.354','8.977','9.647','10.37','11.14'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
     }
-    dayaps = {"text" : data["dayaps"][0] + " - " + data["dayaps"][-1], "verticalAlign": 'bottom', "align": 'right'}
-    datatest1 = data['d1']
-    datatest2 = data['d2']
-    datatest3 = data['d3']
-    datatest4 = data['d4']
-    datatest5 = data['d5']
-    datatest6 = data['d6']
-    datatest7 = data['d7']
-    datatest8 = data['d8']
-    datatest9 = data['d9']
-    datatest10 = data['d10']
-    datatest11 = data['d11']
-    datatest12 = data['d12']
-    datatest13 = data['d13']
-    datatest14 = data['d14']
-    datatest15 = data['d15']
-    datatest16 = data['d16']
-    datatest17 = data['d17']
-    datatest18 = data['d18']
-    datatest19 = data['d19']
-    datatest20 = data['d20']
-    datatest21 = data['d21']
-    datatest22 = data['d22']
-    datatest23 = data['d23']
-    datatest24 = data['d24']
-    datatest25 = data['d25']
-    datatest26 = data['d26']
-    datatest27 = data['d27']
-    datatest28 = data['d28']
-    datatest29 = data['d29']
-    datatest30 = data['d30']
-    datatest31 = data['d31']
-    datatest32 = data['d32']
-    datatest33 = data['d33']
-    datatest34 = data['d34']
-    datatest35 = data['d35']
-    datatest36 = data['d36']
-    datatest37 = data['d37']
-    datatest38 = data['d38']
-    datatest39 = data['d39']
-    datatest40 = data['d40']
-    datatest41 = data['d41']
-    datatest42 = data['d42']
-    datatest43 = data['d43']
+    dayaps = {"text" : data["newdayaps"][0] + " - " + data["newdayaps"][-1], "verticalAlign": 'bottom', "align": 'right'}
+    datatest1 = data['newd1']
+    datatest2 = data['newd2']
+    datatest3 = data['newd3']
+    datatest4 = data['newd4']
+    datatest5 = data['newd5']
+    datatest6 = data['newd6']
+    datatest7 = data['newd7']
+    datatest8 = data['newd8']
+    datatest9 = data['newd9']
+    datatest10 = data['newd10']
+    datatest11 = data['newd11']
+    datatest12 = data['newd12']
+    datatest13 = data['newd13']
+    datatest14 = data['newd14']
+    datatest15 = data['newd15']
+    datatest16 = data['newd16']
+    datatest17 = data['newd17']
+    datatest18 = data['newd18']
+    datatest19 = data['newd19']
+    datatest20 = data['newd20']
+    datatest21 = data['newd21']
+    datatest22 = data['newd22']
+    datatest23 = data['newd23']
+    datatest24 = data['newd24']
+    datatest25 = data['newd25']
+    datatest26 = data['newd26']
+    datatest27 = data['newd27']
+    datatest28 = data['newd28']
+    datatest29 = data['newd29']
+    datatest30 = data['newd30']
+    datatest31 = data['newd31']
+    datatest32 = data['newd32']
+    datatest33 = data['newd33']
+    datatest34 = data['newd34']
+    datatest35 = data['newd35']
+    datatest36 = data['newd36']
+    datatest37 = data['newd37']
+    datatest38 = data['newd38']
+    datatest39 = data['newd39']
+    datatest40 = data['newd40']
+    datatest41 = data['newd41']
+    datatest42 = data['newd42']
+    datatest43 = data['newd43']
 
 
 
@@ -491,7 +690,8 @@ def test(request):
     context['psap'] = cpc3display
 
 
-    downSampling()
+    # downSampling()
+    APSdownSampling()
 
 
     return render(request, "test.html", context)
@@ -1498,6 +1698,185 @@ def downSampling():
         # downSampling()
 
 
+def APSdownSampling():
+    context = {}
+    form = DateForm()
+    context['form'] = form
+    data = {
+        'IDaps': [],'dayaps': [],
+        'd1': [],'d2': [], 'd3': [], 'd4': [],'d5': [],'d6': [],'d7': [],'d8': [],'d9': [],'d10': [],
+        'd11': [],'d12': [], 'd13': [], 'd14': [],'d15': [],'d16': [],'d17': [],'d18': [],'d19': [],'d20': [],
+        'd21': [],'d22': [], 'd23': [], 'd24': [],'d25': [],'d26': [],'d27': [],'d28': [],'d29': [],'d30': [],
+        'd31': [],'d32': [], 'd33': [], 'd34': [],'d35': [],'d36': [],'d37': [],'d38': [],'d39': [],'d40': [],
+        'd41': [],'d42': [], 'd43':[],
+        'newIDaps': [], 'newdayaps': [],
+        'newd1': [],'newd2': [], 'newd3': [], 'newd4': [],'newd5': [],'newd6': [],'newd7': [],'newd8': [],'newd9': [],'newd10': [],
+        'newd11': [],'newd12': [], 'newd13': [], 'newd14': [],'newd15': [],'newd16': [],'newd17': [],'newd18': [],'newd19': [],'newd20': [],
+        'newd21': [],'newd22': [], 'newd23': [], 'newd24': [],'newd25': [],'newd26': [],'newd27': [],'newd28': [],'newd29': [],'newd30': [],
+        'newd31': [],'newd32': [], 'newd33': [], 'newd34': [],'newd35': [],'newd36': [],'newd37': [],'newd38': [],'newd39': [],'newd40': [],
+        'newd41': [],'newd42': [], 'newd43':[],
+            }
+    y=0
+    while y < 235:
+
+        apses = aps.objects.using('dataGOA').order_by('-time')[x:x+5]
+        # print(apses)
+
+
+        upperLimit = 600
+
+        for unita in apses:
+            data['IDaps'].insert(0, datetime.fromtimestamp(unita.time / 1000).strftime("%H:%M"))
+            data['dayaps'].insert(0, datetime.fromtimestamp(unita.time / 1000).strftime("%Y/%m/%d"))
+            data['d1'].insert(0, unita.d1)
+            data['d2'].insert(0, unita.d2)
+            data['d3'].insert(0, unita.d3)
+            data['d4'].insert(0, unita.d4)
+            data['d5'].insert(0, unita.d5)
+            data['d6'].insert(0, unita.d6)
+            data['d7'].insert(0, unita.d7)
+            data['d8'].insert(0, unita.d8)
+            data['d9'].insert(0, unita.d9)
+            data['d10'].insert(0, unita.d10)
+            data['d11'].insert(0, unita.d11)
+            data['d12'].insert(0, unita.d12)
+            data['d13'].insert(0, unita.d13)
+            data['d14'].insert(0, unita.d14)
+            data['d15'].insert(0, unita.d15)
+            data['d16'].insert(0, unita.d16)
+            data['d17'].insert(0, unita.d17)
+            data['d18'].insert(0, unita.d18)
+            data['d19'].insert(0, unita.d19)
+            data['d20'].insert(0, unita.d20)
+            data['d21'].insert(0, unita.d21)
+            data['d22'].insert(0, unita.d22)
+            data['d23'].insert(0, unita.d23)
+            data['d24'].insert(0, unita.d24)
+            data['d25'].insert(0, unita.d25)
+            data['d26'].insert(0, unita.d26)
+            data['d27'].insert(0, unita.d27)
+            data['d28'].insert(0, unita.d28)
+            data['d29'].insert(0, unita.d29)
+            data['d30'].insert(0, unita.d30)
+            data['d31'].insert(0, unita.d31)
+            data['d32'].insert(0, unita.d32)
+            data['d33'].insert(0, unita.d33)
+            data['d34'].insert(0, unita.d34)
+            data['d35'].insert(0, unita.d35)
+            data['d36'].insert(0, unita.d36)
+            data['d37'].insert(0, unita.d37)
+            data['d38'].insert(0, unita.d38)
+            data['d39'].insert(0, unita.d39)
+            data['d40'].insert(0, unita.d40)
+            data['d41'].insert(0, unita.d41)
+            data['d42'].insert(0, unita.d42)
+            data['d43'].insert(0, unita.d43)
+
+
+        avgd1 = sum(data['d1']) / len(data['d1'])
+        avgd2 = sum(data['d2']) / len(data['d2'])
+        avgd3 = sum(data['d3']) / len(data['d3'])
+        avgd4 = sum(data['d4']) / len(data['d4'])
+        avgd5 = sum(data['d5']) / len(data['d5'])
+        avgd6 = sum(data['d6']) / len(data['d6'])
+        avgd7 = sum(data['d7']) / len(data['d7'])
+        avgd8 = sum(data['d8']) / len(data['d8'])
+        avgd9 = sum(data['d9']) / len(data['d9'])
+        avgd10 = sum(data['d10']) / len(data['d10'])
+        avgd11 = sum(data['d11']) / len(data['d11'])
+        avgd12 = sum(data['d12']) / len(data['d12'])
+        avgd13 = sum(data['d13']) / len(data['d13'])
+        avgd14 = sum(data['d14']) / len(data['d14'])
+        avgd15 = sum(data['d15']) / len(data['d15'])
+        avgd16 = sum(data['d16']) / len(data['d16'])
+        avgd17 = sum(data['d17']) / len(data['d17'])
+        avgd18 = sum(data['d18']) / len(data['d18'])
+        avgd19 = sum(data['d19']) / len(data['d19'])
+        avgd20 = sum(data['d20']) / len(data['d20'])
+        avgd21 = sum(data['d21']) / len(data['d21'])
+        avgd22 = sum(data['d22']) / len(data['d22'])
+        avgd23 = sum(data['d23']) / len(data['d23'])
+        avgd24 = sum(data['d24']) / len(data['d24'])
+        avgd25 = sum(data['d25']) / len(data['d25'])
+        avgd26 = sum(data['d26']) / len(data['d26'])
+        avgd27 = sum(data['d27']) / len(data['d27'])
+        avgd28 = sum(data['d28']) / len(data['d28'])
+        avgd29 = sum(data['d29']) / len(data['d29'])
+        avgd30 = sum(data['d30']) / len(data['d30'])
+        avgd31 = sum(data['d31']) / len(data['d31'])
+        avgd32 = sum(data['d32']) / len(data['d32'])
+        avgd33 = sum(data['d33']) / len(data['d33'])
+        avgd34 = sum(data['d34']) / len(data['d34'])
+        avgd35 = sum(data['d35']) / len(data['d35'])
+        avgd36 = sum(data['d36']) / len(data['d36'])
+        avgd37 = sum(data['d37']) / len(data['d37'])
+        avgd38 = sum(data['d38']) / len(data['d38'])
+        avgd39 = sum(data['d39']) / len(data['d39'])
+        avgd40 = sum(data['d40']) / len(data['d40'])
+        avgd41 = sum(data['d41']) / len(data['d41'])
+        avgd42 = sum(data['d42']) / len(data['d42'])
+        avgd43 = sum(data['d43']) / len(data['d43'])
+
+
+        data['newd1'].insert(0, isGreaterThan(avgd1, upperLimit))
+        data['newd2'].insert(0, isGreaterThan(avgd2, upperLimit))
+        data['newd3'].insert(0, isGreaterThan(avgd3, upperLimit))
+        data['newd4'].insert(0, isGreaterThan(avgd4, upperLimit))
+        data['newd5'].insert(0, isGreaterThan(avgd5, upperLimit))
+        data['newd6'].insert(0, isGreaterThan(avgd6, upperLimit))
+        data['newd7'].insert(0, isGreaterThan(avgd7, upperLimit))
+        data['newd8'].insert(0, isGreaterThan(avgd8, upperLimit))
+        data['newd9'].insert(0, isGreaterThan(avgd9, upperLimit))
+        data['newd10'].insert(0, isGreaterThan(avgd10, upperLimit))
+        data['newd11'].insert(0, isGreaterThan(avgd11, upperLimit))
+        data['newd12'].insert(0, isGreaterThan(avgd12, upperLimit))
+        data['newd13'].insert(0, isGreaterThan(avgd13, upperLimit))
+        data['newd14'].insert(0, isGreaterThan(avgd14, upperLimit))
+        data['newd15'].insert(0, isGreaterThan(avgd15, upperLimit))
+        data['newd16'].insert(0, isGreaterThan(avgd16, upperLimit))
+        data['newd17'].insert(0, isGreaterThan(avgd17, upperLimit))
+        data['newd18'].insert(0, isGreaterThan(avgd18, upperLimit))
+        data['newd19'].insert(0, isGreaterThan(avgd19, upperLimit))
+        data['newd20'].insert(0, isGreaterThan(avgd20, upperLimit))
+        data['newd21'].insert(0, isGreaterThan(avgd21, upperLimit))
+        data['newd22'].insert(0, isGreaterThan(avgd22, upperLimit))
+        data['newd23'].insert(0, isGreaterThan(avgd23, upperLimit))
+        data['newd24'].insert(0, isGreaterThan(avgd24, upperLimit))
+        data['newd25'].insert(0, isGreaterThan(avgd25, upperLimit))
+        data['newd26'].insert(0, isGreaterThan(avgd26, upperLimit))
+        data['newd27'].insert(0, isGreaterThan(avgd27, upperLimit))
+        data['newd28'].insert(0, isGreaterThan(avgd28, upperLimit))
+        data['newd29'].insert(0, isGreaterThan(avgd29, upperLimit))
+        data['newd30'].insert(0, isGreaterThan(avgd30, upperLimit))
+        data['newd31'].insert(0, isGreaterThan(avgd31, upperLimit))
+        data['newd32'].insert(0, isGreaterThan(avgd32, upperLimit))
+        data['newd33'].insert(0, isGreaterThan(avgd33, upperLimit))
+        data['newd34'].insert(0, isGreaterThan(avgd34, upperLimit))
+        data['newd35'].insert(0, isGreaterThan(avgd35, upperLimit))
+        data['newd36'].insert(0, isGreaterThan(avgd36, upperLimit))
+        data['newd37'].insert(0, isGreaterThan(avgd37, upperLimit))
+        data['newd38'].insert(0, isGreaterThan(avgd38, upperLimit))
+        data['newd39'].insert(0, isGreaterThan(avgd39, upperLimit))
+        data['newd40'].insert(0, isGreaterThan(avgd40, upperLimit))
+        data['newd41'].insert(0, isGreaterThan(avgd41, upperLimit))
+        data['newd42'].insert(0, isGreaterThan(avgd42, upperLimit))
+        data['newd43'].insert(0, isGreaterThan(avgd43, upperLimit))
+
+
+        print(data['newd1'])
+
+
+
+        data['newIDaps'].insert(0,data['IDaps'][0])
+        data['newdayaps'].insert(0,data['dayaps'][0])
+
+        # print('blue',avgBlue, 'red', avgRed, 'green', avgGreen)
+
+        y = y + 5
+
+    print('newD1', data['newd1'], 'time', data['newIDaps'],'newD33', data['newd33'],'newD24', data['newd24'],)
+
+    return 0
 
 
 
