@@ -8,7 +8,7 @@
 {% block content %}
 
 
-<a href="{% url 'demo' %}">Connect to Google Calendar</a>
+
 
 
 <p>Current time : {% now "Ymj" %}T{% now "Hi" %}</p>
@@ -19,19 +19,21 @@
 
 
 <h2>CPC_UBI :</h2>
+<p>{{daypsap|safe}}</p>
+<p>{{blue|safe}}</p>
 
-    <table border="1">
-        <tr>
-            <th>time</th>
-            <th>N</th>
-        </tr>
-        {% for getdata in psap %}
-        <tr>
-            <td>{{getdata.ID}}</td>
-            <td>{{getdata.N}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+<!--    <table border="1">-->
+<!--        <tr>-->
+<!--            <th>time</th>-->
+<!--            <th>N</th>-->
+<!--        </tr>-->
+<!--        {% for getdata in psap %}-->
+<!--        <tr>-->
+<!--            <td>{{getdata.ID}}</td>-->
+<!--            <td>{{getdata.N}}</td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--    </table>-->
 
 
 

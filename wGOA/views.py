@@ -18,7 +18,7 @@ from django.core.mail import send_mail
 
 from .forms import ContactForm, DateForm
 
-from .calendar_API import test_calendar
+# from .calendar_API import test_calendar
 ################ camera START
 from django.http.response import StreamingHttpResponse
 from .camera import IPWebCam
@@ -521,7 +521,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 
     chartPsap = {"renderTo": chartIDPsap, "type": chart_type_psap, "height": chart_height, }
     titlePsap = {"text": 'PSAP UBI'}
-    xAxisPsap = {"title": {"text": 'Time'}, "categories": data['newIDpsap']}
+    xAxisPsap = {"title": {"text": 'Time'}, "categories": data['IDpsap']}
     yAxisPsap = [{"title": {"text": 'σ<sub>a</sub>/Mm<sup>-1</sup>'}}]
     seriesPsap = [
         {"name": 'Blue', "data": data['pblue'], "color": "#333fff"},
@@ -682,19 +682,41 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 
 
 
+
+# import numpy as np
+# import pandas as pd
+
+
 def test(request):
     context = {}  # used to pass the info to the HTML
     # resultdisplay = cpc.objects.all()
+    #
+    # cpc3display = cpc2.objects.order_by('-ID')[1:10] #all()
+    #
+    #
+    # context['psap'] = cpc3display
+    #
+    #
+    # # downSampling()
+    # APSdownSampling()
 
-    cpc3display = cpc2.objects.order_by('-ID')[1:10] #all()
+    data = {'IDpsap': [], 'daypsap': [], 'blue': [], 'red': [], 'green': [], 'newblue': [], 'newred': [], 'newgreen': [],'newIDpsap': [], 'newdaypsap': [],}
+
+    psapdisplay_det = psap.objects.using('dataGOA').order_by('-time')[:100000]
+
+    for unit in psapdisplay_det:
+        data['blue'].insert(0, unit.blue)
+        data['red'].insert(0, unit.red)
+        data['green'].insert(0, unit.green)
+        data['daypsap'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d - %H:%M:%S"))
 
 
-    context['psap'] = cpc3display
 
 
-    # downSampling()
-    APSdownSampling()
-
+    context['blue'] = data['blue']
+    context['red'] = data['red']
+    context['green'] = data['green']
+    context['daypsap'] = data['daypsap']
 
     return render(request, "test.html", context)
 
@@ -1204,7 +1226,7 @@ def aps_det(request):
 
         apsdisplay_det = aps.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value) # returns a QuerySet : <class 'django.db.models.query.QuerySet'>
 
-        print(apsdisplay_det)
+        # print(apsdisplay_det)
 
         upperLimit = 600
 
@@ -1538,10 +1560,10 @@ def psap_det(request):
 
     return render(request, 'data_det/psap.html', context)
 
-def demo(request):
-    results = test_calendar()
-    context = {"results": results}
-    return render(request, 'demo.html', context)
+# def demo(request):
+#     results = test_calendar()
+#     context = {"results": results}
+#     return render(request, 'demo.html', context)
 
 
 

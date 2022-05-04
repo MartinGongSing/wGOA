@@ -37,7 +37,6 @@ urlpatterns = [
     path('webcam_feed', views.webcam_feed, name='webcam_feed'),
 
     path('test/', views.test, name='test'),
-    path('demo/', views.demo, name='demo'),
 
     path('cpc/', views.cpc_det, name='cpc'),
     path('cpcD/', views.Dcpc_det, name='cpcD'),

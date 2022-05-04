@@ -21,12 +21,35 @@
                 <img src="{% url 'webcam_feed' %}" style='height: 300px;'>
             </a>
             <p>Webcamera <a href="webcam_feed" title="should be...">live feed</a> (reload to update) </p>
-            <p>Current datetime:{% now "jS F Y H:i" %} (GMT / UTC)</p>
+            <p>Current datetime:<span class="clock" data-timezone="Europe/Lisbon"></span></p>
+
         </div>
     </div>
 </div>
 
 
+
+
+<!--TIME -->
+<script>
+    const clocks = document.getElementsByClassName("clock");
+
+    function updateClocks() {
+      for (let clock of clocks) {
+        let timezone = clock.dataset.timezone;
+        let time = new Date().toLocaleTimeString("en-US", {
+          hour: '2-digit',
+          minute:'2-digit',
+          timeZone: timezone
+        });
+        clock.textContent = time;
+      }
+    }
+
+    // Update every minute:
+    setInterval(updateClocks, 60000);
+    updateClocks();
+</script>
 
 
 <script>
