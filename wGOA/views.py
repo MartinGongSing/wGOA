@@ -1932,15 +1932,28 @@ def downSampling3():
 
     mycursor = mydb.cursor()
 
+    # Preparing the query to delete records
+    sql = "TRUNCATE TABLE newpsap"
+
+    try:
+        # Execute the SQL command
+        mycursor.execute(sql)
+
+        # Commit your changes in the database
+        mydb.commit()
+    except:
+        # Roll back in case there is any error
+        mydb.rollback()
+
 
 
     data = {'IDpsap': [], 'daypsap': [], 'blue': [], 'red': [], 'green': [], 'newblue': [], 'newred': [],
             'newgreen': [], 'newIDpsap': [], 'newdaypsap': [], }
 
-    psapdisplay_det = psap.objects.using('dataGOA').order_by('-time')[:10000]
+    psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time').all()
 
 
-    for unit in psapdisplay_det:
+    for unit in psapdisplay_det3:
         data['IDpsap'].insert(0, unit.time)
         data['blue'].insert(0, unit.blue)
         data['red'].insert(0, unit.red)
@@ -1950,7 +1963,7 @@ def downSampling3():
 
     i=0
     while i < len(data['blue']):
-        t =  data['IDpsap'][i]
+        tim =  data['IDpsap'][i]
         blue100 = data['blue'][i:i+99]
         newblue = sum(blue100)/len(blue100)
 
@@ -1963,10 +1976,10 @@ def downSampling3():
         # data['newblue'].insert(0, newblue)
 
 
-
+        print("t=",tim )
         sql = "INSERT INTO newpsap (time, blue, red, green) VALUES (%s, %s, %s, %s)"
 
-        val = (t, newblue, newred, newgreen)
+        val = (tim, newblue, newred, newgreen)
 
         mycursor.execute(sql, val)
 
