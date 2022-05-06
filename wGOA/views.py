@@ -699,24 +699,27 @@ def test(request):
     #
     # # downSampling()
     # APSdownSampling()
-
-    data = {'IDpsap': [], 'daypsap': [], 'blue': [], 'red': [], 'green': [], 'newblue': [], 'newred': [], 'newgreen': [],'newIDpsap': [], 'newdaypsap': [],}
-
-    psapdisplay_det = psap.objects.using('dataGOA').order_by('-time')[:100000]
-
-    for unit in psapdisplay_det:
-        data['blue'].insert(0, unit.blue)
-        data['red'].insert(0, unit.red)
-        data['green'].insert(0, unit.green)
-        data['daypsap'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d - %H:%M:%S"))
-
-
-
-
-    context['blue'] = data['blue']
-    context['red'] = data['red']
-    context['green'] = data['green']
-    context['daypsap'] = data['daypsap']
+    t = time.time()
+    downSampling3()
+    elapsed = time.time() - t
+    print('time = ', elapsed)
+    # data = {'IDpsap': [], 'daypsap': [], 'blue': [], 'red': [], 'green': [], 'newblue': [], 'newred': [], 'newgreen': [],'newIDpsap': [], 'newdaypsap': [],}
+    #
+    # psapdisplay_det = psap.objects.using('dataGOA').order_by('-time')[:100000]
+    #
+    # for unit in psapdisplay_det:
+    #     data['blue'].insert(0, unit.blue)
+    #     data['red'].insert(0, unit.red)
+    #     data['green'].insert(0, unit.green)
+    #     data['daypsap'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d - %H:%M:%S"))
+    #
+    #
+    #
+    #
+    # context['blue'] = data['blue']
+    # context['red'] = data['red']
+    # context['green'] = data['green']
+    # context['daypsap'] = data['daypsap']
 
     return render(request, "test.html", context)
 
@@ -1912,3 +1915,65 @@ def APSdownSampling():
 #            SELECT @row :=0) r, PSAP_UBI
 #        ) ranked
 #    WHERE rownum % 5 = 1 ''')
+
+
+
+import mysql.connector
+
+def downSampling3():
+
+
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="goaubi"
+    )
+
+    mycursor = mydb.cursor()
+
+
+
+    data = {'IDpsap': [], 'daypsap': [], 'blue': [], 'red': [], 'green': [], 'newblue': [], 'newred': [],
+            'newgreen': [], 'newIDpsap': [], 'newdaypsap': [], }
+
+    psapdisplay_det = psap.objects.using('dataGOA').order_by('-time')[:10000]
+
+
+    for unit in psapdisplay_det:
+        data['IDpsap'].insert(0, unit.time)
+        data['blue'].insert(0, unit.blue)
+        data['red'].insert(0, unit.red)
+        data['green'].insert(0, unit.green)
+        # data['IDpsap'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))
+        # data['daypsap'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+
+    i=0
+    while i < len(data['blue']):
+        t =  data['IDpsap'][i]
+        blue100 = data['blue'][i:i+99]
+        newblue = sum(blue100)/len(blue100)
+
+        red100 = data['red'][i:i + 99]
+        newred = sum(red100) / len(red100)
+
+        green100 = data['green'][i:i + 99]
+        newgreen = sum(green100) / len(green100)
+
+        # data['newblue'].insert(0, newblue)
+
+
+
+        sql = "INSERT INTO newpsap (time, blue, red, green) VALUES (%s, %s, %s, %s)"
+
+        val = (t, newblue, newred, newgreen)
+
+        mycursor.execute(sql, val)
+
+        mydb.commit()
+
+        print(mycursor.rowcount, "record inserted.")
+
+        i += 100
+    # print(data['newblue'])
+    return data
