@@ -1,3 +1,20 @@
+from django.db import connections
+from django.db import models
+
+from datetime import datetime
+import time
+
+
+class psap(models.Model):
+    time = models.CharField(max_length= 100,primary_key=True)
+    blue = models.CharField(max_length = 15)
+    red = models.CharField(max_length = 15)
+    green = models.CharField(max_length = 15)
+
+    class Meta:
+        db_table = "PSAP_UBI"
+
+
 def downSampling3():
 
 
@@ -27,7 +44,7 @@ def downSampling3():
 
     data = {'IDpsap': [], 'blue': [], 'red': [], 'green': []}
 
-    psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time').all()
+    psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time')[:1000]
 
 
     for unit in psapdisplay_det3:

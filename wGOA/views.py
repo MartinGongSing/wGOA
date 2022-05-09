@@ -48,6 +48,7 @@ def index(request):
 
     html_template = loader.get_template('index.html')
 
+
     return HttpResponse(html_template.render(context, request))
 
 def station(request):
@@ -1950,7 +1951,7 @@ def downSampling3():
     data = {'IDpsap': [], 'daypsap': [], 'blue': [], 'red': [], 'green': [], 'newblue': [], 'newred': [],
             'newgreen': [], 'newIDpsap': [], 'newdaypsap': [], }
 
-    psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time').all()
+    psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time')[:50000]
 
 
     for unit in psapdisplay_det3:

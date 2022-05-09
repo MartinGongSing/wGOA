@@ -113,8 +113,21 @@
     </TABLE>
 </div>
 
+<div>
+    {% load tz %}
 
-<!--Maybe this : https://pvlib-python.readthedocs.io/en/stable/auto_examples/plot_sunpath_diagrams.html-->
+    {% timezone "Europe/Lisbon" %}
+        Lisbon time: {% now 'Ymj'%}----T{% now 'Hi' %}
+    {% endtimezone %}
+    <br>
+    {% timezone None %}
+        Server time: {% now 'Ymj'%}----T{% now 'Hi' %} <br>
+        {{value}}<br>
+    {{ value|localtime }}<br>
+    {% endtimezone %}
+{% now 'Hi' %}
+
+</div>
 
 <div class="boxGray">
     <div class="row">
