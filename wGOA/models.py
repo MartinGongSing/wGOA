@@ -105,7 +105,14 @@ class aps(models.Model):
     class Meta:
         db_table = "APS_UBI"
 
+class newpsap(models.Model):
+    time = models.CharField(max_length= 100,primary_key=True)
+    blue = models.CharField(max_length = 15)
+    red = models.CharField(max_length = 15)
+    green = models.CharField(max_length = 15)
 
+    class Meta:
+        db_table = "newpsap"
 
 
 

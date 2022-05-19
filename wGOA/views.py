@@ -9,7 +9,7 @@ import requests
 import math
 from datetime import datetime
 import time
-from .models import cpc, instrument, cpc2, neph2, aps, psap, cpc3
+from .models import cpc, instrument, cpc2, neph2, aps, psap, cpc3, newpsap
 from django.db.models import Count, Q
 import json
 
@@ -158,12 +158,12 @@ class ChartData(object):
         # cpces = cpc2.objects.all() # we take all the items
         # cpces = cpc2.objects.order_by('ID')[:288]  # we take only 40 items
 
-        cpc3display = cpc3.objects.using('dataGOA').order_by('-time')[:288]
+        cpc3display = cpc3.objects.order_by('-time')[:288]
 
 
         for unit in cpc3display:
             data['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
-            data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            data['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y-%m-%d"))
             data['N'].insert(0,unit.N)
 
 
@@ -174,14 +174,14 @@ class ChartData(object):
         ####################
         ##### Neph_UBI #####
         ####################
-        nephes = neph2.objects.using('dataGOA').order_by('-time')[:1440]
+        nephes = neph2.objects.order_by('-time')[:1440]
 
         downLimit = 0
 
         for unity in nephes:
 
             data['IDneph'].insert(0,datetime.fromtimestamp(unity.time/1000).strftime( "%H:%M"))
-            data['dayneph'].insert(0,datetime.fromtimestamp(unity.time/ 1000).strftime("%Y/%m/%d"))
+            data['dayneph'].insert(0,datetime.fromtimestamp(unity.time/ 1000).strftime("%Y-%m-%d"))
             data['sblue'].insert(0, isSmallerThan(unity.sblue * 1000000, downLimit)) # x 10^6
             data['sred'].insert(0,isSmallerThan(unity.sred * 1000000, downLimit))
             data['sgreen'].insert(0,isSmallerThan(unity.sgreen * 1000000, downLimit))
@@ -193,11 +193,11 @@ class ChartData(object):
         ####################
         ##### PSAP_UBI #####
         ####################
-        psapes = psap.objects.using('dataGOA').order_by('-time')[1:1440]
+        psapes = psap.objects.order_by('-time')[1:450]
 
         for unites in psapes:
             data['IDpsap'].insert(0,datetime.fromtimestamp(unites.time/1000).strftime( "%H:%M"))            # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-            data['daypsap'].insert(0,datetime.fromtimestamp(unites.time/ 1000).strftime("%Y/%m/%d"))
+            data['daypsap'].insert(0,datetime.fromtimestamp(unites.time/ 1000).strftime("%Y-%m-%d"))
             data['pblue'].insert(0,isSmallerThan(unites.blue, downLimit))
             data['pred'].insert(0,isSmallerThan(unites.red, downLimit))
             data['pgreen'].insert(0,isSmallerThan(unites.green, downLimit))
@@ -241,7 +241,7 @@ class ChartData(object):
         ###################
         ##### APS_UBI #####
         ###################
-        apses = aps.objects.using('dataGOA').order_by('-time')[:144]        #.filter(time__endswith='65000')
+        apses = aps.objects.order_by('-time')[:144]        #.filter(time__endswith='65000')
         # print(apses)
         # print(apses)
 
@@ -258,7 +258,7 @@ class ChartData(object):
 
         for unita in apses:
             data['IDaps'].insert(0,datetime.fromtimestamp(unita.time/1000).strftime( "%H:%M"))
-            data['dayaps'].insert(0,datetime.fromtimestamp(unita.time/ 1000).strftime("%Y/%m/%d"))
+            data['dayaps'].insert(0,datetime.fromtimestamp(unita.time/ 1000).strftime("%Y-%m-%d"))
             data['d1'].insert(0,isGreaterThan(unita.d1,upperLimit))
             data['d2'].insert(0,isGreaterThan(unita.d2,upperLimit))
             data['d3'].insert(0,isGreaterThan(unita.d3,upperLimit))
@@ -304,161 +304,7 @@ class ChartData(object):
             data['d43'].insert(0,isGreaterThan(unita.d43, upperLimit))
 
 
-################################# TEST #######################
 
-        # y = 0
-        # while y < 235:
-        #
-        #     apses = aps.objects.using('dataGOA').order_by('-time')[y:y + 5]
-        #     # print(apses)
-        #
-        #     upperLimit = 600
-        #
-        #     for unita in apses:
-        #         data['IDaps'].insert(0, datetime.fromtimestamp(unita.time / 1000).strftime("%H:%M"))
-        #         data['dayaps'].insert(0, datetime.fromtimestamp(unita.time / 1000).strftime("%Y/%m/%d"))
-        #         data['d1'].insert(0, unita.d1)
-        #         data['d2'].insert(0, unita.d2)
-        #         data['d3'].insert(0, unita.d3)
-        #         data['d4'].insert(0, unita.d4)
-        #         data['d5'].insert(0, unita.d5)
-        #         data['d6'].insert(0, unita.d6)
-        #         data['d7'].insert(0, unita.d7)
-        #         data['d8'].insert(0, unita.d8)
-        #         data['d9'].insert(0, unita.d9)
-        #         data['d10'].insert(0, unita.d10)
-        #         data['d11'].insert(0, unita.d11)
-        #         data['d12'].insert(0, unita.d12)
-        #         data['d13'].insert(0, unita.d13)
-        #         data['d14'].insert(0, unita.d14)
-        #         data['d15'].insert(0, unita.d15)
-        #         data['d16'].insert(0, unita.d16)
-        #         data['d17'].insert(0, unita.d17)
-        #         data['d18'].insert(0, unita.d18)
-        #         data['d19'].insert(0, unita.d19)
-        #         data['d20'].insert(0, unita.d20)
-        #         data['d21'].insert(0, unita.d21)
-        #         data['d22'].insert(0, unita.d22)
-        #         data['d23'].insert(0, unita.d23)
-        #         data['d24'].insert(0, unita.d24)
-        #         data['d25'].insert(0, unita.d25)
-        #         data['d26'].insert(0, unita.d26)
-        #         data['d27'].insert(0, unita.d27)
-        #         data['d28'].insert(0, unita.d28)
-        #         data['d29'].insert(0, unita.d29)
-        #         data['d30'].insert(0, unita.d30)
-        #         data['d31'].insert(0, unita.d31)
-        #         data['d32'].insert(0, unita.d32)
-        #         data['d33'].insert(0, unita.d33)
-        #         data['d34'].insert(0, unita.d34)
-        #         data['d35'].insert(0, unita.d35)
-        #         data['d36'].insert(0, unita.d36)
-        #         data['d37'].insert(0, unita.d37)
-        #         data['d38'].insert(0, unita.d38)
-        #         data['d39'].insert(0, unita.d39)
-        #         data['d40'].insert(0, unita.d40)
-        #         data['d41'].insert(0, unita.d41)
-        #         data['d42'].insert(0, unita.d42)
-        #         data['d43'].insert(0, unita.d43)
-        #
-        #     avgd1 = sum(data['d1']) / len(data['d1'])
-        #     avgd2 = sum(data['d2']) / len(data['d2'])
-        #     avgd3 = sum(data['d3']) / len(data['d3'])
-        #     avgd4 = sum(data['d4']) / len(data['d4'])
-        #     avgd5 = sum(data['d5']) / len(data['d5'])
-        #     avgd6 = sum(data['d6']) / len(data['d6'])
-        #     avgd7 = sum(data['d7']) / len(data['d7'])
-        #     avgd8 = sum(data['d8']) / len(data['d8'])
-        #     avgd9 = sum(data['d9']) / len(data['d9'])
-        #     avgd10 = sum(data['d10']) / len(data['d10'])
-        #     avgd11 = sum(data['d11']) / len(data['d11'])
-        #     avgd12 = sum(data['d12']) / len(data['d12'])
-        #     avgd13 = sum(data['d13']) / len(data['d13'])
-        #     avgd14 = sum(data['d14']) / len(data['d14'])
-        #     avgd15 = sum(data['d15']) / len(data['d15'])
-        #     avgd16 = sum(data['d16']) / len(data['d16'])
-        #     avgd17 = sum(data['d17']) / len(data['d17'])
-        #     avgd18 = sum(data['d18']) / len(data['d18'])
-        #     avgd19 = sum(data['d19']) / len(data['d19'])
-        #     avgd20 = sum(data['d20']) / len(data['d20'])
-        #     avgd21 = sum(data['d21']) / len(data['d21'])
-        #     avgd22 = sum(data['d22']) / len(data['d22'])
-        #     avgd23 = sum(data['d23']) / len(data['d23'])
-        #     avgd24 = sum(data['d24']) / len(data['d24'])
-        #     avgd25 = sum(data['d25']) / len(data['d25'])
-        #     avgd26 = sum(data['d26']) / len(data['d26'])
-        #     avgd27 = sum(data['d27']) / len(data['d27'])
-        #     avgd28 = sum(data['d28']) / len(data['d28'])
-        #     avgd29 = sum(data['d29']) / len(data['d29'])
-        #     avgd30 = sum(data['d30']) / len(data['d30'])
-        #     avgd31 = sum(data['d31']) / len(data['d31'])
-        #     avgd32 = sum(data['d32']) / len(data['d32'])
-        #     avgd33 = sum(data['d33']) / len(data['d33'])
-        #     avgd34 = sum(data['d34']) / len(data['d34'])
-        #     avgd35 = sum(data['d35']) / len(data['d35'])
-        #     avgd36 = sum(data['d36']) / len(data['d36'])
-        #     avgd37 = sum(data['d37']) / len(data['d37'])
-        #     avgd38 = sum(data['d38']) / len(data['d38'])
-        #     avgd39 = sum(data['d39']) / len(data['d39'])
-        #     avgd40 = sum(data['d40']) / len(data['d40'])
-        #     avgd41 = sum(data['d41']) / len(data['d41'])
-        #     avgd42 = sum(data['d42']) / len(data['d42'])
-        #     avgd43 = sum(data['d43']) / len(data['d43'])
-        #
-        #     data['newd1'].insert(0, isGreaterThan(avgd1, upperLimit))
-        #     data['newd2'].insert(0, isGreaterThan(avgd2, upperLimit))
-        #     data['newd3'].insert(0, isGreaterThan(avgd3, upperLimit))
-        #     data['newd4'].insert(0, isGreaterThan(avgd4, upperLimit))
-        #     data['newd5'].insert(0, isGreaterThan(avgd5, upperLimit))
-        #     data['newd6'].insert(0, isGreaterThan(avgd6, upperLimit))
-        #     data['newd7'].insert(0, isGreaterThan(avgd7, upperLimit))
-        #     data['newd8'].insert(0, isGreaterThan(avgd8, upperLimit))
-        #     data['newd9'].insert(0, isGreaterThan(avgd9, upperLimit))
-        #     data['newd10'].insert(0, isGreaterThan(avgd10, upperLimit))
-        #     data['newd11'].insert(0, isGreaterThan(avgd11, upperLimit))
-        #     data['newd12'].insert(0, isGreaterThan(avgd12, upperLimit))
-        #     data['newd13'].insert(0, isGreaterThan(avgd13, upperLimit))
-        #     data['newd14'].insert(0, isGreaterThan(avgd14, upperLimit))
-        #     data['newd15'].insert(0, isGreaterThan(avgd15, upperLimit))
-        #     data['newd16'].insert(0, isGreaterThan(avgd16, upperLimit))
-        #     data['newd17'].insert(0, isGreaterThan(avgd17, upperLimit))
-        #     data['newd18'].insert(0, isGreaterThan(avgd18, upperLimit))
-        #     data['newd19'].insert(0, isGreaterThan(avgd19, upperLimit))
-        #     data['newd20'].insert(0, isGreaterThan(avgd20, upperLimit))
-        #     data['newd21'].insert(0, isGreaterThan(avgd21, upperLimit))
-        #     data['newd22'].insert(0, isGreaterThan(avgd22, upperLimit))
-        #     data['newd23'].insert(0, isGreaterThan(avgd23, upperLimit))
-        #     data['newd24'].insert(0, isGreaterThan(avgd24, upperLimit))
-        #     data['newd25'].insert(0, isGreaterThan(avgd25, upperLimit))
-        #     data['newd26'].insert(0, isGreaterThan(avgd26, upperLimit))
-        #     data['newd27'].insert(0, isGreaterThan(avgd27, upperLimit))
-        #     data['newd28'].insert(0, isGreaterThan(avgd28, upperLimit))
-        #     data['newd29'].insert(0, isGreaterThan(avgd29, upperLimit))
-        #     data['newd30'].insert(0, isGreaterThan(avgd30, upperLimit))
-        #     data['newd31'].insert(0, isGreaterThan(avgd31, upperLimit))
-        #     data['newd32'].insert(0, isGreaterThan(avgd32, upperLimit))
-        #     data['newd33'].insert(0, isGreaterThan(avgd33, upperLimit))
-        #     data['newd34'].insert(0, isGreaterThan(avgd34, upperLimit))
-        #     data['newd35'].insert(0, isGreaterThan(avgd35, upperLimit))
-        #     data['newd36'].insert(0, isGreaterThan(avgd36, upperLimit))
-        #     data['newd37'].insert(0, isGreaterThan(avgd37, upperLimit))
-        #     data['newd38'].insert(0, isGreaterThan(avgd38, upperLimit))
-        #     data['newd39'].insert(0, isGreaterThan(avgd39, upperLimit))
-        #     data['newd40'].insert(0, isGreaterThan(avgd40, upperLimit))
-        #     data['newd41'].insert(0, isGreaterThan(avgd41, upperLimit))
-        #     data['newd42'].insert(0, isGreaterThan(avgd42, upperLimit))
-        #     data['newd43'].insert(0, isGreaterThan(avgd43, upperLimit))
-        #
-        #     # print(data['newd1'])
-        #
-        #     data['newIDaps'].insert(0, data['IDaps'][0])
-        #     data['newdayaps'].insert(0, data['dayaps'][0])
-        #
-        #     # print('blue',avgBlue, 'red', avgRed, 'green', avgGreen)
-        #
-        #     y = y + 5
-        #
-        ###########################################################
         return data
 
 def isGreaterThan(x,y):
@@ -496,7 +342,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
     series = [
         {"name": 'N/#/cm3', "data": data['N'], "color":"#333fff"},
         ]
-    daycpc = {"text": data["daycpc"][0] + " - " + data["daycpc"][-1], "verticalAlign": 'bottom', "align": 'right'}
+    daycpc = {"text": data["daycpc"][0] + " , " + data["daycpc"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
     ####################
     ##### Neph_UBI #####
@@ -514,7 +360,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         {"name": 'bRed',   "yAxis": 1,  "data": data['bsred'],   "color":"#fab9b9",    "marker": {"symbol": "circle"}    },
         {"name": 'bGreen', "yAxis": 1,  "data": data['bsgreen'], "color":"#b5f7bc",    "marker": {"symbol": "circle"}    },
     ]
-    dayneph = {"text" : data["dayneph"][0] + " - " + data["dayneph"][-1], "verticalAlign": 'bottom', "align": 'right'}
+    dayneph = {"text" : data["dayneph"][0] + " , " + data["dayneph"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
     ####################
     ##### PSAP_UBI #####
@@ -530,7 +376,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         {"name": 'Green', "data": data['pgreen'], "color": "#33ff49"},
 
     ]
-    daypsap = {"text": data["daypsap"][0] + " - " + data["daypsap"][-1], "verticalAlign": 'bottom', "align": 'right'}
+    daypsap = {"text": data["daypsap"][0] + " , " + data["daypsap"][-1], "verticalAlign": 'bottom', "align": 'right'}
 
 
 
@@ -554,7 +400,7 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
         "title": {"text": 'Particule size'},
         "categories": ['<0.523','0.542','0.583','0.626','0.723','0.777','0.835','0.898','0.965','1.037','1.114','1.197','1.286','1.382','1;486','1.596','1.715','1.843','1.981','2.129','2.288','2.458','2.642','2.839','3.051','3.278','3.523','3.786','4.068','4.371','4.698','5.048','5.425','5.829','6.264','6.732','7.234','7.774','8.354','8.977','9.647','10.37','11.14'], #'type': 'logarithmic', #precise logarithmic scale define upper limit
     }
-    dayaps = {"text" : data["dayaps"][0] + " - " + data["dayaps"][-1], "verticalAlign": 'bottom', "align": 'right'}
+    dayaps = {"text" : data["dayaps"][0] + " , " + data["dayaps"][-1], "verticalAlign": 'bottom', "align": 'right'}
     datatest1 = data['d1']
     datatest2 = data['d2']
     datatest3 = data['d3']
@@ -691,10 +537,10 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 def test(request):
     context = {}  # used to pass the info to the HTML
     # resultdisplay = cpc.objects.all()
-    #
-    # cpc3display = cpc2.objects.order_by('-ID')[1:10] #all()
-    #
-    #
+
+    # cpc3display = aps.objects.using('dataGOA').order_by('-time')[1:10] #all()
+    # #
+    # #
     # context['psap'] = cpc3display
     #
     #
@@ -795,7 +641,7 @@ def Dpsap_det(request):
     context = {}  # used to pass the info to the HTML
     yoda = {'daysList': []}
 
-    theDaysData = psap.objects.using('dataGOA').order_by('-time').all()
+    theDaysData = newpsap.objects.order_by('-time').all()
     day1 = 0
     month1 = 0
     for days in theDaysData:
@@ -1407,107 +1253,98 @@ def psap_det(request):
             return render(request, 'data_det/psap.html', context)
         value = int(time.mktime(dt.timetuple()))
         value = int(value / 10000)
-        finishby = 50000
-        psapdisplay_det = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,time__iendswith=finishby)
-        print("psapdisplay_det", psapdisplay_det)
+        psapdisplay_det = newpsap.objects.order_by('-time').filter(time__istartswith=value)
+        # print("psapdisplay_det", psapdisplay_det)
 
-        # value = value + 1
-        # psapdisplay_det1 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-        #                                                                           time__iendswith=finishby)
-        #
-        # value = value + 1
-        # psapdisplay_det2 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-        #                                                                           time__iendswith=finishby)
-        #
-        # value = value + 1
-        # psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-        #                                                                           time__iendswith=finishby)
-        #
-        # value = value + 1
-        # psapdisplay_det4 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-        #                                                                           time__iendswith=finishby)
-        #
-        # value = value + 1
-        # psapdisplay_det5 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-        #                                                                           time__iendswith=finishby)
-        #
-        # value = value + 1
-        # psapdisplay_det6 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-        #                                                                           time__iendswith=finishby)
-        #
-        # value = value + 1
-        # psapdisplay_det7 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-        #                                                                           time__iendswith=finishby)
-        #
-        # value = value + 1
-        # psapdisplay_det8 = psap.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value,
-        #                                                                           time__iendswith=finishby)
-        #
-        # for unites in psapdisplay_det8:
-        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-        #     data['blue'].insert(0, unites.blue)
-        #     data['red'].insert(0, unites.red)
-        #     data['green'].insert(0, unites.green)
-        #
-        # for unites in psapdisplay_det7:
-        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-        #     data['blue'].insert(0, unites.blue)
-        #     data['red'].insert(0, unites.red)
-        #     data['green'].insert(0, unites.green)
-        #
-        # for unites in psapdisplay_det6:
-        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-        #     data['blue'].insert(0, unites.blue)
-        #     data['red'].insert(0, unites.red)
-        #     data['green'].insert(0, unites.green)
-        #
-        # for unites in psapdisplay_det5:
-        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-        #     data['blue'].insert(0, unites.blue)
-        #     data['red'].insert(0, unites.red)
-        #     data['green'].insert(0, unites.green)
-        #
-        # for unites in psapdisplay_det4:
-        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-        #     data['blue'].insert(0, unites.blue)
-        #     data['red'].insert(0, unites.red)
-        #     data['green'].insert(0, unites.green)
-        #
-        # for unites in psapdisplay_det3:
-        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-        #     data['blue'].insert(0, unites.blue)
-        #     data['red'].insert(0, unites.red)
-        #     data['green'].insert(0, unites.green)
-        #
-        # for unites in psapdisplay_det2:
-        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
-        #         "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-        #     data['blue'].insert(0, unites.blue)
-        #     data['red'].insert(0, unites.red)
-        #     data['green'].insert(0, unites.green)
-        #
-        # for unites in psapdisplay_det1:
-        #     data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
-        #     data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
-        #     data['blue'].insert(0, unites.blue)
-        #     data['red'].insert(0, unites.red)
-        #     data['green'].insert(0, unites.green)
+        value = value + 1
+        psapdisplay_det1 = newpsap.objects.order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        psapdisplay_det2 = newpsap.objects.order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        psapdisplay_det3 = newpsap.objects.order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        psapdisplay_det4 = newpsap.objects.order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        psapdisplay_det5 = newpsap.objects.order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        psapdisplay_det6 = newpsap.objects.order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        psapdisplay_det7 = newpsap.objects.order_by('-time').filter(time__istartswith=value)
+
+        value = value + 1
+        psapdisplay_det8 = newpsap.objects.order_by('-time').filter(time__istartswith=value)
+
+        for unites in psapdisplay_det8:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det7:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det6:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det5:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det4:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det3:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det2:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime(
+                "%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
+
+        for unites in psapdisplay_det1:
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
+            data['blue'].insert(0, unites.blue)
+            data['red'].insert(0, unites.red)
+            data['green'].insert(0, unites.green)
 
         for unites in psapdisplay_det:
-            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M:%S"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
+            data['IDpsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%H:%M"))  # https://www.codegrepper.com/code-examples/python/get+every+nth+element+in+list+python
             data['daypsap'].insert(0, datetime.fromtimestamp(unites.time / 1000).strftime("%Y/%m/%d"))
             data['blue'].insert(0, unites.blue)
             data['red'].insert(0, unites.red)
@@ -1951,7 +1788,7 @@ def downSampling3():
     data = {'IDpsap': [], 'daypsap': [], 'blue': [], 'red': [], 'green': [], 'newblue': [], 'newred': [],
             'newgreen': [], 'newIDpsap': [], 'newdaypsap': [], }
 
-    psapdisplay_det3 = psap.objects.using('dataGOA').order_by('-time')[:50000]
+    psapdisplay_det3 = psap.objects.order_by('-time')[:150000]
 
 
     for unit in psapdisplay_det3:
@@ -1965,19 +1802,19 @@ def downSampling3():
     i=0
     while i < len(data['blue']):
         tim =  data['IDpsap'][i]
-        blue100 = data['blue'][i:i+99]
+        blue100 = data['blue'][i:i+199]
         newblue = sum(blue100)/len(blue100)
 
-        red100 = data['red'][i:i + 99]
+        red100 = data['red'][i:i + 199]
         newred = sum(red100) / len(red100)
 
-        green100 = data['green'][i:i + 99]
+        green100 = data['green'][i:i + 199]
         newgreen = sum(green100) / len(green100)
 
         # data['newblue'].insert(0, newblue)
 
 
-        print("t=",tim )
+        # print("t=",tim )
         sql = "INSERT INTO newpsap (time, blue, red, green) VALUES (%s, %s, %s, %s)"
 
         val = (tim, newblue, newred, newgreen)
@@ -1986,8 +1823,8 @@ def downSampling3():
 
         mydb.commit()
 
-        print(mycursor.rowcount, "record inserted.")
+        # print(mycursor.rowcount, "record inserted.")
 
-        i += 100
+        i += 200
     # print(data['newblue'])
     return data
