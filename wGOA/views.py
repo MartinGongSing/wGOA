@@ -536,18 +536,18 @@ def plot(request, chartID = 'chart_ID', chart_type = 'line', chart_height = 500,
 
 def test(request):
     context = {}  # used to pass the info to the HTML
-    # resultdisplay = cpc.objects.all()
+    resultdisplay = cpc.objects.all()
 
-    # cpc3display = aps.objects.using('dataGOA').order_by('-time')[1:10] #all()
+    cpc3display = aps.objects.using('daaata').order_by('-time')[1:10] #all()
     # #
     # #
-    # context['psap'] = cpc3display
+    context['psap'] = cpc3display
     #
     #
     # # downSampling()
     # APSdownSampling()
     t = time.time()
-    downSampling3()
+    # downSampling3()
     elapsed = time.time() - t
     print('time = ', elapsed)
     # data = {'IDpsap': [], 'daypsap': [], 'blue': [], 'red': [], 'green': [], 'newblue': [], 'newred': [], 'newgreen': [],'newIDpsap': [], 'newdaypsap': [],}
@@ -577,14 +577,14 @@ def Dcpc_det(request):
     context = {}  # used to pass the info to the HTML
     yoda = {'daysList': []}
 
-    theDaysData = cpc3.objects.using('dataGOA').order_by('-time').all()
+    theDaysData = cpc3.objects.order_by('-time').all()         #.using('dataGOA')
     day1 = 0
     month1 = 0
     for days in theDaysData:
-        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
-        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
+        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m-%d")
+        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m")
         if day2 != day1:
-            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
+            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m-%d"))
         # if month2 != month1:
         #     yoda['daysList'].insert(0, '<br>')
         day1 = day2
@@ -602,10 +602,10 @@ def Daps_det(request):
     day1 = 0
     month1 = 0
     for days in theDaysData:
-        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
-        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
+        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m-%d")
+        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m")
         if day2 != day1:
-            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
+            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m-%d"))
         # if month2 != month1:
         #     yoda['daysList'].insert(0, '<br>')
         day1 = day2
@@ -623,10 +623,10 @@ def Dneph_det(request):
     day1 = 0
     month1 = 0
     for days in theDaysData:
-        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
-        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
+        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m-%d")
+        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m")
         if day2 != day1:
-            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
+            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m-%d"))
         # if month2 != month1:
         #     yoda['daysList'].insert(0, '<br>')
         day1 = day2
@@ -645,10 +645,10 @@ def Dpsap_det(request):
     day1 = 0
     month1 = 0
     for days in theDaysData:
-        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d")
-        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m")
+        day2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m-%d")
+        month2 = datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m")
         if day2 != day1:
-            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y/%m/%d"))
+            yoda['daysList'].insert(0, datetime.fromtimestamp(days.time / 1000).strftime("%Y-%m-%d"))
         # if month2 != month1:
         #     yoda['daysList'].insert(0, '<br>')
         day1 = day2
@@ -692,76 +692,76 @@ def cpc_det(request):
 
         value = int(value/10000)
         # print("value is : ",value)
-        precisedata = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value) # returns a QuerySet : <class 'django.db.models.query.QuerySet'>
+        precisedata = cpc3.objects.order_by('-time').filter(time__istartswith=value) # returns a QuerySet : <class 'django.db.models.query.QuerySet'>
 
         value = value+1
-        precisedata2 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+        precisedata2 = cpc3.objects.order_by('-time').filter(time__istartswith=value)
 
         value = value + 1
-        precisedata3 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+        precisedata3 = cpc3.objects.order_by('-time').filter(time__istartswith=value)
 
         value = value + 1
-        precisedata4 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+        precisedata4 = cpc3.objects.order_by('-time').filter(time__istartswith=value)
 
         value = value + 1
-        precisedata5 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+        precisedata5 = cpc3.objects.order_by('-time').filter(time__istartswith=value)
 
         value = value + 1
-        precisedata6 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+        precisedata6 = cpc3.objects.order_by('-time').filter(time__istartswith=value)
 
         value = value + 1
-        precisedata7 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+        precisedata7 = cpc3.objects.order_by('-time').filter(time__istartswith=value)
 
         value = value + 1
-        precisedata8 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+        precisedata8 = cpc3.objects.order_by('-time').filter(time__istartswith=value)
 
         value = value + 1
-        precisedata9 = cpc3.objects.using('dataGOA').order_by('-time').filter(time__istartswith=value)
+        precisedata9 = cpc3.objects.order_by('-time').filter(time__istartswith=value)
 
         for unit in precisedata9:
             yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
-            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y-%m-%d"))
             yoda['N'].insert(0, unit.N)
 
         for unit in precisedata8:
             yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
-            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y-%m-%d"))
             yoda['N'].insert(0, unit.N)
 
         for unit in precisedata7:
             yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
-            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y-%m-%d"))
             yoda['N'].insert(0, unit.N)
 
         for unit in precisedata6:
             yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
-            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y-%m-%d"))
             yoda['N'].insert(0, unit.N)
 
         for unit in precisedata5:
             yoda['ID'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%H:%M"))  # change the timestamp
-            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y/%m/%d"))
+            yoda['daycpc'].insert(0, datetime.fromtimestamp(unit.time / 1000).strftime("%Y-%m-%d"))
             yoda['N'].insert(0, unit.N)
 
         for unit in precisedata4:
             yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
-            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y-%m-%d"))
             yoda['N'].insert(0,unit.N)
 
         for unit in precisedata3:
             yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
-            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y-%m-%d"))
             yoda['N'].insert(0,unit.N)
 
         for unit in precisedata2:
             yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
-            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y-%m-%d"))
             yoda['N'].insert(0,unit.N)
 
 
         for unit in precisedata:
             yoda['ID'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%H:%M")) #change the timestamp
-            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y/%m/%d"))
+            yoda['daycpc'].insert(0,datetime.fromtimestamp(unit.time/1000).strftime("%Y-%m-%d"))
             yoda['N'].insert(0,unit.N)
 
         # print("time : ",yoda['ID'])

@@ -96,6 +96,16 @@ DATABASES = {
         'OPTIONS':{
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"            }
     },
+    'daaata': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'goaubi',
+        'USER': 'readonlyguest',
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'HOST': 'linuxhoster.ubi.pt',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
+    },
     'default2': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'goa001_db',
@@ -116,7 +126,8 @@ DATABASES = {
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
-    }
+    },
+
 }
 
 

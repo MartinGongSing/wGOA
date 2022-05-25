@@ -13,14 +13,14 @@
     <div class="row">
         <div class="column">
             <div id='map' style='width: 400px; height: 300px;' class="center"></div>
-            <p>Current location: <a href="http://www.ubi.pt/">University of Beira Interior</a>, Covilhã, Portugal </p>
+            <p>Current location: <a href="http://www.ubi.pt/" target="_new">University of Beira Interior</a>, Covilhã, Portugal </p>
 	        <p>40° 16' 30"N, 7° 30' 35"W, 704 m</p>
         </div>
         <div class="column">
-            <a href="{% url 'webcam_feed' %}">
+            <a href="{% url 'webcam_feed' %}" target="_new">
                 <img src="{% url 'webcam_feed' %}" style='height: 300px;'>
             </a>
-            <p>Webcamera <a href="webcam_feed" title="should be...">live feed</a> (reload to update) </p>
+            <p>Webcamera <a href="/webcam_feed" title="should be..." target="_new">live feed</a> (reload to update) </p>
             <p>Current datetime:<span class="clock" data-timezone="Europe/Lisbon"></span></p>
 
         </div>
@@ -113,27 +113,27 @@
     </TABLE>
 </div>
 
-<div>
-    {% load tz %}
+<!--<div>-->
+<!--    {% load tz %}-->
 
-    {% timezone "Europe/Lisbon" %}
-        Lisbon time: {% now 'Ymj'%}----T{% now 'Hi' %}
-    {% endtimezone %}
-    <br>
-    {% timezone None %}
-        Server time: {% now 'Ymj'%}----T{% now 'Hi' %} <br>
-        {{value}}<br>
-    {{ value|localtime }}<br>
-    {% endtimezone %}
-{% now 'Hi' %}
+<!--    {% timezone "Europe/Lisbon" %}-->
+<!--        Lisbon time: {% now 'Ymj'%}&#45;&#45;&#45;&#45;T{% now 'Hi' %}-->
+<!--    {% endtimezone %}-->
+<!--    <br>-->
+<!--    {% timezone None %}-->
+<!--        Server time: {% now 'Ymj'%}&#45;&#45;&#45;&#45;T{% now 'Hi' %} <br>-->
+<!--        {{value}}<br>-->
+<!--    {{ value|localtime }}<br>-->
+<!--    {% endtimezone %}-->
+<!--{% now 'Hi' %}-->
 
-</div>
+<!--</div>-->
 
 <div class="boxGray">
     <div class="row">
         <div class="column">
-            <a href="https://www.timeanddate.com/worldclock/sunearth.html?iso={% now 'Ymj'%}T{% now 'Hi' %}&earth=1">
-                <img src="https://www.timeanddate.com/scripts/sunmap.php?iso={% now 'Ymj'%}T{% now 'Hi' %}&earth=1" style='height: 300px;'>
+            <a href="https://www.timeanddate.com/worldclock/sunearth.html?iso={% now 'Ymj'%}T{% now 'Hi' %}&earth=1" target="_new">
+                <img src="https://www.timeanddate.com/scripts/sunmap.php?iso={% now 'Ymj'%}T{% now 'Hi' %}&earth=1" style='height: 300px;' target="_new">
             </a>
         </div>
 
@@ -158,10 +158,10 @@
                 </table><!-- // end moon phase HTML // -->
             </div>
             <div class="center">
-                <a href="https://www.ubi.pt/Entidade/Departamento_de_Ciencias_Aeroespaciais ">
+                <a href="https://www.ubi.pt/Entidade/Departamento_de_Ciencias_Aeroespaciais" target="_new">
                     <p>Dpt.of Aerospace Science – UBI</p>
                 </a>
-                <a href="https://www.flightradar24.com/38.69,-5.3/6">
+                <a href="https://www.flightradar24.com/38.69,-5.3/6" target="_new">
                     <img src="../static/assets/img/flightradar24.jpg" style="width: 10%" >
                 </a>
             </div>
